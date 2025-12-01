@@ -83,9 +83,11 @@ The test test_register_user_success demonstrates the process perfectly:
 
     # Exercise 6.3
 
+    To test our database we wrote tests for our UserService.
+    We did not implement a separate UserRepository because we implemented all needed features directly in the service.
 
+    A deleting user function was not implemented. Deleting a user could lead to problems: If we have an old task from a few months ago with 3 people, we would lose information if we delete the user or we would have problems with the database because of the foreign key violation in the task.
 
-
-
+    The file can be found [here](../test_backend/test_integration_services.py)
 
     # Exercise 6.4
