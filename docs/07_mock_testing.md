@@ -1,10 +1,9 @@
 
 # Exercise 6.1
 
-This part of the document reviews the unit test implementations from lab 3. The decisions were made by using the different decision table technique. 
+This part of the document reviews the unit test implementations from lab 3. The decisions were made by using the different decision table technique. The feedback gained from using those was used to realize missing unit tests.
 
 ## 6.1.1. register user
-
 
 | Password is valid | user creation is successful in keycloak | database user creation is successful | Result  |
 |-------------------|-----------------------------------------|--------------------------------------|---------|
@@ -91,6 +90,9 @@ This table analyzes the logic for when a user leaves a group, especially the cri
 | Yes             | Yes            | Yes                  | group is deleted |
 | No              | -              | -                    | exception        |
 
+# 6.1.6. domain model unit tests
+
+Following the feedback of lab 4, unit tests for domain models defined in[models.py](../backend/models.py) were added in the file [test_models.py](../test_backend/test_models.py).
 
 
 # Exercise 6.2: Service Testing with Mocks
