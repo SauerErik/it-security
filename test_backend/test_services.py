@@ -20,12 +20,17 @@ class FakeUser:
         self.id = kwargs.get('id')
         self.username = kwargs.get('username')
         self.email = kwargs.get('email')
+        # Ensure group_memberships is always a list for iteration
+        self.group_memberships = kwargs.get('group_memberships', [])
+        # Add a way to set group_memberships for testing
+        if 'group_memberships' not in kwargs:
+            self.group_memberships = []
+
         self.birthday = kwargs.get('birthday')
         self.faculty = kwargs.get('faculty')
-        self.group_memberships = []
 
 def make_fake_db():
-    session = SimpleNamespace(add=Mock(), commit=Mock(), get=Mock(), query=MagicMock())
+    session = SimpleNamespace(add=Mock(), commit=Mock(), get=Mock(), query=MagicMock(), delete=Mock())
     return SimpleNamespace(session=session)
 
 # Install a fake 'models' module into sys.modules so services can import it
@@ -423,6 +428,71 @@ def test_join_group_service_raises_when_group_not_found():
     assert "Group with id 999 does not exist" in str(excinfo.value)
 
 
+# -----------------------------
+# Tests for leave_group_service
+# -----------------------------
+def test_leave_group_service_member_leaves():
+    """Rule 2: A regular member leaves the group."""
+    membership = SimpleNamespace(user_id="user1", group_id=1, role="member")
+    
+    services.db = make_fake_db()
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = membership
+
+    services.leave_group_service("user1", 1)
+
+    services.db.session.delete.assert_called_once_with(membership)
+    services.db.session.commit.assert_called_once()
+
+def test_leave_group_service_admin_leaves_not_last():
+    """Rule 3: An admin leaves, but other admins remain."""
+    membership = SimpleNamespace(user_id="admin1", group_id=1, role="admin")
+    
+    services.db = make_fake_db()
+    # Mock the membership lookup
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = membership
+    # Mock the count of other admins to be greater than 0
+    services.db.session.query.return_value.filter.return_value.count.return_value = 1
+
+    services.leave_group_service("admin1", 1)
+
+    # The group should NOT be deleted
+    services.db.session.delete.assert_called_once_with(membership)
+    services.db.session.commit.assert_called_once()
+
+def test_leave_group_service_last_admin_leaves():
+    """Rule 4: The last admin leaves, deleting the group."""
+    class FakeGroup:
+        pass
+    
+    membership = SimpleNamespace(user_id="admin1", group_id=1, role="admin")
+    group_to_delete = FakeGroup()
+
+    services.Group = FakeGroup
+    services.db = make_fake_db()
+    # Mock the membership lookup
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = membership
+    # Mock the count of other admins to be 0
+    services.db.session.query.return_value.filter.return_value.count.return_value = 0
+    # Mock the lookup for the group to be deleted
+    services.db.session.get.return_value = group_to_delete
+
+    services.leave_group_service("admin1", 1)
+
+    # The group itself should be deleted, not the membership directly
+    services.db.session.delete.assert_called_once_with(group_to_delete)
+    services.db.session.commit.assert_called_once()
+
+def test_leave_group_service_not_a_member_fails():
+    """Tests that leave_group_service raises an exception if the user is not a member."""
+    services.db = make_fake_db()
+    # Mock filter_by.first to return None, indicating no membership
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = None
+
+    with pytest.raises(Exception, match="User is not a member of this group."):
+        services.leave_group_service("non_member_user", 1)
+
+    services.db.session.delete.assert_not_called()
+    services.db.session.commit.assert_not_called()
 
 
 # -----------------------------
@@ -529,6 +599,7 @@ def test_update_task_service_validates_status_transition(monkeypatch):
     assert "Invalid status transition" in str(excinfo.value)
 
 def test_create_task_service_validates_due_date(monkeypatch):
+    """Tests that create_task_service raises ValueError if deadline is in the past."""
     data = {
         "title": "Past Task",
         "deadline": "2020-01-01",  # Past date
@@ -549,16 +620,75 @@ def test_create_task_service_validates_due_date(monkeypatch):
         services.create_task_service(data)
     assert "Deadline cannot be in the past" in str(excinfo.value)
 
-def test_update_task_service_validates_progress():
+def test_update_task_service_cannot_start_past_due_task(monkeypatch):
+    """Tests that update_task_service raises ValueError if trying to start a past-due task."""
+    task = FakeTask(id="t_past_due", status="todo", deadline=date(2020, 1, 1))
+    services.Task = FakeTask
+    services.db = make_fake_db()
+    services.db.session.get.return_value = task
+
+    # Mock date.today() to be after the task's deadline
+    class FakeDate(date):
+        @classmethod
+        def today(cls):
+            return date(2024, 1, 1)
+    monkeypatch.setattr(services, "date", FakeDate, raising=False)
+
+    with pytest.raises(ValueError, match="Cannot start a task that is past its deadline."):
+        services.update_task_service("t_past_due", {"status": "in_progress"})
+    
+    # Ensure status was not changed
+    assert task.status == "todo"
+
+def test_update_task_service_validates_deadline_on_update(monkeypatch):
+    """Tests that update_task_service raises ValueError if a new deadline is in the past."""
+    task = FakeTask(id="t_update_deadline", status="todo", deadline=date(2025, 1, 1))
+    services.Task = FakeTask
+    services.db = make_fake_db()
+    services.db.session.get.return_value = task
+
+    class FakeDate(date):
+        @classmethod
+        def today(cls):
+            return date(2024, 1, 1)
+    monkeypatch.setattr(services, "date", FakeDate, raising=False)
+
+    # Test with a valid future date
+    services.update_task_service("t_update_deadline", {"deadline": "2025-12-31"})
+    assert task.deadline == date(2025, 12, 31)
+
+    # Test with an invalid past date
+    with pytest.raises(ValueError, match="Deadline cannot be in the past"):
+        services.update_task_service("t_update_deadline", {"deadline": "2023-01-01"})
+    
+    # Ensure deadline was not changed to the invalid value
+    assert task.deadline == date(2025, 12, 31) # Should still be the last valid date
+
+@pytest.mark.parametrize("progress_value, should_succeed", [
+    # Boundary Value Analysis (Lower Boundary)
+    (-1, False),   # Invalid (below lower bound)
+    (0, True),    # Valid (at lower bound)
+    (1, True),    # Valid (above lower bound)
+    # Equivalence Partitioning (Valid middle value)
+    (50, True),
+    # Boundary Value Analysis (Upper Boundary)
+    (99, True),   # Valid (below upper bound)
+    (100, True),  # Valid (at upper bound)
+    (101, False), # Invalid (above upper bound)
+])
+def test_update_task_service_validates_progress_with_boundaries(progress_value, should_succeed):
+    """Tests progress validation using equivalence partitioning and boundary value analysis."""
     task = FakeTask(id="t4", progress=50)
     services.Task = FakeTask
     services.db = make_fake_db()
     services.db.session.get.return_value = task
 
-    # Invalid progress value
-    with pytest.raises(ValueError) as excinfo:
-        services.update_task_service("t4", {"progress": 101})
-    assert "Progress must be between 0 and 100" in str(excinfo.value)
+    if should_succeed:
+        services.update_task_service("t4", {"progress": progress_value})
+        assert task.progress == progress_value
+    else:
+        with pytest.raises(ValueError, match="Progress must be between 0 and 100"):
+            services.update_task_service("t4", {"progress": progress_value})
 
 def test_task_priority_management():
     task = FakeTask(id="t5", priority="low")
@@ -606,3 +736,54 @@ def test_task_assignment_validation():
     with pytest.raises(ValueError) as excinfo:
         services.update_task_service("t6", {"assignee": "other-user"})
     assert "Assignee must be member of the group" in str(excinfo.value)
+
+def test_update_task_service_member_assigns_to_own_group_success():
+    """Scenario 1: A group member assigns a task to their own group (permission validation)."""
+    # Setup: Task in group 1, editor is member of group 1
+    task = FakeTask(id="t7", group_id=1, assignee=None)
+    editor_user = FakeUser(id="editor1", group_memberships=[SimpleNamespace(group_id=1)])
+
+    services.Task = FakeTask
+    services.User = FakeUser
+    services.db = make_fake_db()
+    # Configure the mock to return the correct object based on the requested ID.
+    services.db.session.get.side_effect = lambda model, id: {
+        "t7": task, "editor1": editor_user
+    }.get(id)
+
+    # Action: Editor updates task, setting group_id to their own group
+    services.update_task_service("t7", {"group_id": 1}, editor_user_id="editor1")
+
+    # Assert: Success, no error, commit called
+    assert task.group_id == 1
+    services.db.session.commit.assert_called_once()
+
+def test_update_task_service_non_member_assigns_to_foreign_group_fails():
+    """Scenario 2: A user tries to assign a task to a group they are not a member of (permission validation)."""
+    # Setup: Task in group 1, editor is NOT member of group 1 (e.g., member of group 2)
+    task = FakeTask(id="t8", group_id=1, assignee=None)
+    editor_user = FakeUser(id="editor2", group_memberships=[SimpleNamespace(group_id=2)])
+
+    services.Task = FakeTask
+    services.User = FakeUser
+    services.db = make_fake_db()
+    # Configure the mock to return the correct object based on the requested ID.
+    services.db.session.get.side_effect = lambda model, id: {
+        "t8": task, "editor2": editor_user
+    }.get(id)
+
+    # Action: Editor updates task, setting group_id to a foreign group
+    with pytest.raises(PermissionError, match="You can only assign tasks to groups you are a member of."):
+        services.update_task_service("t8", {"group_id": 1}, editor_user_id="editor2")
+
+    # Assert: Error raised, no commit
+    services.db.session.commit.assert_not_called()
+
+def test_update_task_service_anonymous_assigns_to_group_fails():
+    """Scenario 3: An anonymous process tries to assign a task to a group (permission validation)."""
+    task = FakeTask(id="t9", group_id=None)
+    services.Task = FakeTask
+    services.db = make_fake_db()
+    services.db.session.get.return_value = task
+    with pytest.raises(PermissionError, match="User ID is required to assign a task to a group."):
+        services.update_task_service("t9", {"group_id": 1}, editor_user_id=None)

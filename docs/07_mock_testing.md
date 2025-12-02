@@ -1,9 +1,95 @@
 
 # Exercise 6.1
 
+This part of the document reviews the unit test implementations from lab 3. The decisions were made by using the different decision table technique. 
+
+## 6.1.1. register user
 
 
+| Password is valid | user creation is successful in keycloak | database user creation is successful | Result  |
+|-------------------|-----------------------------------------|--------------------------------------|---------|
+| N                 | -                                       | -                                    | Error   |
+| Y                 | Y                                       | Y                                    | Success |
+| Y                 | N                                       | -                                    | Error   |
+| Y                 | Y                                       | N                                    | Error   |
 
+
+## 6.1.2. get or create user
+
+| user ID is present in Keycloak user info | User exists in DB | Result                         |
+|------------------------------------------|-------------------|--------------------------------|
+| N                                        | -                 | error                          |
+| Y                                        | Y                 | success (user already existed) |
+| Y                                        | N                 | success (new user created)     |
+
+## 6.1.3. creating a task 
+
+| Deadline is in the past     | duplicate task exists | Result      |
+|-----------------------------|-----------------------|-------------|
+| Y                           | -                     | error       |
+| N                           | Y                     | no new task |
+| N                           | N                     | new task    |
+
+
+## 6.1.4. updating a task 
+
+This function is complex due to several validation areas. Therefore several steps and design techniques are used.
+
+
+### status transition validation
+
+| status in data | status changing? | Transition valid? | past due date? | new status "in_progress"? | Result                         |
+|----------------|------------------|-------------------|----------------|---------------------------|--------------------------------|
+| Y              | N                | -                 | -              | -                         | success                        |
+| Y              | Y                | Y                 | N              | -                         | success                        |
+| Y              | Y                | N                 | -              | -                         | error (invalid transition)     |
+| Y              | Y                | Y                 | Y              | Y                         | error (task start is past due) |
+
+
+### field validation
+
+For these fields, the equivalence partitioning analysis with boundary values (where) is considered more valuable than the decision table 
+
+| parameter | equivalence class           | representative                        |
+|-----------|-----------------------------|---------------------------------------|
+| progress  | [0–100] -> valid            | 0, 1, 50, 100                         |
+|           | ≤ 0 -> invalid              | 0,-1                                  |
+|           | ≥ 100 -> invalid            | 101                                   |
+|           | NaN -> invalid              | "abc"                                 |
+|-----------|-----------------------------|---------------------------------------|
+| priority  | allowed strings -> valid    | low, medium, high                     |
+|           | incorrect strings -> invalid| "urgent", ""                          |
+|           | invalid strings -> invalid  | "High", "MEDIUM"                      |
+|           | incorrect type -> invalid   | null, true                            |
+|-----------|-----------------------------|---------------------------------------|
+| deadline  | future dates -> valid       | today, today + 1 day, today + 10 days |
+|           | past dates -> invalid       | today - 1 day, today - 10 days        |
+|-----------|-----------------------------|---------------------------------------|
+| assignee  | ID of existing user         | "user-123"                            |
+|           | ID not existing             | "user-999"                            |
+|           | invalid ID format           | 123, "", null                         |
+
+### permission validation
+
+Here, the use case testing technique is used for group assignment testing
+
+| Scenario Description (Use Case)                                           | User Role / Context                 | User Action                                                            | Expected Result                        |
+|---------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|----------------------------------------|
+| A group member assigns a task to their own group                        | Alice is a member of group "Alpha".   | Alice edits a task and sets the `group_id` to the ID of "Alpha".       | success: task is assigned to the group |
+| A user tries to assign a task to a group they are *not* a member of     | Bob is not a member of group "Alpha". | Bob edits a task and tries to set the `group_id` to the ID of "Alpha". | permission error                       |
+
+
+## 6.1.5. leaving a group
+
+The "leave group" feature was completely missing, therefore a user table was created to cover all test cases needed.
+This table analyzes the logic for when a user leaves a group, especially the critical case involving the last administrator.
+
+| User is member? | Role is admin? | Last admin in group? | Result           |
+|-----------------|----------------|----------------------|------------------|
+| Yes             | No             | -                    | member deleted   |
+| Yes             | Yes            | No                   | member deleted   |
+| Yes             | Yes            | Yes                  | group is deleted |
+| No              | -              | -                    | exception        |
 
 
 
