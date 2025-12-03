@@ -3,13 +3,18 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 # -----------------------------
-# Association Table for Many-to-Many: Users <-> Groups
+# Association Object for Many-to-Many with extra data: Users <-> Groups
 # -----------------------------
-user_groups = db.Table(
-    'user_groups',
-    db.Column('user_id', db.String(50), db.ForeignKey('users.id'), primary_key=True),
-    db.Column('group_id', db.Integer, db.ForeignKey('groups.id'), primary_key=True)
-)
+class GroupMembership(db.Model):
+    __tablename__ = 'group_memberships'
+    user_id = db.Column(db.String(50), db.ForeignKey('users.id'), primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), primary_key=True)
+    role = db.Column(db.String(50), nullable=False, default='member')  # z.B. 'member', 'admin'
+
+    # Relationships to User and Group
+    user = db.relationship('User', back_populates='group_memberships')
+    group = db.relationship('Group', back_populates='group_memberships')
+
 
 # -----------------------------
 # User Model
@@ -22,10 +27,10 @@ class User(db.Model):
     birthday = db.Column(db.Date, nullable=True)
     faculty = db.Column(db.String(100), nullable=True)
 
-    # Many-to-many: groups
-    groups = db.relationship('Group', secondary=user_groups, back_populates='members')
+    # One-to-many: memberships
+    group_memberships = db.relationship('GroupMembership', back_populates='user', cascade='all, delete-orphan')
 
-    # One-to-many: tasks assigned to this user
+    # One-to-many: tasks created by this user
     tasks = db.relationship('Task', back_populates='user', cascade='all, delete-orphan')
 
 
@@ -40,8 +45,8 @@ class Group(db.Model):
     group_number = db.Column(db.Integer, nullable=False)
     invite_link = db.Column(db.String(200), nullable=False)
 
-    # Many-to-many: users
-    members = db.relationship('User', secondary=user_groups, back_populates='groups')
+    # One-to-many: memberships
+    group_memberships = db.relationship('GroupMembership', back_populates='group', cascade='all, delete-orphan')
 
     # One-to-many: tasks belonging to this group
     tasks = db.relationship('Task', back_populates='group', cascade='all, delete-orphan')

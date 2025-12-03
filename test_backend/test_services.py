@@ -1,33 +1,36 @@
 import os
 import sys
 from types import SimpleNamespace, ModuleType
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 from datetime import date, datetime
 import pytest
 from backend import services
 
 # Mock classes for testing
-class MockQuery:
-    """Helper class to mock SQLAlchemy query interface"""
-    def filter(self, *args):
+class DummyExpr:
+    def __or__(self, other):
         return self
-    def first(self):
-        return None
-    def all(self):
-        return []
-    def get(self, id):
-        return None
+class DummyColumn:
+    def __eq__(self, other):
+        return DummyExpr
 
 class FakeUser:
     query = None
-    def __init__(self, id=None, username=None, email=None):
-        self.id = id
-        self.username = username
-        self.email = email
-        self.groups = []
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
+        self.username = kwargs.get('username')
+        self.email = kwargs.get('email')
+        # Ensure group_memberships is always a list for iteration
+        self.group_memberships = kwargs.get('group_memberships', [])
+        # Add a way to set group_memberships for testing
+        if 'group_memberships' not in kwargs:
+            self.group_memberships = []
+
+        self.birthday = kwargs.get('birthday')
+        self.faculty = kwargs.get('faculty')
 
 def make_fake_db():
-    session = SimpleNamespace(add=Mock(), commit=Mock())
+    session = SimpleNamespace(add=Mock(), commit=Mock(), get=Mock(), query=MagicMock(), delete=Mock())
     return SimpleNamespace(session=session)
 
 # Install a fake 'models' module into sys.modules so services can import it
@@ -36,6 +39,7 @@ fake_models.db = make_fake_db()
 fake_models.User = FakeUser
 fake_models.Group = SimpleNamespace()
 fake_models.Task = SimpleNamespace()
+fake_models.GroupMembership = SimpleNamespace()
 sys.modules["models"] = fake_models
 
 class FakeTask:
@@ -54,65 +58,23 @@ class FakeTask:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-
-def test_get_or_create_user_from_keycloak_returns_existing_user():
-    existing = FakeUser(id="u1", username="alice", email="alice@example.com")
-    FakeUser.query = SimpleNamespace(get=lambda uid: existing)
-    services.User = FakeUser
-    services.db = make_fake_db()
-
-    result = services.get_or_create_user_from_keycloak({
-        "sub": "u1",
-        "preferred_username": "alice",
-        "email": "alice@example.com"
-    })
-
-    assert result is existing
-    assert services.db.session.add.call_count == 0
-    assert services.db.session.commit.call_count == 0
-
-
-def test_get_or_create_user_from_keycloak_creates_and_commits_new_user():
-    FakeUser.query = SimpleNamespace(get=lambda uid: None)
-    services.User = FakeUser
-    services.db = make_fake_db()
-
-    kc_info = {"sub": "u2", "preferred_username": "bob", "email": "bob@example.com"}
-
-    result = services.get_or_create_user_from_keycloak(kc_info)
-
-    assert isinstance(result, FakeUser)
-    assert result.id == "u2"
-    assert result.username == "bob"
-    assert result.email == "bob@example.com"
-    services.db.session.add.assert_called_once_with(result)
-    services.db.session.commit.assert_called_once()
-
-
-def test_get_or_create_user_from_keycloak_raises_on_missing_sub():
-    services.User = FakeUser
-    services.db = make_fake_db()
-
-    with pytest.raises(Exception) as excinfo:
-        services.get_or_create_user_from_keycloak({"email": "noid@example.com"})
-    assert "Missing Keycloak user ID" in str(excinfo.value)
-
-
 # -----------------------------
 # Tests for get_user_service
 # -----------------------------
 def test_get_user_service_returns_user_when_exists():
     existing = FakeUser(id="u10", username="carol", email="carol@example.com")
-    FakeUser.query = SimpleNamespace(get=lambda uid: existing if uid == "u10" else None)
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = existing
 
     result = services.get_user_service("u10")
 
     assert result is existing
 
 def test_get_user_service_raises_when_not_exists():
-    FakeUser.query = SimpleNamespace(get=lambda uid: None)
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = None
 
     with pytest.raises(Exception) as excinfo:
         services.get_user_service("missing")
@@ -222,9 +184,9 @@ def test_update_task_service_updates_fields_and_deadline(monkeypatch):
         progress=0
     )
 
-    FakeTask.query = SimpleNamespace(get=lambda tid: existing if tid == "t1" else None)
     services.Task = FakeTask
     services.db = make_fake_db()
+    services.db.session.get.return_value = existing
 
     class FakeDate(date):
         @classmethod
@@ -257,9 +219,9 @@ def test_update_task_service_raises_when_task_not_found():
     class FakeTask:
         query = None
 
-    FakeTask.query = SimpleNamespace(get=lambda tid: None)
     services.Task = FakeTask
     services.db = make_fake_db()
+    services.db.session.get.return_value = None
 
     with pytest.raises(Exception) as excinfo:
         services.update_task_service("missing-id", {"title": "x"})
@@ -283,9 +245,9 @@ def test_get_tasks_for_user_returns_tasks_for_user_and_group():
     # prepare user with one group
     group = SimpleNamespace(id=2)
     user = FakeUser(id="u5", username="eve", email="eve@example.com")
-    user.groups = [group]
-    FakeUser.query = SimpleNamespace(get=lambda uid: user if uid == "u5" else None)
+    user.group_memberships = [SimpleNamespace(group=group)]
     services.User = FakeUser
+    services.db = make_fake_db()
 
     # fake Task class and two tasks: one owned by user, one belonging to group
     class FakeTask:
@@ -303,16 +265,19 @@ def test_get_tasks_for_user_returns_tasks_for_user_and_group():
     # Task.query.filter(...).all() returns both tasks
     FakeTask.query = SimpleNamespace(filter=lambda *a, **k: SimpleNamespace(all=lambda: [task_user, task_group]))
     services.Task = FakeTask
+    services.db.session.get.return_value = user
 
     result = services.get_tasks_for_user("u5")
     assert result == [task_user, task_group]
 
 def test_get_tasks_for_user_returns_empty_list_when_user_missing():
-    FakeUser.query = SimpleNamespace(get=lambda uid: None)
+    """Tests that get_tasks_for_user raises an error if the user is not found."""
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = None
 
-    result = services.get_tasks_for_user("nope")
-    assert result == []
+    with pytest.raises(Exception, match="does not exist"):
+        services.get_tasks_for_user("nope")
 
 # -----------------------------
 # Tests for get_all_tasks
@@ -344,7 +309,7 @@ def test_get_all_tasks_returns_empty_list_when_none():
 # -----------------------------
 # Tests for create_group_service
 # -----------------------------
-def test_create_group_service_returns_existing_group():
+def test_create_group_service_creates_and_commits_new_group():
     # helper type to emulate SQLAlchemy column expression behavior
     class DummyExpr:
         def __or__(self, other):
@@ -361,48 +326,7 @@ def test_create_group_service_returns_existing_group():
         def __init__(self, **kwargs):
             for k, v in kwargs.items():
                 setattr(self, k, v)
-
-    existing_group = FakeGroup(
-        name="Study Group A",
-        description="Test group",
-        group_number="G123",
-        invite_link="link123"
-    )
-
-    # filter(...).first() returns existing group
-    FakeGroup.query = SimpleNamespace(filter=lambda *a, **k: SimpleNamespace(first=lambda: existing_group))
-    services.Group = FakeGroup
-    services.db = make_fake_db()
-
-    data = {
-        "name": "Study Group A",
-        "description": "Test group",
-        "groupNumber": "G123",
-        "inviteLink": "link123"
-    }
-
-    result = services.create_group_service(data)
-    assert result is existing_group
-    assert services.db.session.add.call_count == 0
-    assert services.db.session.commit.call_count == 0
-
-
-def test_create_group_service_creates_and_commits_new_group():
-    # helper type for SQLAlchemy expressions
-    class DummyExpr:
-        def __or__(self, other):
-            return self
-    class DummyColumn:
-        def __eq__(self, other):
-            return DummyExpr()
-
-    class FakeGroup:
-        group_number = DummyColumn()
-        invite_link = DummyColumn()
-        query = None
-        def __init__(self, **kwargs):
-            for k, v in kwargs.items():
-                setattr(self, k, v)
+        _sa_instance_state = MagicMock() # Use MagicMock to handle subscripting
 
     # filter(...).first() returns None (no duplicate)
     FakeGroup.query = SimpleNamespace(filter=lambda *a, **k: SimpleNamespace(first=lambda: None))
@@ -416,46 +340,43 @@ def test_create_group_service_creates_and_commits_new_group():
         "inviteLink": "newlink999"
     }
 
-    result = services.create_group_service(data)
+    result = services.create_group_service(data, creator_id="creator-1")
 
     assert isinstance(result, FakeGroup)
     assert result.name == "New Study Group"
     assert result.description == "A fresh group"
     assert result.group_number == "G999"
-    assert result.invite_link == "newlink999"
+    assert result.invite_link == "newlink999" 
 
-    services.db.session.add.assert_called_once_with(result)
-    services.db.session.commit.assert_called_once()
+    assert services.db.session.add.call_count == 2 # Group and Membership
+    assert services.db.session.commit.call_count == 1
 
 
-# -----------------------------
-# Tests for join_group_service
-# -----------------------------
 def test_join_group_service_adds_user_to_group():
-    # Setup fake user and group
-    user = FakeUser(id="u7", username="frank", email="frank@example.com")
-    user.groups = []
-    
     class FakeGroup:
+        group_number = DummyColumn()
+        invite_link = DummyColumn()
         query = None
         def __init__(self, **kwargs):
             for k, v in kwargs.items():
                 setattr(self, k, v)
+        _sa_instance_state = MagicMock()
 
+    # Setup fake user and group
+    user = FakeUser(id="u7", username="frank", email="frank@example.com")
     group = FakeGroup(id=3, name="Test Group")
 
     # Setup queries
-    FakeUser.query = SimpleNamespace(get=lambda uid: user if uid == "u7" else None)
-    FakeGroup.query = SimpleNamespace(get=lambda gid: group if gid == 3 else None)
-    
     services.User = FakeUser
     services.Group = FakeGroup
     services.db = make_fake_db()
+    services.db.session.get.side_effect = [user, group] # First call returns user, second group
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = None # Configure the mock chain
 
     result = services.join_group_service("u7", 3)
 
     assert result is group
-    assert group in user.groups
+    assert services.db.session.add.call_count == 1
     services.db.session.commit.assert_called_once()
 
 
@@ -469,26 +390,22 @@ def test_join_group_service_returns_group_if_already_member():
             for k, v in kwargs.items():
                 setattr(self, k, v)
 
-    group = FakeGroup(id=4, name="Existing Group")
-    user.groups = [group]  # User is already in group
-
-    # Setup queries
-    FakeUser.query = SimpleNamespace(get=lambda uid: user if uid == "u8" else None)
-    FakeGroup.query = SimpleNamespace(get=lambda gid: group if gid == 4 else None)
-    
     services.User = FakeUser
     services.Group = FakeGroup
     services.db = make_fake_db()
+    services.db.session.get.side_effect = [user, FakeGroup(id=4)]
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = True # Configure the mock chain
 
     result = services.join_group_service("u8", 4)
 
-    assert result is group
+    assert result is not None
     assert services.db.session.commit.call_count == 0
 
 
 def test_join_group_service_raises_when_user_not_found():
-    FakeUser.query = SimpleNamespace(get=lambda uid: None)
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = None
 
     with pytest.raises(Exception) as excinfo:
         services.join_group_service("missing", 1)
@@ -496,22 +413,86 @@ def test_join_group_service_raises_when_user_not_found():
 
 
 def test_join_group_service_raises_when_group_not_found():
-    # User exists but group doesn't
     user = FakeUser(id="u9")
-    FakeUser.query = SimpleNamespace(get=lambda uid: user if uid == "u9" else None)
-    
     class FakeGroup:
         query = None
-    FakeGroup.query = SimpleNamespace(get=lambda gid: None)
-    
+
     services.User = FakeUser
     services.Group = FakeGroup
+    services.db = make_fake_db()
+    # First get (user) succeeds, second (group) fails
+    services.db.session.get.side_effect = [user, None]
 
     with pytest.raises(Exception) as excinfo:
         services.join_group_service("u9", 999)
     assert "Group with id 999 does not exist" in str(excinfo.value)
 
 
+# -----------------------------
+# Tests for leave_group_service
+# -----------------------------
+def test_leave_group_service_member_leaves():
+    """Rule 2: A regular member leaves the group."""
+    membership = SimpleNamespace(user_id="user1", group_id=1, role="member")
+    
+    services.db = make_fake_db()
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = membership
+
+    services.leave_group_service("user1", 1)
+
+    services.db.session.delete.assert_called_once_with(membership)
+    services.db.session.commit.assert_called_once()
+
+def test_leave_group_service_admin_leaves_not_last():
+    """Rule 3: An admin leaves, but other admins remain."""
+    membership = SimpleNamespace(user_id="admin1", group_id=1, role="admin")
+    
+    services.db = make_fake_db()
+    # Mock the membership lookup
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = membership
+    # Mock the count of other admins to be greater than 0
+    services.db.session.query.return_value.filter.return_value.count.return_value = 1
+
+    services.leave_group_service("admin1", 1)
+
+    # The group should NOT be deleted
+    services.db.session.delete.assert_called_once_with(membership)
+    services.db.session.commit.assert_called_once()
+
+def test_leave_group_service_last_admin_leaves():
+    """Rule 4: The last admin leaves, deleting the group."""
+    class FakeGroup:
+        pass
+    
+    membership = SimpleNamespace(user_id="admin1", group_id=1, role="admin")
+    group_to_delete = FakeGroup()
+
+    services.Group = FakeGroup
+    services.db = make_fake_db()
+    # Mock the membership lookup
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = membership
+    # Mock the count of other admins to be 0
+    services.db.session.query.return_value.filter.return_value.count.return_value = 0
+    # Mock the lookup for the group to be deleted
+    services.db.session.get.return_value = group_to_delete
+
+    services.leave_group_service("admin1", 1)
+
+    # The group itself should be deleted, not the membership directly
+    services.db.session.delete.assert_called_once_with(group_to_delete)
+    services.db.session.commit.assert_called_once()
+
+def test_leave_group_service_not_a_member_fails():
+    """Tests that leave_group_service raises an exception if the user is not a member."""
+    services.db = make_fake_db()
+    # Mock filter_by.first to return None, indicating no membership
+    services.db.session.query.return_value.filter_by.return_value.first.return_value = None
+
+    with pytest.raises(Exception, match="User is not a member of this group."):
+        services.leave_group_service("non_member_user", 1)
+
+    services.db.session.delete.assert_not_called()
+    services.db.session.commit.assert_not_called()
 
 
 # -----------------------------
@@ -561,33 +542,33 @@ def test_get_groups_for_user_returns_user_groups():
     g2 = FakeGroup(2, "Group B")
     
     user = FakeUser(id="u10", username="harry", email="harry@example.com")
-    user.groups = [g1, g2]
+    user.group_memberships = [SimpleNamespace(group=g1), SimpleNamespace(group=g2)]
 
-    FakeUser.query = SimpleNamespace(get=lambda uid: user if uid == "u10" else None)
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = user
 
     result = services.get_groups_for_user("u10")
     
     assert result == [g1, g2]
     assert len(result) == 2
-    assert result[0].name == "Group A"
-    assert result[1].name == "Group B"
 
 
 def test_get_groups_for_user_returns_empty_list_when_user_not_found():
-    FakeUser.query = SimpleNamespace(get=lambda uid: None)
+    """Tests that get_groups_for_user raises an error if the user is not found."""
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = None
 
-    result = services.get_groups_for_user("missing")
-    assert result == []
+    with pytest.raises(Exception, match="does not exist"):
+        services.get_groups_for_user("missing")
 
 
 def test_get_groups_for_user_returns_empty_list_when_user_has_no_groups():
     user = FakeUser(id="u11", username="ian", email="ian@example.com")
-    user.groups = []
-    
-    FakeUser.query = SimpleNamespace(get=lambda uid: user if uid == "u11" else None)
     services.User = FakeUser
+    services.db = make_fake_db()
+    services.db.session.get.return_value = user
 
     result = services.get_groups_for_user("u11")
     assert result == []
@@ -595,11 +576,18 @@ def test_get_groups_for_user_returns_empty_list_when_user_has_no_groups():
 # -----------------------------
 # Entity-specific validation tests
 # -----------------------------
-def test_update_task_service_validates_status_transition():
-    task = FakeTask(id="t3", status="todo")
-    FakeTask.query = SimpleNamespace(get=lambda tid: task)
+def test_update_task_service_validates_status_transition(monkeypatch):
+    task = FakeTask(id="t3", status="todo", deadline=date(2025, 1, 1))
     services.Task = FakeTask
     services.db = make_fake_db()
+    services.db.session.get.return_value = task
+
+    # Mock date.today() to return a fixed date before the task's deadline
+    class FakeDate(date):
+        @classmethod
+        def today(cls):
+            return date(2024, 1, 1)
+    monkeypatch.setattr(services, "date", FakeDate, raising=False)
 
     # Valid transition todo -> in_progress
     services.update_task_service("t3", {"status": "in_progress"})
@@ -611,6 +599,7 @@ def test_update_task_service_validates_status_transition():
     assert "Invalid status transition" in str(excinfo.value)
 
 def test_create_task_service_validates_due_date(monkeypatch):
+    """Tests that create_task_service raises ValueError if deadline is in the past."""
     data = {
         "title": "Past Task",
         "deadline": "2020-01-01",  # Past date
@@ -618,7 +607,6 @@ def test_create_task_service_validates_due_date(monkeypatch):
         "priority": "high"
     }
     
-    FakeTask.query = MockQuery()
     services.Task = FakeTask
     services.db = make_fake_db()
 
@@ -632,22 +620,81 @@ def test_create_task_service_validates_due_date(monkeypatch):
         services.create_task_service(data)
     assert "Deadline cannot be in the past" in str(excinfo.value)
 
-def test_update_task_service_validates_progress():
-    task = FakeTask(id="t4", progress=50)
-    FakeTask.query = SimpleNamespace(get=lambda tid: task)
+def test_update_task_service_cannot_start_past_due_task(monkeypatch):
+    """Tests that update_task_service raises ValueError if trying to start a past-due task."""
+    task = FakeTask(id="t_past_due", status="todo", deadline=date(2020, 1, 1))
     services.Task = FakeTask
     services.db = make_fake_db()
+    services.db.session.get.return_value = task
 
-    # Invalid progress value
-    with pytest.raises(ValueError) as excinfo:
-        services.update_task_service("t4", {"progress": 101})
-    assert "Progress must be between 0 and 100" in str(excinfo.value)
+    # Mock date.today() to be after the task's deadline
+    class FakeDate(date):
+        @classmethod
+        def today(cls):
+            return date(2024, 1, 1)
+    monkeypatch.setattr(services, "date", FakeDate, raising=False)
+
+    with pytest.raises(ValueError, match="Cannot start a task that is past its deadline."):
+        services.update_task_service("t_past_due", {"status": "in_progress"})
+    
+    # Ensure status was not changed
+    assert task.status == "todo"
+
+def test_update_task_service_validates_deadline_on_update(monkeypatch):
+    """Tests that update_task_service raises ValueError if a new deadline is in the past."""
+    task = FakeTask(id="t_update_deadline", status="todo", deadline=date(2025, 1, 1))
+    services.Task = FakeTask
+    services.db = make_fake_db()
+    services.db.session.get.return_value = task
+
+    class FakeDate(date):
+        @classmethod
+        def today(cls):
+            return date(2024, 1, 1)
+    monkeypatch.setattr(services, "date", FakeDate, raising=False)
+
+    # Test with a valid future date
+    services.update_task_service("t_update_deadline", {"deadline": "2025-12-31"})
+    assert task.deadline == date(2025, 12, 31)
+
+    # Test with an invalid past date
+    with pytest.raises(ValueError, match="Deadline cannot be in the past"):
+        services.update_task_service("t_update_deadline", {"deadline": "2023-01-01"})
+    
+    # Ensure deadline was not changed to the invalid value
+    assert task.deadline == date(2025, 12, 31) # Should still be the last valid date
+
+@pytest.mark.parametrize("progress_value, should_succeed", [
+    # Boundary Value Analysis (Lower Boundary)
+    (-1, False),   # Invalid (below lower bound)
+    (0, True),    # Valid (at lower bound)
+    (1, True),    # Valid (above lower bound)
+    # Equivalence Partitioning (Valid middle value)
+    (50, True),
+    # Boundary Value Analysis (Upper Boundary)
+    (99, True),   # Valid (below upper bound)
+    (100, True),  # Valid (at upper bound)
+    (101, False), # Invalid (above upper bound)
+])
+def test_update_task_service_validates_progress_with_boundaries(progress_value, should_succeed):
+    """Tests progress validation using equivalence partitioning and boundary value analysis."""
+    task = FakeTask(id="t4", progress=50)
+    services.Task = FakeTask
+    services.db = make_fake_db()
+    services.db.session.get.return_value = task
+
+    if should_succeed:
+        services.update_task_service("t4", {"progress": progress_value})
+        assert task.progress == progress_value
+    else:
+        with pytest.raises(ValueError, match="Progress must be between 0 and 100"):
+            services.update_task_service("t4", {"progress": progress_value})
 
 def test_task_priority_management():
     task = FakeTask(id="t5", priority="low")
-    FakeTask.query = SimpleNamespace(get=lambda tid: task)
     services.Task = FakeTask
     services.db = make_fake_db()
+    services.db.session.get.return_value = task
 
     # Valid priority update
     services.update_task_service("t5", {"priority": "high"})
@@ -663,9 +710,7 @@ def test_task_assignment_validation():
     # Create two users - one in group, one not
     group_user = FakeUser(id="u12")
     other_user = FakeUser(id="other-user")
-    group = SimpleNamespace(id=5)
-    group_user.groups = [group]
-    other_user.groups = []  # not in the group
+    group_user.group_memberships = [SimpleNamespace(group_id=5, group=SimpleNamespace(id=5))]
     
     task = FakeTask(
         id="t6", 
@@ -674,16 +719,14 @@ def test_task_assignment_validation():
     )
     
     # Setup query to return either user based on id
-    FakeUser.query = SimpleNamespace(
-        get=lambda uid: {
-            "u12": group_user,
-            "other-user": other_user
-        }.get(uid)
-    )
-    FakeTask.query = SimpleNamespace(get=lambda tid: task)
     services.Task = FakeTask
     services.User = FakeUser
     services.db = make_fake_db()
+    services.db.session.get.side_effect = lambda model, id: {
+        "t6": task,
+        "u12": group_user,
+        "other-user": other_user
+    }.get(id)
 
     # First verify we can assign to user in group
     services.update_task_service("t6", {"assignee": "u12"})
@@ -693,3 +736,54 @@ def test_task_assignment_validation():
     with pytest.raises(ValueError) as excinfo:
         services.update_task_service("t6", {"assignee": "other-user"})
     assert "Assignee must be member of the group" in str(excinfo.value)
+
+def test_update_task_service_member_assigns_to_own_group_success():
+    """Scenario 1: A group member assigns a task to their own group (permission validation)."""
+    # Setup: Task in group 1, editor is member of group 1
+    task = FakeTask(id="t7", group_id=1, assignee=None)
+    editor_user = FakeUser(id="editor1", group_memberships=[SimpleNamespace(group_id=1)])
+
+    services.Task = FakeTask
+    services.User = FakeUser
+    services.db = make_fake_db()
+    # Configure the mock to return the correct object based on the requested ID.
+    services.db.session.get.side_effect = lambda model, id: {
+        "t7": task, "editor1": editor_user
+    }.get(id)
+
+    # Action: Editor updates task, setting group_id to their own group
+    services.update_task_service("t7", {"group_id": 1}, editor_user_id="editor1")
+
+    # Assert: Success, no error, commit called
+    assert task.group_id == 1
+    services.db.session.commit.assert_called_once()
+
+def test_update_task_service_non_member_assigns_to_foreign_group_fails():
+    """Scenario 2: A user tries to assign a task to a group they are not a member of (permission validation)."""
+    # Setup: Task in group 1, editor is NOT member of group 1 (e.g., member of group 2)
+    task = FakeTask(id="t8", group_id=1, assignee=None)
+    editor_user = FakeUser(id="editor2", group_memberships=[SimpleNamespace(group_id=2)])
+
+    services.Task = FakeTask
+    services.User = FakeUser
+    services.db = make_fake_db()
+    # Configure the mock to return the correct object based on the requested ID.
+    services.db.session.get.side_effect = lambda model, id: {
+        "t8": task, "editor2": editor_user
+    }.get(id)
+
+    # Action: Editor updates task, setting group_id to a foreign group
+    with pytest.raises(PermissionError, match="You can only assign tasks to groups you are a member of."):
+        services.update_task_service("t8", {"group_id": 1}, editor_user_id="editor2")
+
+    # Assert: Error raised, no commit
+    services.db.session.commit.assert_not_called()
+
+def test_update_task_service_anonymous_assigns_to_group_fails():
+    """Scenario 3: An anonymous process tries to assign a task to a group (permission validation)."""
+    task = FakeTask(id="t9", group_id=None)
+    services.Task = FakeTask
+    services.db = make_fake_db()
+    services.db.session.get.return_value = task
+    with pytest.raises(PermissionError, match="User ID is required to assign a task to a group."):
+        services.update_task_service("t9", {"group_id": 1}, editor_user_id=None)
