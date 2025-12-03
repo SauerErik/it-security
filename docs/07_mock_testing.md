@@ -178,4 +178,26 @@ The test test_register_user_success demonstrates the process perfectly:
 
     The file can be found [here](../test_backend/test_integration_services.py)
 
-    # Exercise 6.4
+# 6.4 REST API Controller
+
+For Exercise 6.4 we implemented the required REST API endpoints that form the entry point of the StudyConnect backend. The implementation follows the scenarios listed in the task description from the exercise sheet (user registration, login, profile management, task management, error handling, and validation).
+
+Instead of redefining all endpoints here, we reference the file **studyconnect_api_docs.md**, which is located in the same folder. This file contains the full API specification and documents every implemented endpoint, including:
+
+- **User endpoints** (registration, login, retrieving and updating user profiles)
+- **Task endpoints** (creating, updating, retrieving tasks)
+- **Group endpoints** used in our application
+- **Authentication requirements**
+- **Expected request and response formats**
+- **Error handling and validation rules**
+
+All REST controllers were implemented according to the definitions in *studyconnect_api_docs.md*.  
+This ensured that:
+
+- each required route exists and behaves as documented,
+- input validation follows the API specification,
+- appropriate HTTP status codes are used,
+- and the controllers correctly interact with the service layer from the previous exercises.
+
+As stated in the task description, Exercise 6.4 does **not** require writing test cases.  
+The goal was to implement the REST endpoints so they can be tested in the following week.
