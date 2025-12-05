@@ -90,3 +90,4 @@ log/
 *.gz
 *.tgz
 
+flake8-report.txt

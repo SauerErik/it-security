@@ -66,3 +66,4 @@ yarg==0.1.9
 python-keycloak==5.8.1
 pytest
 behave
+flake8==7.3.0
