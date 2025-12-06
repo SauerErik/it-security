@@ -159,7 +159,7 @@ Key configurations include:
 
 ## **2. Running the Coverage Check**
 
-To run the tests and generate a coverage report, I used the following command from the `backend` directory:
+To run the tests and generate a coverage report, I used the following command from the `studyconnect` directory:
 
 ```bash
 pytest --cov
@@ -171,12 +171,12 @@ This command executes all tests and, upon completion, prints a coverage report t
 
 ## **3. Reflection on the Results**
 
-The initial run of the coverage check yielded a **total coverage of 84%**, which successfully meets the 80% target defined in the configuration.
+After the initial run, the code coverage was below the 80% target. To meet the quality gate, we had to write several additional tests, particularly for the service and API layers. After these additions, the final run yielded a **total coverage of 89%**, which successfully meets the 80% target defined in the configuration.
 
--   **Strengths**: The core business logic in `services.py` (86%) and the data models in `models.py` (100%) are very well-tested. This is excellent, as these are critical components of the application.
--   **Weaknesses**: The API layer, defined in `api.py`, showed a very low coverage of only **33%**. This indicates that the HTTP endpoints themselves are not being sufficiently tested. The reason is that most existing tests are unit tests that call service functions directly, bypassing the API routes.
+-   **Strengths**: The core business logic in `services.py` and the data models in `models.py` are very well-tested. This is excellent, as these are critical components of the application.
+-   **Weaknesses**: The API layer, defined in `api.py`, initially showed a very low coverage. This indicated that the HTTP endpoints themselves were not being sufficiently tested, as most existing tests were unit tests that called service functions directly, bypassing the API routes.
 
-To improve this, additional integration tests that simulate HTTP requests (e.g., using the Flask test client) are needed for the endpoints in `api.py`.
+To improve this, we added several integration tests that simulate HTTP requests (e.g., using the Flask test client) for the endpoints in `api.py`.
 
 ------------------------------------------------------------------------
 
