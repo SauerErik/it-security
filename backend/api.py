@@ -326,8 +326,11 @@ def get_tasks():
 @app.route("/api/tasks/user/<string:user_id>", methods=["GET"])
 @keycloak_protect
 def get_tasks_for_specific_user(user_id):
-    tasks = get_tasks_for_user(user_id)
-    return jsonify([task_to_dict(t) for t in tasks]), 200
+    try:
+        tasks = get_tasks_for_user(user_id)
+        return jsonify([task_to_dict(t) for t in tasks]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 404
 
 # Groups
 @app.route("/api/groups", methods=["GET"])

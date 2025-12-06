@@ -756,3 +756,342 @@ def test_join_group_endpoint_handles_exception(mock_get_or_create_user, mock_joi
     # 3. Assert the results
     assert response.status_code == 400
     assert "Group is full" in response.get_json()["error"]
+
+# New test to cover a permission error when kicking a user.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.kick_user_service')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_kick_user_permission_denied(mock_get_or_create_user, mock_kick_service, mock_keycloak_openid, client):
+    """
+    Tests that POST /api/groups/<group_id>/kick returns a 400/403 error
+    if the kicker is not an admin.
+    """
+    # 1. Configure mocks
+    # Mock authentication for a non-admin user
+    mock_keycloak_openid.userinfo.return_value = {"sub": "non-admin-user"}
+    mock_get_or_create_user.return_value = DummyUser(id="non-admin-user")
+
+    # Mock the service call to raise a PermissionError
+    mock_kick_service.side_effect = PermissionError("Only admins can kick members.")
+
+    # 2. Define a payload and call the API endpoint
+    payload = {"user_id": "user-to-kick"}
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.post("/api/groups/1/kick", json=payload, headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 400 # Or 403, depending on your desired API behavior
+    assert "Only admins can kick members" in response.get_json()["error"]
+
+# New test to cover a validation error (past deadline).
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_create_task_with_past_deadline(mock_get_or_create_user, mock_keycloak_openid, client):
+    """
+    Tests that POST /api/tasks returns a 400 error if the deadline is in the past.
+    """
+    # 1. Configure mocks
+    # Mock authentication
+    mock_keycloak_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+    mock_get_or_create_user.return_value = DummyUser(id="requesting-user-id")
+
+    # 2. Define a payload with a deadline in the past
+    task_data = {
+        "title": "A task from the past",
+        "deadline": "2020-01-01",
+        "kind": "Test",
+        "priority": "low"
+    }
+    headers = {"Authorization": "Bearer dummy-token"}
+
+    # 3. Call the API endpoint
+    response = client.post("/api/tasks", json=task_data, headers=headers)
+
+    # 4. Assert the results
+    assert response.status_code == 400
+    assert "Deadline cannot be in the past" in response.get_json()["error"]
+
+# New test to cover the refresh token failure path.
+@patch('backend.api.keycloak_openid')
+def test_refresh_token_failure(mock_keycloak_openid, client):
+    """
+    Tests that POST /api/refresh returns a 401 error if the refresh token is invalid.
+    """
+    # 1. Configure mocks
+    # Mock the keycloak client to raise an exception, simulating an invalid token.
+    from keycloak.exceptions import KeycloakPostError
+    mock_keycloak_openid.refresh_token.side_effect = KeycloakPostError(
+        response_code=400, error_message='{"error": "invalid_grant"}'
+    )
+
+    # 2. Call the API endpoint with an invalid token
+    response = client.post("/api/refresh", json={"refresh_token": "invalid-or-expired-token"})
+
+    # 3. Assert the results
+    assert response.status_code == 401
+    assert "Failed to refresh token" in response.get_json()["error"]
+    assert "invalid_grant" in response.get_json()["details"]
+
+# New test to cover a generic exception handler in the leave_group endpoint.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.leave_group_service')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_leave_group_endpoint_handles_exception(mock_get_or_create_user, mock_leave_group, mock_keycloak_openid, client):
+    """
+    Tests that POST /api/groups/<group_id>/leave returns a 400 error if the service call fails.
+    """
+    # 1. Configure mocks
+    # Mock authentication
+    mock_keycloak_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+    mock_get_or_create_user.return_value = DummyUser(id="requesting-user-id")
+
+    # Mock the service call to raise an exception (e.g., user is not a member)
+    mock_leave_group.side_effect = Exception("User is not a member of this group.")
+
+    # 2. Call the API endpoint
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.post("/api/groups/123/leave", headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 400
+    assert "User is not a member of this group" in response.get_json()["error"]
+
+# New test to cover missing fields in user registration.
+def test_register_user_missing_fields(client):
+    """
+    Tests that POST /api/users/register returns a 400 error if required fields are missing.
+    """
+    # 1. Define a payload that is missing required fields (e.g., password)
+    incomplete_registration_data = {
+        "firstName": "Test",
+        "lastName": "User",
+        "username": "incomplete_user",
+        "email": "incomplete@example.com"
+    }
+
+    # 2. Call the API endpoint
+    response = client.post("/api/users/register", json=incomplete_registration_data)
+
+    # 3. Assert the results
+    assert response.status_code == 400
+    assert "are required" in response.get_json()["error"]
+
+# New test to cover a generic exception handler in the add_admin_to_group endpoint.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.promote_to_admin_service')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_add_admin_endpoint_handles_exception(mock_get_or_create_user, mock_promote_service, mock_keycloak_openid, client):
+    """
+    Tests that POST /api/groups/<group_id>/add-admin returns a 400 error if the service call fails.
+    """
+    # 1. Configure mocks
+    # Mock authentication for the promoter
+    mock_keycloak_openid.userinfo.return_value = {"sub": "promoter-id"}
+    mock_get_or_create_user.return_value = DummyUser(id="promoter-id")
+
+    # Mock the service call to raise an exception
+    mock_promote_service.side_effect = Exception("User to promote is not a member of this group.")
+
+    # 2. Define a payload and call the API endpoint
+    payload = {"user_id": "non-member-id"}
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.post("/api/groups/1/add-admin", json=payload, headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 400
+    assert "User to promote is not a member" in response.get_json()["error"]
+
+# New test to cover a permission error when promoting a user.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.promote_to_admin_service')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_add_admin_permission_denied(mock_get_or_create_user, mock_promote_service, mock_keycloak_openid, client):
+    """
+    Tests that POST /api/groups/<group_id>/add-admin returns a 400/403 error
+    if the promoter is not an admin.
+    """
+    # 1. Configure mocks
+    # Mock authentication for a non-admin user
+    mock_keycloak_openid.userinfo.return_value = {"sub": "non-admin-user"}
+    mock_get_or_create_user.return_value = DummyUser(id="non-admin-user")
+
+    # Mock the service call to raise a PermissionError
+    mock_promote_service.side_effect = PermissionError("Only admins can promote other members.")
+
+    # 2. Define a payload and call the API endpoint
+    payload = {"user_id": "user-to-promote"}
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.post("/api/groups/1/add-admin", json=payload, headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 400 # Or 403, depending on your desired API behavior
+    assert "Only admins can promote other members" in response.get_json()["error"]
+
+# New test to cover a generic exception handler in the get_groups_for_specific_user endpoint.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.get_groups_for_user')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_get_groups_for_user_handles_exception(mock_get_or_create_user, mock_get_groups, mock_keycloak_openid, client):
+    """
+    Tests that GET /api/groups/user/<user_id> returns a 500 error if the service call fails.
+    """
+    # 1. Configure mocks
+    # Mock authentication
+    mock_keycloak_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+    mock_get_or_create_user.return_value = DummyUser(id="requesting-user-id")
+
+    # Mock the service call to raise an exception
+    mock_get_groups.side_effect = Exception("Internal service error")
+
+    # 2. Call the API endpoint
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.get("/api/groups/user/some-user-id", headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 500
+    assert "Internal service error" in response.get_json()["error"]
+
+# New test to cover an exception during user registration.
+@patch('backend.api.user_service')
+def test_register_user_service_exception(mock_user_service, client):
+    """
+    Tests that POST /api/users/register returns a 500 error if the service call fails.
+    """
+    # 1. Configure mocks
+    # Mock the user service to raise an exception
+    mock_user_service.register_user.side_effect = Exception("Username already exists")
+
+    # 2. Define a payload for the API call
+    registration_data = {
+        "firstName": "Test",
+        "lastName": "User",
+        "username": "existing_user",
+        "email": "test@example.com",
+        "password": "a-secure-password"
+    }
+
+    # 3. Call the API endpoint
+    response = client.post("/api/users/register", json=registration_data)
+
+    # 4. Assert the results
+    assert response.status_code == 500
+    assert "Keycloak or internal error" in response.get_json()["error"]
+    assert "Username already exists" in response.get_json()["details"]
+
+# New test to cover the login failure path.
+@patch('backend.api.keycloak_openid')
+def test_login_failure(mock_keycloak_openid, client):
+    """
+    Tests that POST /api/login returns a 401 error if login fails.
+    """
+    # 1. Configure mocks
+    # Mock the keycloak client to raise an exception, simulating invalid credentials.
+    from keycloak.exceptions import KeycloakAuthenticationError
+    mock_keycloak_openid.token.side_effect = KeycloakAuthenticationError(
+        response_code=401, error_message='{"error": "invalid_grant"}'
+    )
+
+    # 2. Call the API endpoint with invalid credentials
+    response = client.post("/api/login", json={"username": "testuser", "password": "wrong-password"})
+
+    # 3. Assert the results
+    assert response.status_code == 401
+    assert "Login failed" in response.get_json()["error"]
+    assert "invalid_grant" in response.get_json()["details"]
+
+# New test to cover missing fields in login.
+def test_login_endpoint_missing_fields(client):
+    """
+    Tests that POST /api/login returns a 400 error if username or password is missing.
+    """
+    # 1. Test with missing password
+    response1 = client.post("/api/login", json={"username": "testuser"})
+    assert response1.status_code == 400
+    assert "Username and password required" in response1.get_json()["error"]
+
+    # 2. Test with missing username
+    response2 = client.post("/api/login", json={"password": "somepassword"})
+    assert response2.status_code == 400
+    assert "Username and password required" in response2.get_json()["error"]
+
+# New test to cover the error path of get_tasks_for_specific_user
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.get_tasks_for_user')
+def test_get_tasks_for_specific_user_not_found(mock_get_tasks, mock_keycloak_openid, client):
+    """
+    Tests that GET /api/tasks/user/<user_id> returns a 404 if the user does not exist.
+    """
+    # 1. Configure mocks
+    # Mock authentication
+    mock_keycloak_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+
+    # Mock the service call to raise an exception (user not found)
+    target_user_id = "non-existent-user"
+    mock_get_tasks.side_effect = Exception(f"User with id {target_user_id} does not exist")
+
+    # 2. Call the API endpoint
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.get(f"/api/tasks/user/{target_user_id}", headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 404
+    assert "does not exist" in response.get_json()["error"]
+
+# New test to cover an admin trying to kick another admin.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.kick_user_service')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+def test_kick_user_cannot_kick_admin(mock_get_or_create_user, mock_kick_service, mock_keycloak_openid, client):
+    """
+    Tests that POST /api/groups/<group_id>/kick returns a 400 error
+    if an admin tries to kick another admin.
+    """
+    # 1. Configure mocks
+    # Mock authentication for the admin performing the action
+    mock_keycloak_openid.userinfo.return_value = {"sub": "admin-kicker"}
+    mock_get_or_create_user.return_value = DummyUser(id="admin-kicker")
+
+    # Mock the service call to raise a PermissionError
+    mock_kick_service.side_effect = PermissionError("Admins cannot kick other admins.")
+
+    # 2. Define a payload and call the API endpoint
+    payload = {"user_id": "admin-to-kick"}
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.post("/api/groups/1/kick", json=payload, headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 400
+    assert "Admins cannot kick other admins" in response.get_json()["error"]
+
+# New test to cover an edge case where a member's user record is missing.
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.db.session.get')
+def test_get_group_members_with_orphaned_membership(mock_db_get, mock_keycloak_openid, client):
+    """
+    Tests that GET /api/groups/<group_id>/members handles memberships
+    for which the user record no longer exists.
+    """
+    # 1. Configure mocks
+    mock_keycloak_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+
+    # Create a group with one valid member and one orphaned membership
+    valid_member = DummyUser(id="valid-member", username="valid")
+    
+    # Simulate the GroupMembership relationship
+    valid_membership = type('DummyMembership', (object,), {'user': valid_member, 'role': 'member'})()
+    orphaned_membership = type('DummyMembership', (object,), {'user': None, 'role': 'member'})() # User is None
+
+    group_to_find = DummyGroup()
+    group_to_find.group_memberships = [valid_membership, orphaned_membership]
+    mock_db_get.return_value = group_to_find
+
+    # 2. Call the API endpoint
+    headers = {"Authorization": "Bearer dummy-token"}
+    response = client.get(f"/api/groups/{group_to_find.id}/members", headers=headers)
+
+    # 3. Assert the results
+    assert response.status_code == 200
+    data = response.get_json()
+    # Only the valid member should be in the list
+    assert len(data["members"]) == 1
+    assert data["members"][0]["id"] == "valid-member"
