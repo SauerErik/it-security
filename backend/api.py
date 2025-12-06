@@ -12,7 +12,8 @@ from .services import (
     join_group_service, update_task_service, get_all_groups, leave_group_service, promote_to_admin_service, kick_user_service,
     UserService
 )
-from .auth import create_user, get_user_by_id, keycloak_protect, keycloak_admin, set_user_password, update_user
+# Change 1: Import keycloak_openid from auth to use the same instance as the decorator/tests
+from .auth import create_user, get_user_by_id, keycloak_protect, keycloak_admin, set_user_password, update_user, keycloak_openid
 
 # -----------------------------
 # App Initialization
@@ -40,12 +41,8 @@ db.init_app(app)
 # -----------------------------
 # Keycloak Client
 # -----------------------------
-keycloak_openid = KeycloakOpenID(
-    server_url=os.getenv("KEYCLOAK_SERVER_URL"),
-    client_id=os.getenv("KEYCLOAK_CLIENT_ID"),
-    realm_name=os.getenv("KEYCLOAK_REALM"),
-    client_secret_key=os.getenv("KEYCLOAK_CLIENT_SECRET"),
-)
+# Change 2: Removed local initialization of KeycloakOpenID to avoid duplicate/unmocked instances.
+# The instance is now imported from .auth (see imports above).
 
 # -----------------------------
 # Helpers
