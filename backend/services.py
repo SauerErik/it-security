@@ -81,8 +81,8 @@ class UserService:
             user.email = data['email']
         if 'faculty' in data:
             user.faculty = data['faculty']
-        if 'birthday' in data and data['birthday']:
-            user.birthday = datetime.strptime(data['birthday'], "%Y-%m-%d").date()
+        if 'birthday' in data:
+            user.birthday = datetime.strptime(data['birthday'], "%Y-%m-%d").date() if data['birthday'] else None
 
         self.db.commit()
         return user

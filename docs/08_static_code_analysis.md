@@ -97,3 +97,101 @@ Yes. Linters like Flake8 offer several benefits:
 
 Even though linters may initially produce many warnings, the resulting
 improvements make them a valuable part of modern development workflows.
+
+---
+
+# **Exercise 8.2 -- Code Coverage Configuration (Python / pytest-cov)**
+
+## *Code Coverage Analysis -- StudyConnect Project*
+
+In this exercise, I configured a code coverage checker for the Python backend service. Code coverage is a metric that measures the percentage of code lines executed during automated testing. It is an essential tool for ensuring test thoroughness and maintaining code quality.
+
+For the Python backend, I used **`pytest-cov`**, a plugin for the Pytest framework.
+
+------------------------------------------------------------------------
+
+## **1. Configuration Steps**
+
+To integrate `pytest-cov`, two main configuration steps were performed:
+
+### **a) Adding the Dependency**
+
+First, the `pytest-cov` package was added as a dependency to the project's `requirements.txt` file. This ensures that the tool is installed alongside other project dependencies when setting up the environment.
+
+File: `backend/requirements.txt`
+```
+...
+pytest
+behave
+flake8==7.3.0
+pytest-cov
+```
+
+After updating the file, the new dependency was installed using `pip`:
+```bash
+pip install -r requirements.txt
+```
+
+### **b) Creating the Configuration File**
+
+Next, a configuration file named `.coveragerc` was created in the root of the `backend` directory. This file allows for fine-tuning the behavior of `pytest-cov`.
+
+File: `backend/.coveragerc`
+```ini
+[run]
+source = backend
+omit = */venv/*, */tests/*, *test*.py
+
+[report]
+show_missing = True
+fail_under = 80
+
+[html]
+directory = htmlcov
+```
+
+Key configurations include:
+-   `source = backend`: Specifies that only code within the `backend` directory should be measured.
+-   `omit = ...`: Excludes test files and virtual environments to avoid skewing the results.
+-   `fail_under = 80`: Sets a quality gate. The test run will fail if the total coverage is below 80%.
+
+------------------------------------------------------------------------
+
+## **2. Running the Coverage Check**
+
+To run the tests and generate a coverage report, I used the following command from the `backend` directory:
+
+```bash
+pytest --cov
+```
+
+This command executes all tests and, upon completion, prints a coverage report to the console and generates a detailed HTML report in the `htmlcov/` directory.
+
+------------------------------------------------------------------------
+
+## **3. Reflection on the Results**
+
+The initial run of the coverage check yielded a **total coverage of 84%**, which successfully meets the 80% target defined in the configuration.
+
+-   **Strengths**: The core business logic in `services.py` (86%) and the data models in `models.py` (100%) are very well-tested. This is excellent, as these are critical components of the application.
+-   **Weaknesses**: The API layer, defined in `api.py`, showed a very low coverage of only **33%**. This indicates that the HTTP endpoints themselves are not being sufficiently tested. The reason is that most existing tests are unit tests that call service functions directly, bypassing the API routes.
+
+To improve this, additional integration tests that simulate HTTP requests (e.g., using the Flask test client) are needed for the endpoints in `api.py`.
+
+------------------------------------------------------------------------
+
+## **4. Reflection on the Code Coverage Metric**
+
+### **What do I think about the code coverage metric?**
+
+Code coverage is a highly valuable metric, but it must be interpreted with caution.
+
+**Benefits:**
+-   **It reveals untested code:** Its greatest strength is objectively identifying parts of the codebase that are not exercised by any tests. This provides a clear roadmap for where to add new tests.
+-   **It serves as a quality gate:** By setting a minimum threshold (e.g., `fail_under = 80`), it prevents the introduction of untested code into the main branch, enforcing a baseline of quality in a CI/CD pipeline.
+
+**Limitations:**
+-   **It does not measure test quality:** 100% coverage does not guarantee that the code is bug-free. A test can execute a line of code without actually verifying its behavior (i.e., without meaningful assert statements).
+-   **It can encourage bad practices:** If treated as the only goal, developers might write trivial tests just to increase the percentage, rather than writing tests that validate important functionality and edge cases.
+
+**Conclusion:** Code coverage is an essential tool for maintaining and improving test suites. However, it should be used as a guide to find gaps, not as the ultimate measure of code quality. The focus should always remain on writing meaningful tests that verify the application's behavior correctly.

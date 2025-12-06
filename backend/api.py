@@ -114,6 +114,11 @@ def populate_keycloak_users():
             print(f"Error populating users: {e}")
 
 # -----------------------------
+# Service Initialization
+# -----------------------------
+user_service = UserService(db.session, keycloak_admin)
+
+# -----------------------------
 # POST Routes
 # -----------------------------
 
@@ -174,9 +179,6 @@ def register_user():
         return jsonify({"error": "firstName, lastName, username, email, and password are required"}), 400
 
     try:
-        # Initialize service with real dependencies
-        user_service = UserService(db.session, keycloak_admin)
-
         # Prepare data for the service
         user_data = {
             "username": username,
@@ -214,7 +216,6 @@ def register_user():
 @keycloak_protect
 def create_task():
     data = request.json
-    user_service = UserService(db.session, keycloak_admin)
     kc_user = user_service.get_or_create_user_from_keycloak(request.user)
     # Set the user_id on the backend to ensure the creator is always the logged-in user.
     data["user_id"] = kc_user.id
@@ -230,7 +231,6 @@ def create_task():
 def create_group():
     data = request.json
     try:
-        user_service = UserService(db.session, keycloak_admin)
         kc_user = user_service.get_or_create_user_from_keycloak(request.user)
         group = create_group_service(data, creator_id=kc_user.id)
         return jsonify({
@@ -244,7 +244,6 @@ def create_group():
 @keycloak_protect
 def join_group():
     data = request.json
-    user_service = UserService(db.session, keycloak_admin)
     kc_user = user_service.get_or_create_user_from_keycloak(request.user)
     group_id = data.get("group_id")
     try:
@@ -259,7 +258,6 @@ def join_group():
 @app.route("/api/groups/<int:group_id>/leave", methods=["POST"])
 @keycloak_protect
 def leave_group(group_id):
-    user_service = UserService(db.session, keycloak_admin)
     kc_user = user_service.get_or_create_user_from_keycloak(request.user)
     try:
         leave_group_service(kc_user.id, group_id)
@@ -272,7 +270,6 @@ def leave_group(group_id):
 def add_admin_to_group(group_id):
     data = request.json
     user_to_promote_id = data.get("user_id")
-    user_service = UserService(db.session, keycloak_admin)
     promoter = user_service.get_or_create_user_from_keycloak(request.user)
     try:
         promote_to_admin_service(promoter.id, user_to_promote_id, group_id)
@@ -285,7 +282,6 @@ def add_admin_to_group(group_id):
 def kick_user(group_id):
     data = request.json
     user_to_kick_id = data.get("user_id")
-    user_service = UserService(db.session, keycloak_admin)
     kicker = user_service.get_or_create_user_from_keycloak(request.user)
     try:
         kick_user_service(kicker.id, user_to_kick_id, group_id)
@@ -296,15 +292,13 @@ def kick_user(group_id):
 # -----------------------------
 # GET Routes
 # -----------------------------
-user_service = UserService(db.session, keycloak_admin)
 
 # Users
 @app.route("/api/users/<string:user_id>", methods=["GET"])
 @keycloak_protect
 def get_user(user_id):
     try:
-        user = User.query.get(user_id)
-        user_service = UserService(db.session, keycloak_admin)
+        user = db.session.get(User, user_id)
         if not user:
             auth_header = request.headers.get("Authorization")
             token = auth_header.split()[1]
@@ -328,7 +322,6 @@ def get_user(user_id):
 @app.route("/api/tasks", methods=["GET"])
 @keycloak_protect
 def get_tasks():
-    user_service = UserService(db.session, keycloak_admin)
     kc_user = user_service.get_or_create_user_from_keycloak(request.user)
     tasks = get_tasks_for_user(kc_user.id)
     return jsonify([task_to_dict(t) for t in tasks]), 200
@@ -355,7 +348,6 @@ def get_groups_for_specific_user(user_id):
     try:
         # The @keycloak_protect decorator ensures that request.user exists.
         # We just need to ensure the user is in our local DB.
-        user_service = UserService(db.session, keycloak_admin)
         user = user_service.get_or_create_user_from_keycloak(request.user)
         groups = get_groups_for_user(user.id) # Call the service function
         groups_serialized = [group_to_dict(g, user.id) for g in groups]
@@ -369,7 +361,6 @@ def get_groups_for_specific_user(user_id):
 def get_groups_for_specific_admin_user(user_id):
     try:
         user = db.session.get(User, user_id)
-        user_service = UserService(db.session, keycloak_admin)
         if not user:
             auth_header = request.headers.get("Authorization")
             token = auth_header.split()[1]
@@ -426,7 +417,6 @@ def get_group_members(group_id):
 @keycloak_protect
 def update_task(task_id):
     data = request.json
-    user_service = UserService(db.session, keycloak_admin)
     kc_user = user_service.get_or_create_user_from_keycloak(request.user)
     try:
         updated_task = update_task_service(task_id, data, editor_user_id=kc_user.id)
@@ -437,7 +427,6 @@ def update_task(task_id):
 @app.route("/api/users/<string:user_id>", methods=["PUT"])
 @keycloak_protect
 def update_user(user_id):
-    user_service = UserService(db.session, keycloak_admin)
     kc_user = user_service.get_or_create_user_from_keycloak(request.user)
     if kc_user.id != user_id:
         return jsonify({"error": "Cannot edit another user"}), 403
