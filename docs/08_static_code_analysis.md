@@ -167,6 +167,29 @@ pytest --cov
 
 This command executes all tests and, upon completion, prints a coverage report to the console and generates a detailed HTML report in the `htmlcov/` directory.
 
+### **a) Viewing the HTML Report**
+
+In environments without a graphical user interface (like WSL or Docker), opening the HTML file directly can fail. A universal method to view the report is to start a temporary web server.
+
+1.  **Navigate to the report directory:**
+    From the project root, change into the `htmlcov` directory.
+    ```bash
+    cd htmlcov
+    ```
+
+2.  **Start a simple Python web server:**
+    This command serves the files in the current directory.
+    ```bash
+    python3 -m http.server
+    ```
+
+3.  **Open the report in your browser:**
+    On your main operating system (Windows, macOS), open a web browser and navigate to:
+    ```
+    http://localhost:8000
+    ```
+    This will display the interactive coverage report. To stop the server, return to the terminal and press `Ctrl + C`.
+
 ------------------------------------------------------------------------
 
 ## **3. Reflection on the Results**
