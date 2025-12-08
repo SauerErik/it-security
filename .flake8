@@ -1,0 +1,8 @@
+[flake8]
+# It is considered to be few to use 79 characters as a maximum line length
+# therefore, a new maximum line length of 120 characters is seen as reasonable
+# value is also used in CalculatorPython repo
+max-line-length = 120
+
+# excluding certain directory names from being checked
+exclude = .git,.venv,venv,__pycache__,.env

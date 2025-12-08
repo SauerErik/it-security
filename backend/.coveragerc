@@ -1,0 +1,23 @@
+[run]
+# Misst die Coverage für das 'backend' Verzeichnis
+source = backend
+branch = True
+
+# Schließt bestimmte Dateien und Verzeichnisse von der Messung aus
+omit =
+    # Schließt das virtual environment aus
+    */venv/*
+    # Schließt Testdateien aus
+    */tests/*
+    *test*.py
+
+[report]
+# Zeigt die Zeilennummern an, die nicht abgedeckt sind
+show_missing = True
+
+# Sorgt dafür, dass der Test fehlschlägt, wenn die Coverage unter 80% liegt
+fail_under = 80
+
+[html]
+# Verzeichnis für den HTML-Report
+directory = htmlcov

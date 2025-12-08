@@ -81,8 +81,8 @@ class UserService:
             user.email = data['email']
         if 'faculty' in data:
             user.faculty = data['faculty']
-        if 'birthday' in data and data['birthday']:
-            user.birthday = datetime.strptime(data['birthday'], "%Y-%m-%d").date()
+        if 'birthday' in data:
+            user.birthday = datetime.strptime(data['birthday'], "%Y-%m-%d").date() if data['birthday'] else None
 
         self.db.commit()
         return user
@@ -289,8 +289,10 @@ def leave_group_service(user_id: str, group_id: int):
             group_to_delete = db.session.get(Group, group_id)
             if group_to_delete:
                 db.session.delete(group_to_delete)
-                db.session.commit()
-                return # Exit after deleting the group
+            # In either case (group deleted or not found), the process is complete for the last admin.
+            # The membership will be cascade-deleted if the group was deleted.
+            db.session.commit()
+            return # Exit after handling the last admin case.
 
     db.session.delete(membership)
     db.session.commit()
@@ -324,11 +326,11 @@ def kick_user_service(kicker_id: str, user_to_kick_id: str, group_id: int):
     if not membership_to_kick:
         raise Exception("User to be kicked is not a member of this group.")
 
-    # Prevent an admin from kicking another admin or themselves
-    if membership_to_kick.role == 'admin':
-        raise PermissionError("Admins cannot kick other admins.")
+    # Prevent an admin from kicking themselves or another admin (check for self-kick first)
     if kicker_id == user_to_kick_id:
         raise PermissionError("You cannot kick yourself. Use the 'Leave Group' feature.")
+    if membership_to_kick.role == 'admin':
+        raise PermissionError("Admins cannot kick other admins.")
 
     db.session.delete(membership_to_kick)
     db.session.commit()
