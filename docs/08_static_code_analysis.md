@@ -218,3 +218,68 @@ Code coverage is a highly valuable metric, but it must be interpreted with cauti
 -   **It can encourage bad practices:** If treated as the only goal, developers might write trivial tests just to increase the percentage, rather than writing tests that validate important functionality and edge cases.
 
 **Conclusion:** Code coverage is an essential tool for maintaining and improving test suites. However, it should be used as a guide to find gaps, not as the ultimate measure of code quality. The focus should always remain on writing meaningful tests that verify the application's behavior correctly.
+
+
+# **Exercise 8.3 -- Run local linters automatically using Git’s hook system**
+
+To use pre-commit hooks, first the corresponding package needs to be installed in the virtual environment with a `pip install` command. The package is also added to the `requirements.txt` file. To use the pre-commit hooks, a `.pre-commit-config.yaml` is created.
+
+In addition to that, after examining the result of present files in the repository, we decided to use a formatter to reduce the number of formatting errors. For now, it is not added to the pre-commit hook.
+The decision was made to use `black`.
+
+The `black` package is also added as a dependency to the projects `requirements.txt` file. This ensures that the tools are installed alongside other project dependencies when setting up the environment.
+
+File: `backend/requirements.txt`
+```
+...
+flake8==7.3.0
+pytest-cov
+pre-commit==-4.5.0
+black==25.11.0
+```
+
+To increase the speed of running flake8 and reducing the number of errors, some constraints were relaxed in contrast to the standard `flake8` configuration. These are defined in the [.flake8](../.flake8) file and, in case of `black`, in the [pyproject.toml](../pyproject.toml) file.
+
+So the final configuration is a [.pre-commit-config.yaml](../.pre-commit-config.yaml) with the usage of
+- pre-commit-hooks
+- flake8 (linter for python code)
+
+To activate the hook, we need to tell git to use it. This is done by executing
+`pre-commit install`
+in the CLI.
+
+## Execution example
+For example, let's examine the file [environment.py](../backend/features/environment.py). This is the output of flake8 for this file before linting:
+```sh
+./backend/features/environment.py:6:62: W291 trailing whitespace
+./backend/features/environment.py:7:56: W291 trailing whitespace
+./backend/features/environment.py:13:34: W291 trailing whitespace
+./backend/features/environment.py:16:1: W293 blank line contains whitespace
+./backend/features/environment.py:17:1: W293 blank line contains whitespace
+./backend/features/environment.py:29:1: W293 blank line contains whitespace
+./backend/features/environment.py:35:1: E302 expected 2 blank lines, found 1
+./backend/features/environment.py:40:1: E302 expected 2 blank lines, found 1
+./backend/features/environment.py:43:30: W292 no newline at end of file
+```
+
+We solve the last error W292 by adding a newline at the end and try to commit the file. If our pre-commit hook is configured correctly, the commit should be refused due to the activation of flake8 in the git hook.
+
+As expected, the commit gets refused, and due to the configuration of the pre-commit hook, some errors gets solved. However, two errors remain that need to be solved manually or by using the flake8 extension for VSCode:
+```sh
+[WARNING] Unstaged files detected.
+[INFO] Stashing unstaged files to /home/<...>/.cache/pre-commit/patch1765218930-35085.
+trim trailing whitespace.................................................Passed
+fix end of files.........................................................Passed
+check yaml...........................................(no files to check)Skipped
+check for added large files..............................................Passed
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+backend/features/environment.py:35:1: E302 expected 2 blank lines, found 1
+backend/features/environment.py:40:1: E302 expected 2 blank lines, found 1
+
+[INFO] Restored changes from /home/<....>/.cache/pre-commit/patch1765218930-35085.
+```
+
+After adding another blank line an the mentioned line numbers, the commit should pass. As expected, the commit passes and can be pushed to the origin branch.
