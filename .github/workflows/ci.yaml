@@ -21,15 +21,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install backend dependencies
-        working-directory: backend
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r backend/requirements.txt
 
       - name: Run backend tests
-        working-directory: backend
         run: |
-          pytest
+          pytest test_backend --cov=backend
 
 
   frontend:
