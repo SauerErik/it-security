@@ -27,17 +27,17 @@ jobs:
 
       keycloak:
         image: quay.io/keycloak/keycloak:21.1.1
-        ports:
-          - 8081:8080
         env:
           KEYCLOAK_ADMIN: admin
           KEYCLOAK_ADMIN_PASSWORD: admin
+        ports:
+          - 8081:8080
         options: >-
+          start-dev
           --health-cmd "curl -f http://localhost:8080/realms/master || exit 1"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
-        command: start-dev
 
     steps:
       - name: Checkout repository
@@ -50,8 +50,8 @@ jobs:
 
       - name: Wait for services
         run: |
-          echo "Waiting for Postgres and Keycloak..."
-          sleep 20  # give services some time to be ready
+          echo "Waiting for Postgres and Keycloak to be ready..."
+          sleep 30  # give services some time to be ready
 
       - name: Install backend dependencies
         run: |
