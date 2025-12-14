@@ -302,7 +302,7 @@
         }
       ],
       "security-admin-console": [],
-      "StudyConnectAdmin": [
+      "studyconnect-backend": [
         {
           "id": "fc9e064c-ffea-4208-b4f4-dfa6f24afe86",
           "name": "RealmManager",
