@@ -19,18 +19,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Set up Node.js (for frontend cache)
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install docker-compose
-        run: sudo apt-get update && sudo apt-get install -y docker-compose
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
 
       - name: Start services via Docker Compose
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker compose -f docker-compose.yml up -d
           echo "Waiting for Postgres and Keycloak to be ready..."
           # wait for Postgres
           until docker exec postgres_db pg_isready -U root -d StudyConnect; do
@@ -61,8 +55,7 @@ jobs:
           KEYCLOAK_CLIENT_SECRET: 2f8oWlRJM1edRQG0mHyCwEQhn95Sr4i7
           KEYCLOAK_ADMIN_CLIENT_ID: StudyConnectAdmin
           KEYCLOAK_ADMIN_CLIENT_SECRET: IDFYO9tn5QsTAexalTGzbkrHmjCWbFRO
-        run: |
-          pytest test_backend --cov=backend
+        run: pytest
 
       - name: Shutdown services
         run: docker-compose down
