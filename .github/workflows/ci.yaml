@@ -5,15 +5,20 @@ on:
     branches:
       - "**"
   pull_request:
+    branches:
+      - main
 
 jobs:
-  backend:
+  backend-test:
     name: Backend Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Start Services (Keycloak & DB)
+        run: docker compose up -d keycloak
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -22,50 +27,38 @@ jobs:
           cache: "pip"
           cache-dependency-path: backend/requirements.txt
 
-      - name: Start services via Docker Compose
-        run: |
-          docker compose -f docker-compose.yml up -d
-          echo "Waiting for Postgres and Keycloak to be ready..."
-          # wait for Postgres
-          until docker exec postgres_db pg_isready -U root -d StudyConnect; do
-            sleep 5
-          done
-          # wait for Keycloak
-          until curl -f http://localhost:8081/realms/master; do
-            sleep 5
-          done
-          echo "Services are ready"
-
       - name: Install backend dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
-          pip install pytest pytest-cov requests
 
-      - name: Run backend tests
+      - name: Wait for Keycloak
+        run: |
+          # Warten bis Keycloak auf Port 8081 antwortet (Timeout 30s)
+          timeout 30s bash -c 'until curl -sf http://localhost:8081/realms/master > /dev/null; do sleep 5; done'
+
+      - name: Run Tests
         env:
+          KEYCLOAK_SERVER_URL: http://localhost:8081
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
           POSTGRES_DB: StudyConnect
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          KEYCLOAK_SERVER_URL: http://localhost:8081/auth
-          KEYCLOAK_CLIENT_ID: StudyConnect
+          # Werte passend zur keycloak-config/realm-export.json
           KEYCLOAK_REALM: StudyConnectRealm
-          KEYCLOAK_CLIENT_SECRET: 2f8oWlRJM1edRQG0mHyCwEQhn95Sr4i7
-          KEYCLOAK_ADMIN_CLIENT_ID: StudyConnectAdmin
-          KEYCLOAK_ADMIN_CLIENT_SECRET: IDFYO9tn5QsTAexalTGzbkrHmjCWbFRO
-        run: pytest
+          KEYCLOAK_CLIENT_ID: studyconnect-backend
+          KEYCLOAK_CLIENT_SECRET: test-secret-key
+          KEYCLOAK_ADMIN_CLIENT_ID: studyconnect-backend
+          KEYCLOAK_ADMIN_CLIENT_SECRET: test-secret-key
+        run: |
+          pytest test_backend
 
-      - name: Shutdown services
-        run: docker-compose down
 
-  frontend:
-    name: Frontend Build
+  ui-build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Node.js
@@ -79,6 +72,17 @@ jobs:
         working-directory: ui
         run: npm ci
 
-      - name: Build frontend
+      - name: Build UI
         working-directory: ui
         run: npm run build
+
+  # Integration Check
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: [backend-test, ui-build]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Compose Services
+        run: docker compose build
