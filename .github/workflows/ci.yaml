@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
 
       - name: Start Services (Keycloak & DB)
         run: docker compose up -d keycloak
@@ -67,7 +69,13 @@ jobs:
           KEYCLOAK_ADMIN_CLIENT_ID: studyconnect-backend
           KEYCLOAK_ADMIN_CLIENT_SECRET: test-secret-key
         run: |
-          pytest test_backend
+          pytest test_backend --cov=backend --cov-report=xml:coverage.xml
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
 
   ui-build:
