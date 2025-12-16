@@ -97,7 +97,6 @@ def populate_keycloak_users():
                 user_id = kc_user.get("id") or kc_user.get("sub")
                 if not user_id:
                     continue
-                existing_user = db.session.get(User, user_id)
                 # Logic moved to the service to maintain consistency
                 # Here we call the service to create the user if they are missing.
                 user_service = UserService(db.session, keycloak_admin)
