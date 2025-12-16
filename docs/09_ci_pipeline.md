@@ -5,7 +5,7 @@
 A GitHub Actions [workflow file](../.github/workflows/ci.yaml) was created to automate the test and build processes.
 
 ### Configuration and Decisions
-For the basic pipeline configuration, we decided to trigger the workflow on every push to any branch. This ensures that developers receive immediate feedback on their changes. Additionally, pull requests targeting the main branch trigger the pipeline, acting as a quality gate before merges. We selected ubuntu-latest as the runner because it is the standard environment such CI tasks, and supports docker natively.
+For the basic pipeline configuration, we decided to trigger the workflow on every push to any branch. This ensures that developers receive immediate feedback on their changes. Additionally, pull requests targeting the main branch trigger the pipeline, acting as a quality gate before merges. To optimize resource usage, the pipeline is configured to skip execution if the commit only contains changes to documentation files (Markdown files or the `docs/` directory), as these do not affect the application's functionality. We selected ubuntu-latest as the runner because it is the standard environment such CI tasks, and supports docker natively.
 
 ### Workflow Steps
 
