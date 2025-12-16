@@ -57,14 +57,14 @@ services:
       - db
       - keycloak
     environment:
-      # Datenbank-Konfiguration (nutzt .env oder Defaults für CI/Docker)
+      # uses .env oder defaults for CI/docker
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
       POSTGRES_DB: ${POSTGRES_DB:-StudyConnect}
       POSTGRES_HOST: ${POSTGRES_HOST:-db}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
 
-      # Keycloak-Konfiguration (nutzt .env oder Defaults für CI/Docker)
+      # uses .env oder defaults for CI/docker
       KEYCLOAK_SERVER_URL: ${KEYCLOAK_SERVER_URL:-http://keycloak:8080}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-StudyConnectRealm}
       KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-studyconnect-backend}
