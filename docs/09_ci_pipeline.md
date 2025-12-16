@@ -26,3 +26,34 @@ This adds another layer to the following measures:
 - *linting*: since flake8 was already added via the pre-commit hook, and due to implementing a broader range of tools, it was decided not to add flake8 to the GitHub Action. Style was considered as a less important factor than security, therefore it can remain in the local scope.
 
 And since code quality is handled locally, the CI expansion is thus focused on security management.
+
+## Exercise 9.3: SonarQube Integration (optional)
+
+The project was integrated with the provided SonarQube instance running on bwCloud to enable continuous static code analysis.
+
+### Integration Steps
+
+1.  **Project Setup:**
+    -   A new project was created on the SonarQube instance.
+    -   A project token was generated for authentication.
+
+2.  **GitHub Configuration:**
+    -   The secrets SONAR_TOKEN and SONAR_HOST_URL were added to the GitHub repository to securely store credentials.
+
+3.  **Workflow Enhancement:**
+    -   The existing CI pipeline from the(ci.yaml) was updated.
+    -   **Checkout:** Added fetch-depth: 0 to ensure the scanner has access to the full git history for assigning issues to authors.
+    -   **Scanning:** Added the sonarsource/sonarqube-scan-action` step to execute the analysis and push results to the server.
+
+
+### Security Analysis Results
+The initial scan revealed several security hotspots which were reviewed:
+
+-   **CSRF Protection (Flask):** Flagged because Flask does not enable CSRF protection by default.
+    -   *Resolution:* Marked as **Safe**. The application acts as a stateless REST API using Bearer Token authentication (Keycloak). Since no session cookies are used, standard CSRF attacks are not applicable.
+-   **Docker Recursive Copy (COPY . .):** Flagged because it might copy sensitive files (like .env) into the container.
+    -   *Resolution:* **Fixed**. A .dockerignore file was added to the project root to explicitly exclude .env, .git, and virtual environment folders from the build context.
+-   **Debug Mode (debug=True):** Flagged as a critical risk for production environments.
+    -   *Resolution:* **Fixed**. The code was updated to use environment variables (FLASK_DEBUG) to control the debug mode, defaulting to False for safety.
+-   **Permissive CORS (origins="*"):** Flagged because it allows access from any domain.
+    -   *Resolution:* **Fixed**. The CORS configuration was updated to use an environment variable (FRONTEND_URL), defaulting to http://localhost:3000 instead of allowing all origins.

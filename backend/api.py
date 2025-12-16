@@ -20,7 +20,8 @@ from .auth import create_user, get_user_by_id, keycloak_protect, keycloak_admin,
 # -----------------------------
 app = Flask(__name__)
 load_dotenv()
-CORS(app, resources={r"/*": {"origins": "*"}})
+frontend_origin = os.getenv("FRONTEND_URL", "http://localhost:3000")
+CORS(app, resources={r"/*": {"origins": frontend_origin}})
 
 # -----------------------------
 # PostgreSQL Configuration
@@ -452,4 +453,5 @@ if __name__ == "__main__":
         db.create_all()
         # Uncomment to pre-populate all Keycloak users once
         populate_keycloak_users()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    debug_mode = os.getenv("FLASK_DEBUG", "False").lower() == "true"
+    app.run(host="0.0.0.0", port=5000, debug=debug_mode)
