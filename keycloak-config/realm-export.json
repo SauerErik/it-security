@@ -302,7 +302,7 @@
         }
       ],
       "security-admin-console": [],
-      "StudyConnectAdmin": [
+      "studyconnect-backend": [
         {
           "id": "fc9e064c-ffea-4208-b4f4-dfa6f24afe86",
           "name": "RealmManager",
@@ -482,12 +482,12 @@
   "users": [
     {
       "id": "58ca21f8-cfc0-475c-b543-0d519f3e2e77",
-      "username": "service-account-studyconnectadmin",
+      "username": "service-account-studyconnect-backend",
       "emailVerified": false,
       "enabled": true,
       "createdTimestamp": 1761687187045,
       "totp": false,
-      "serviceAccountClientId": "StudyConnectAdmin",
+      "serviceAccountClientId": "studyconnect-backend",
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
@@ -888,7 +888,7 @@
     },
     {
       "id": "c168d6fc-9333-47a4-8e07-71832486e399",
-      "clientId": "StudyConnectAdmin",
+      "clientId": "studyconnect-backend",
       "name": "",
       "description": "",
       "rootUrl": "",
@@ -898,7 +898,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "test-secret-key",
       "redirectUris": [
         "/*"
       ],

@@ -6,3 +6,6 @@ max-line-length = 120
 
 # excluding certain directory names from being checked
 exclude = .git,.venv,venv,__pycache__,.env
+
+# E302: expected 2 blank lines, found 1
+extend-ignore = E302
