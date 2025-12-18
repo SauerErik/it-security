@@ -64,9 +64,9 @@ webencodings==0.5.1
 Werkzeug==3.1.4
 yarg==0.1.9
 python-keycloak==5.8.1
-pytest
-behave
+pytest==9.0.1
+behave==1.3.3
 flake8==7.3.0
-pytest-cov
+pytest-cov==7.0.0
 black==25.11.0
 uvicorn[standard]==0.24.0

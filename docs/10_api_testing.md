@@ -1,7 +1,7 @@
 # Exercise 10: API Tesing
 
 
-# 10.1
+# 10.1 Reflect on your existing API Endpoint
 ## 10.1.1 Reflection on API Endpoints
 
 Developed initially during Exercise 6 (Mock Testing) and refined subsequently, the API ensures separation of concerns by utilizing a Service Layer pattern. This allows the API endpoints (backend/api.py) to handle HTTP requests and responses while delegating business logic to backend/services.py.
@@ -192,7 +192,33 @@ Tool used: **Postman**
 
 ## 10.3 Automated API Test Cases
 
+To ensure the reliability and correctness of the API endpoints, automated test cases have been implemented using **pytest** and **unittest.mock**.
 
+### Test Strategy
+The tests focus on validating the behavior of the API endpoints in isolation. External dependencies such as the PostgreSQL database and the Keycloak authentication service are **mocked**. This ensures that tests run quickly and are not flaky due to network issues or external state.
+
+**Key areas covered:**
+*   **Success Scenarios**: Verifying that valid requests return the expected status codes (200/201) and JSON structures.
+*   **Failure Scenarios**: Verifying that invalid input, missing authentication, or permission issues result in appropriate error codes (400, 401, 403, 404).
+*   **Edge Cases**: Testing boundary conditions like past deadlines or missing optional fields.
+
+### Source Code
+The test cases are located in test_backend/test_api.py.
+
+### How to Run the Tests
+
+1.  **Ensure Dependencies are Installed**:
+    Make sure `pytest` is installed.
+    ```bash
+    pip install pytest
+    ```
+
+2.  **Run the Tests**:
+    Execute the following command from the project root directory:
+    ```bash
+    pytest test_backend/test_api.py
+    or just execute `pytest` in the root folder
+    ```
 
 
 
