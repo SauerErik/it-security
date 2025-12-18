@@ -74,7 +74,7 @@ services:
       - dev
 
   gatling:
-    image: gatling/gatling:3.10.5
+    image: denvazh/gatling:latest
     container_name: gatling
     depends_on:
       - app
@@ -85,9 +85,10 @@ services:
       - ./gatling/resources:/opt/gatling/user-files/resources
       - ./gatling/results:/opt/gatling/results
     command: >
-      -s APISimulation
+      -s ApiSimulation
     profiles:
-      - dev
+      - test
+
 
 volumes:
   db-data:
