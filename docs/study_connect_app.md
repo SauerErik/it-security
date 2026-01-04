@@ -83,13 +83,17 @@ The project requires a `.env` file in the root directory for local environment v
 2.  Open the new `.env` file and adjust the placeholder values. The Keycloak secrets must be obtained from the admin console of your running Keycloak instance.
 
 
-### App execution
+### App execution dev
 1.  **Start Infrastructure Services**: From the root directory, start Postgres, pgAdmin, and Keycloak using Docker Compose:
     ```sh
     docker compose up -d
     ```
 2.  **Run the Backend**: In the `backend` directory with your virtual environment activated, start the backend with `python -m backend.api`
 3.  **Run the Frontend**: In the `ui` directory, start the Frontend with `npm run dev`
+
+### App execution prod
+
+If you want to start the backend in the container use `docker compose up app -d`.
 
 ### Test execution
 Both unit and BDD tests have a `.ini` file, so they can be executed from CLI without the need to pass respective filenames or directories.
