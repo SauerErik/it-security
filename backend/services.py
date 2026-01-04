@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from sqlalchemy import and_
-from .models import db, User, Group, Task, GroupMembership
+from models import db, User, Group, Task, GroupMembership
 
 VALID_PRIORITIES = ['low', 'medium', 'high']
 VALID_STATUSES = {
