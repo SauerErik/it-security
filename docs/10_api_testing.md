@@ -224,3 +224,18 @@ The test cases are located in test_backend/test_api.py.
 
 
 ## 10.4 Load & Performance Testing
+
+We used Gatling to performance, load nad stress test our backend.
+
+With 2 separat tests we tested both constant load and ramp-up load.
+
+The Gatling script can be found [here](../gatling/simulations/APISimulation.scala).
+
+The report for both test runs can be found in the `docs/files` folder.
+
+- [Constant Load](files/constant.pdf)
+- [Ramp-Up Load](files/ramp-up.pdf)
+
+### Summary
+
+Over all we think the backend performance is good in the current state.
