@@ -18,7 +18,7 @@ export default function JoinGroup({ userId, onCancel }) {
 
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5000/api/groups", {
+        const res = await fetch("http://localhost:8000/api/groups", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,7 +60,7 @@ export default function JoinGroup({ userId, onCancel }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/groups/join", {
+      const res = await fetch("http://localhost:8000/api/groups/join", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

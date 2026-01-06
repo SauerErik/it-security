@@ -20,7 +20,7 @@ from auth import create_user, get_user_by_id, keycloak_protect, keycloak_admin, 
 # -----------------------------
 app = Flask(__name__)
 load_dotenv()
-frontend_origin = os.getenv("FRONTEND_URL", "http://localhost:3000")
+frontend_origin = os.getenv("FRONTEND_URL", "http://localhost:8080")
 CORS(app, resources={r"/*": {"origins": frontend_origin}})
 
 # -----------------------------

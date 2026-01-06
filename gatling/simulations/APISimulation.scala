@@ -6,7 +6,7 @@ class ApiSimulation extends Simulation {
 
   // 1. HTTP Protocol Configuration
   val httpProtocol = http
-    .baseUrl("http://localhost:5000") // Base URL of the Flask API
+    .baseUrl("http://localhost:8000") // Base URL of the Flask API
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
 

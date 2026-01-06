@@ -25,7 +25,7 @@ export default function App() {
   // -----------------------------
   const fetchTasks = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks/user/${userId}`);
+      const res = await fetch(`http://localhost:8000/api/tasks/user/${userId}`);
       const data = await res.json();
       const newColumns = { todo: [], inProgress: [], done: [] };
       data.forEach(task => {
@@ -46,7 +46,7 @@ export default function App() {
   // -----------------------------
   const fetchGroups = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/groups/user/${userId}`);
+      const res = await fetch(`http://localhost:8000/api/groups/user/${userId}`);
       const data = await res.json();
       setGroups(data);
     } catch (err) {
@@ -64,7 +64,7 @@ export default function App() {
   // -----------------------------
   const handleAddTask = async (newTask) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks`, {
+      const res = await fetch(`http://localhost:8000/api/tasks`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...newTask, user_id: userId }),
@@ -87,7 +87,7 @@ export default function App() {
   // -----------------------------
   const handleUpdateTask = async (updatedTask) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks/${updatedTask.id}`, {
+      const res = await fetch(`http://localhost:8000/api/tasks/${updatedTask.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTask),
@@ -114,7 +114,7 @@ export default function App() {
   // -----------------------------
   const handleJoinGroup = async (groupId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/groups/join`, {
+      const res = await fetch(`http://localhost:8000/api/groups/join`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: userId, group_id: groupId }),
@@ -151,7 +151,7 @@ export default function App() {
     setColumns(newColumns);
 
     try {
-      await fetch(`http://localhost:5000/api/tasks/${draggableId}`, {
+      await fetch(`http://localhost:8000/api/tasks/${draggableId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: destination.droppableId }),

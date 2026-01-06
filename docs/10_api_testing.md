@@ -47,11 +47,11 @@ The API meets the requirement of providing at least two operations for the main 
     ```bash
     python -m backend.api
     ```
-    The API will be accessible at `http://localhost:5000`.
+    The API will be accessible at `http://localhost:8000`.
 
 ## 10.1.3. API Reference
 
-**Base URL**: `http://localhost:5000`
+**Base URL**: `http://localhost:8000`
 
 ### Authentication
 *   **Login**: `POST /api/login` (Body: `username`, `password`) -> Returns Tokens.
@@ -83,7 +83,7 @@ Tool used: **Postman**
 
 **1. Register User**
 *   **Method:** `POST`
-*   **URL:** `http://localhost:5000/api/users/register`
+*   **URL:** `http://localhost:8000/api/users/register`
 *   **Body** (Select `raw` -> `JSON`):
     ```json
     {
@@ -108,7 +108,7 @@ Tool used: **Postman**
 
 **10.2.2 Login**
 *   **Method:** `POST`
-*   **URL:** `http://localhost:5000/api/login`
+*   **URL:** `http://localhost:8000/api/login`
 *   **Body** (Select `raw` -> `JSON`):
     ```json
     {
@@ -132,7 +132,7 @@ Tool used: **Postman**
 
 **Create Task (Valid)**
 *   **Method:** `POST`
-*   **URL:** `http://localhost:5000/api/tasks`
+*   **URL:** `http://localhost:8000/api/tasks`
 *   **Authorization:** Select Type **Bearer Token** and paste the token from the login step.
 *   **Body** (Select `raw` -> `JSON`):
     ```json
@@ -169,7 +169,7 @@ Tool used: **Postman**
 
 **Create Task (Invalid Deadline)**
 *   **Method:** `POST`
-*   **URL:** `http://localhost:5000/api/tasks`
+*   **URL:** `http://localhost:8000/api/tasks`
 *   **Authorization:** Select Type **Bearer Token** and paste the token.
 *   **Body** (Select `raw` -> `JSON`):
     ```json

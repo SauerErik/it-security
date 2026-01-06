@@ -42,7 +42,7 @@ export default function CreateGroup({ userId, onCancel, onAddGroup }) {
 
     try {
       // 1️⃣ Create the group
-      const res = await fetch("http://localhost:5000/api/groups", {
+      const res = await fetch("http://localhost:8000/api/groups", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
