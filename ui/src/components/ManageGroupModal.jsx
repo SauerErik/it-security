@@ -10,7 +10,7 @@ export default function ManageGroupModal({ group, onClose, onUpdate }) {
       try {
         setLoading(true);
         const data = await fetchWithToken(
-          `http://localhost:5000/api/groups/${group.id}/members`
+          `http://localhost:8000/api/groups/${group.id}/members`
         );
 
         setMembers(data.members || []);
@@ -30,7 +30,7 @@ export default function ManageGroupModal({ group, onClose, onUpdate }) {
 
     try {
       await fetchWithToken(
-        `http://localhost:5000/api/groups/${group.id}/kick`,
+        `http://localhost:8000/api/groups/${group.id}/kick`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -53,7 +53,7 @@ export default function ManageGroupModal({ group, onClose, onUpdate }) {
 
     try {
       await fetchWithToken(
-        `http://localhost:5000/api/groups/${group.id}/add-admin`,
+        `http://localhost:8000/api/groups/${group.id}/add-admin`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

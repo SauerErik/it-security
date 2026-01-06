@@ -38,7 +38,7 @@ export default function App2({ token, userId, onLogout }) {
     if (!userId) return;
     try {
       // Use the imported fetchWithToken which already returns JSON
-      const data = await fetchWithToken(`http://localhost:5000/api/tasks`);
+      const data = await fetchWithToken(`http://localhost:8000/api/tasks`);
 
       const newCols = { todo: [], inProgress: [], done: [], expired: [] };
       data.forEach((task) => {
@@ -59,7 +59,7 @@ export default function App2({ token, userId, onLogout }) {
   const fetchGroups = useCallback(async () => {
     if (!userId) return;
     try {
-      const data = await fetchWithToken(`http://localhost:5000/api/groups/user/${userId}`);
+      const data = await fetchWithToken(`http://localhost:8000/api/groups/user/${userId}`);
       setGroups(data);
     } catch (err) {
       console.error("Failed to fetch groups:", err);
@@ -68,7 +68,7 @@ export default function App2({ token, userId, onLogout }) {
 
   const handleAddTask = async (newTask) => {
     try {
-      const data = await fetchWithToken(`http://localhost:5000/api/tasks`, {
+      const data = await fetchWithToken(`http://localhost:8000/api/tasks`, {
         method: "POST",
         body: JSON.stringify(newTask),
       });
@@ -89,7 +89,7 @@ export default function App2({ token, userId, onLogout }) {
   const handleUpdateTask = async (updatedTask) => {
     try {
       const data = await fetchWithToken(
-        `http://localhost:5000/api/tasks/${updatedTask.id}`,
+        `http://localhost:8000/api/tasks/${updatedTask.id}`,
         {
           method: "PUT",
           body: JSON.stringify(updatedTask),
@@ -115,7 +115,7 @@ export default function App2({ token, userId, onLogout }) {
 
   const handleJoinGroup = async (groupId) => {
     try {
-      await fetchWithToken(`http://localhost:5000/api/groups/join`, {
+      await fetchWithToken(`http://localhost:8000/api/groups/join`, {
         method: "POST",
         body: JSON.stringify({ user_id: userId, group_id: groupId }),
       });
@@ -168,7 +168,7 @@ export default function App2({ token, userId, onLogout }) {
 
     // Update backend
     try {
-      await fetchWithToken(`http://localhost:5000/api/tasks/${draggableId}`, {
+      await fetchWithToken(`http://localhost:8000/api/tasks/${draggableId}`, {
         method: "PUT",
         body: JSON.stringify({ status: destination.droppableId }),
       });
@@ -195,7 +195,7 @@ export default function App2({ token, userId, onLogout }) {
       const refreshToken = localStorage.getItem("refresh_token");
       if (!refreshToken) return;
       try {
-        const res = await fetch("http://localhost:5000/api/refresh", {
+        const res = await fetch("http://localhost:8000/api/refresh", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ refresh_token: refreshToken }),

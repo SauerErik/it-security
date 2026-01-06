@@ -25,6 +25,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy build output
 COPY --from=build /app/dist /usr/share/nginx/html
 
+COPY --from=build /app/assets /usr/share/nginx/html/assets
+
 # Expose nginx port
 EXPOSE 80
 

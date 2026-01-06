@@ -17,7 +17,7 @@ export default function EditTaskModal({ task, onSave, onCancel, userId, onUpdate
   useEffect(() => {
     async function fetchGroups() {
       try {
-        const data = await fetchWithToken(`http://localhost:5000/api/groups/user/${userId}`);
+        const data = await fetchWithToken(`http://localhost:8000/api/groups/user/${userId}`);
         setGroups(data.filter(g => g.role));
       } catch (err) {
         console.error("Failed to fetch groups:", err);

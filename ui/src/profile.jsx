@@ -19,7 +19,7 @@ export default function Profile({ userId, onClose, onUpdate }) {
 
   const fetchGroups = async () => {
     try {
-      const dataGroup = await fetchWithToken(`http://localhost:5000/api/groups/user/${userId}`);
+      const dataGroup = await fetchWithToken(`http://localhost:8000/api/groups/user/${userId}`);
 
       setAdminGroups(dataGroup.filter((g) => g.role === "admin"));
       setJoinedGroups(dataGroup.filter((g) => g.role !== "admin"));
@@ -32,7 +32,7 @@ export default function Profile({ userId, onClose, onUpdate }) {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const dataUser = await fetchWithToken(`http://localhost:5000/api/users/${userId}`);
+        const dataUser = await fetchWithToken(`http://localhost:8000/api/users/${userId}`);
 
         setUser(dataUser);
         setForm({
@@ -63,7 +63,7 @@ export default function Profile({ userId, onClose, onUpdate }) {
         faculty: form.faculty,
       };
 
-      const data = await fetchWithToken(`http://localhost:5000/api/users/${userId}`, {
+      const data = await fetchWithToken(`http://localhost:8000/api/users/${userId}`, {
         method: "PUT",
         body: JSON.stringify(payload),
       });
@@ -79,7 +79,7 @@ export default function Profile({ userId, onClose, onUpdate }) {
 
   const handleLeaveGroup = async (groupId) => {
     try {
-      const data = await fetchWithToken(`http://localhost:5000/api/groups/${groupId}/leave`, {
+      const data = await fetchWithToken(`http://localhost:8000/api/groups/${groupId}/leave`, {
         method: "POST",
       });
 

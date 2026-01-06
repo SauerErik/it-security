@@ -30,7 +30,7 @@ export default function CreateTask({ userId, onCancel, onAddTask }) {
 
     if (!refreshToken) throw new Error("Session expired. Please log in again.");
 
-    const refreshRes = await fetch("http://localhost:5000/api/refresh", {
+    const refreshRes = await fetch("http://localhost:8000/api/refresh", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh_token: refreshToken }),
@@ -56,7 +56,7 @@ export default function CreateTask({ userId, onCancel, onAddTask }) {
     async function fetchGroups() {
       try {
         const res = await fetchWithToken(
-          `http://localhost:5000/api/groups/user/admin/${userId}`
+          `http://localhost:8000/api/groups/user/admin/${userId}`
         );
         const data = await res.json();
         if (res.ok) setGroups(data.filter((g) => g.role));

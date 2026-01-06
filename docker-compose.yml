@@ -48,6 +48,20 @@ services:
     networks:
       - appnetwork
 
+  ui:
+    build: ./ui
+    container_name: ui
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+      - app
+      - keycloak
+    networks:
+      - appnetwork
+    profiles:
+      - dev
+
   app:
     build: ./backend
     container_name: python_app
@@ -57,14 +71,11 @@ services:
       - db
       - keycloak
     environment:
-      # uses .env oder defaults for CI/docker
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
       POSTGRES_DB: ${POSTGRES_DB:-StudyConnect}
       POSTGRES_HOST: ${POSTGRES_HOST:-db}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-
-      # uses .env oder defaults for CI/docker
       KEYCLOAK_SERVER_URL: ${KEYCLOAK_SERVER_URL:-http://keycloak:8080}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-StudyConnectRealm}
       KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-studyconnect-backend}
@@ -75,6 +86,23 @@ services:
       - appnetwork
     profiles:
       - dev
+
+  gatling:
+    image: denvazh/gatling:latest
+    container_name: gatling
+    depends_on:
+      - app
+    networks:
+      - appnetwork
+    volumes:
+      - ./gatling/simulations:/opt/gatling/user-files/simulations
+      - ./gatling/resources:/opt/gatling/user-files/resources
+      - ./gatling/results:/opt/gatling/results
+    command: >
+      -s ApiSimulation
+    profiles:
+      - test
+
 
 volumes:
   db-data:

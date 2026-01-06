@@ -564,26 +564,66 @@ def test_get_tasks_for_specific_user_endpoint(mock_get_tasks, mock_keycloak_open
     assert data[0]['title'] == 'Test Task'
     mock_get_tasks.assert_called_once_with(target_user_id)
 
-# Temporarily disabled - this test fails due to a complex mock interaction during teardown.
-# We will re-enable and fix it later.
+
 @patch('backend.auth.keycloak_openid')
+@patch('backend.api.keycloak_openid')
 @patch('backend.api.db.session.get')
 @patch('backend.api.user_service.get_or_create_user_from_keycloak')
-def xtest_get_user_creates_local_user_if_missing(mock_get_or_create, mock_db_get, mock_keycloak_openid, client):
+def test_get_user_creates_local_user_if_missing(mock_get_or_create, mock_db_get, mock_api_openid, mock_auth_openid, client):
     """
     Tests that the GET /api/users/<user_id> endpoint creates a local user if they only exist in Keycloak.
     """
-    pass # Test is currently disabled by renaming it with 'xtest_'
+    user_id = "missing-user-id"
+    token = "valid-token"
 
-# Temporarily disabled - this test fails due to a complex mock interaction during teardown.
-# We will re-enable and fix it later.
+    # 1. Mock authentication (Decorator)
+    mock_auth_openid.userinfo.return_value = {"sub": user_id}
+
+    # 2. Mock DB to return None (User not found locally)
+    mock_db_get.return_value = None
+
+    # 3. Mock API Keycloak client to return user info matching the requested ID
+    mock_api_openid.userinfo.return_value = {"sub": user_id, "preferred_username": "new_user", "email": "new@test.com"}
+
+    # 4. Mock service to return the created user
+    mock_get_or_create.return_value = DummyUser(id=user_id, username="new_user", email="new@test.com")
+
+    # 5. Call endpoint
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.get(f"/api/users/{user_id}", headers=headers)
+
+    # 6. Assert
+    assert response.status_code == 200
+    data = response.get_json()
+    assert data["id"] == user_id
+    mock_get_or_create.assert_called_once()
+
 @patch('backend.auth.keycloak_openid')
+@patch('backend.api.keycloak_openid')
 @patch('backend.api.db.session.get')
-def xtest_get_user_not_found_in_db_or_keycloak(mock_db_get, mock_keycloak_openid, client):
+def test_get_user_not_found_in_db_or_keycloak(mock_db_get, mock_api_openid, mock_auth_openid, client):
     """
     Tests the 404 error path when a user is not found in the local DB and the authenticated user does not match the requested user_id.
     """
-    pass # Test is currently disabled by renaming it with 'xtest_'
+    user_id = "missing-user-id"
+    token = "valid-token"
+
+    # 1. Mock authentication (Decorator)
+    mock_auth_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+
+    # 2. Mock DB to return None
+    mock_db_get.return_value = None
+
+    # 3. Mock API Keycloak client to return info for the requesting user (mismatching the requested user_id)
+    mock_api_openid.userinfo.return_value = {"sub": "requesting-user-id"}
+
+    # 4. Call endpoint
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.get(f"/api/users/{user_id}", headers=headers)
+
+    # 5. Assert
+    assert response.status_code == 404
+    assert "User not found" in response.get_json()["error"]
 
 # New test to increase coverage
 @patch('backend.auth.keycloak_openid')
@@ -1095,3 +1135,77 @@ def test_get_group_members_with_orphaned_membership(mock_db_get, mock_keycloak_o
     # Only the valid member should be in the list
     assert len(data["members"]) == 1
     assert data["members"][0]["id"] == "valid-member"
+
+# Tests for populate_keycloak_users function
+@patch('backend.api.keycloak_admin')
+@patch('backend.api.UserService')
+def test_populate_keycloak_users(mock_UserService, mock_keycloak_admin):
+    """
+    Tests the helper function that syncs Keycloak users to the local DB.
+    """
+    from backend.api import populate_keycloak_users
+    
+    # 1. Setup mocks
+    mock_keycloak_admin.get_users.return_value = [
+        {"id": "u1", "username": "user1", "email": "e1@test.com"},
+        {"id": "u2", "sub": "u2_sub", "username": "user2", "email": "e2@test.com"}, # Test 'sub' fallback
+        {"username": "no_id"} # Should be skipped
+    ]
+    
+    mock_service_instance = mock_UserService.return_value
+    
+    # 2. Run function
+    populate_keycloak_users()
+    
+    # 3. Assert
+    assert mock_keycloak_admin.get_users.called
+    assert mock_service_instance.get_or_create_user_from_keycloak.call_count == 2
+
+# Tests fallback logic for get_groups_for_specific_admin_user
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.keycloak_openid')
+@patch('backend.api.db.session.get')
+@patch('backend.api.user_service.get_or_create_user_from_keycloak')
+@patch('backend.api.get_groups_for_user')
+def test_get_admin_groups_fallback(mock_get_groups, mock_get_or_create, mock_db_get, mock_api_openid, mock_auth_openid, client):
+    """
+    Tests GET /api/groups/user/admin/<user_id> when user is not in local DB but valid in Keycloak.
+    """
+    user_id = "admin-user"
+    token = "token"
+    
+    # Mocks
+    mock_auth_openid.userinfo.return_value = {"sub": user_id}
+    mock_db_get.return_value = None # Not in DB
+    mock_api_openid.userinfo.return_value = {"sub": user_id} # Token matches
+    
+    user = DummyUser(id=user_id)
+    mock_get_or_create.return_value = user
+    
+    # Groups setup
+    g1 = DummyGroup()
+    g1.group_memberships = [type('DummyMembership', (object,), {'user_id': user_id, 'role': 'admin'})()]
+    mock_get_groups.return_value = [g1]
+    
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.get(f"/api/groups/user/admin/{user_id}", headers=headers)
+    
+    assert response.status_code == 200
+    assert len(response.get_json()) == 1
+    mock_get_or_create.assert_called()
+
+# Tests exception handling for get_groups_for_specific_admin_user
+@patch('backend.auth.keycloak_openid')
+@patch('backend.api.db.session.get')
+def test_get_admin_groups_exception(mock_db_get, mock_auth_openid, client):
+    """
+    Tests that GET /api/groups/user/admin/<user_id> handles exceptions correctly.
+    """
+    mock_auth_openid.userinfo.return_value = {"sub": "u1"}
+    mock_db_get.side_effect = Exception("DB Error")
+    
+    headers = {"Authorization": "Bearer token"}
+    response = client.get("/api/groups/user/admin/u1", headers=headers)
+    
+    assert response.status_code == 500
+    assert "DB Error" in response.get_json()["error"]

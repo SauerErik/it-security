@@ -29,7 +29,7 @@
 
 **StudyConnect API** is a backend service built with Flask that interacts with PostgreSQL and Keycloak for authentication. It provides endpoints for managing users, tasks, and groups in a collaborative environment.
 
-**Base URL:** `http://localhost:5000/api`
+**Base URL:** `http://localhost:8000/api`
 
 **Authentication:**
 - Keycloak tokens are required for protected endpoints.
