@@ -6,7 +6,7 @@ class ApiSimulation extends Simulation {
 
   // 1. HTTP Protocol Configuration
   val httpProtocol = http
-    .baseUrl("http://localhost:8000") // Base URL of the Flask API
+    .baseUrl("http://app:8000") // Base URL of the Flask API
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
 
@@ -24,25 +24,34 @@ class ApiSimulation extends Simulation {
     // Step A: Register a new user
     .exec(http("Register User")
       .post("/api/users/register")
-      .body(StringBody("""{
-        "firstName": "Load",
-        "lastName": "Tester",
-        "username": "#{username}",
-        "email": "#{email}",
-        "password": "#{password}",
-        "birthday": "2000-01-01",
-        "faculty": "Engineering"
-      }""")).asJson
+      .body( StringBody { session =>
+            s"""
+            {
+              "firstName": "Load",
+              "lastName": "Tester",
+              "username": "${session("username").as[String]}",
+              "email": "${session("email").as[String]}",
+              "password": "${session("password").as[String]}",
+              "birthday": "2000-01-01",
+              "faculty": "Engineering"
+            }
+            """
+          }
+        ).asJson
       .check(status.is(201))
     )
     .pause(1) // Think time
     // Step B: Login to get Token
     .exec(http("Login")
       .post("/api/login")
-      .body(StringBody("""{
-        "username": "#{username}",
-        "password": "#{password}"
-      }""")).asJson
+      .body(StringBody { session =>
+            s"""
+            {
+              "username": "${session("username").as[String]}",
+              "password": "${session("password").as[String]}"
+            }
+            """
+          }).asJson
       .check(status.is(200))
       .check(jsonPath("$.access_token").saveAs("authToken"))
     )
@@ -51,16 +60,16 @@ class ApiSimulation extends Simulation {
     .repeat(3) { // Repeat a few times per user
       exec(http("Get Tasks")
         .get("/api/tasks")
-        .header("Authorization", "Bearer #{authToken}")
+         .header("Authorization", session => s"Bearer ${session("authToken").as[String]}")
         .check(status.is(200))
       )
       .pause(1)
       .exec(http("Create Task")
         .post("/api/tasks")
-        .header("Authorization", "Bearer #{authToken}")
+         .header("Authorization", session => s"Bearer ${session("authToken").as[String]}")
         .body(StringBody("""{
           "title": "Load Test Task",
-          "deadline": "2025-12-31",
+          "deadline": "2055-12-31",
           "kind": "Homework",
           "priority": "medium"
         }""")).asJson
@@ -82,11 +91,9 @@ class ApiSimulation extends Simulation {
   )
 
   // Profile B: Constant Load (Stability Test)
-  /*
-  setUp(
-    scn.inject(
-      constantUsersPerSec(2).during(30.seconds) // 2 users per second for 30 seconds
-    ).protocols(httpProtocol)
-  )
-  */
+  // setUp(
+  //   scn.inject(
+  //     constantUsersPerSec(2).during(30.seconds) // 2 users per second for 30 seconds
+  //   ).protocols(httpProtocol)
+  // )
 }

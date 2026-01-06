@@ -81,6 +81,7 @@ System Volume Information/
 *.log
 logs/
 log/
+gatling/results
 
 # ------------------------------
 # Archives (generic)
