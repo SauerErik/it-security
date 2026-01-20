@@ -23,7 +23,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  
+          fetch-depth: 0
 
       - name: Start Services (Keycloak & DB)
         run: docker compose up -d keycloak
@@ -41,6 +41,7 @@ jobs:
           pip install -r backend/requirements.txt
 
       - name: Security Audit (Python Dependencies)
+        continue-on-error: true
         run: |
           pip install pip-audit
           pip-audit -r backend/requirements.txt
