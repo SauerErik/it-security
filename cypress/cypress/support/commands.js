@@ -36,3 +36,34 @@ Cypress.Commands.add("login", () => {
   cy.get(loginButtonElement).click();
   cy.wait(250);
 });
+
+Cypress.Commands.add("createTask", (task, shouldBeDisabled = false) => {
+  const taskTitleElement =
+    "#root > div > div.modal-overlay > div > div > form > div:nth-child(1) > input";
+  const taskDeadlineElement =
+    "#root > div > div.modal-overlay > div > div > form > div:nth-child(2) > input";
+  const taskKindElement =
+    "#root > div > div.modal-overlay > div > div > form > div:nth-child(3) > select";
+  const taskPrioElement =
+    "#root > div > div.modal-overlay > div > div > form > div:nth-child(4) > select";
+
+  cy.get("#root > div > div.button-container > button:nth-child(1)").click();
+
+  if (task.title) cy.get(taskTitleElement).type(task.title);
+
+  if (task.deadline) cy.get(taskDeadlineElement).type(task.deadline);
+
+  if (task.kind) cy.get(taskKindElement).select(task.kind);
+
+  if (task.priority) cy.get(taskPrioElement).select(task.priority);
+
+  if (shouldBeDisabled) {
+    cy.get(
+      "#root > div > div.modal-overlay > div > div > form > div.form-buttons.mt-4.flex.gap-2 > button.btn-primary.flex-1",
+    ).should("be.disabled");
+  } else {
+    cy.get(
+      "#root > div > div.modal-overlay > div > div > form > div.form-buttons.mt-4.flex.gap-2 > button.btn-primary.flex-1",
+    ).click();
+  }
+});

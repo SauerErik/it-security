@@ -7,7 +7,6 @@ module.exports = defineConfig({
     },
     baseUrl: "http://localhost:8080",
   },
-
   env: {
     login_name: "cypress_user",
     login_password: "super-secret_cypress_password123",

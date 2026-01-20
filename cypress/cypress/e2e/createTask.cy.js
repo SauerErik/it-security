@@ -10,35 +10,29 @@ describe("Test basics", () => {
     kind: "homework",
     priority: "medium",
   };
+
+  const taskFail = {
+    title: "",
+    deadline: new Date("2000-01-01").toISOString().split("T")[0],
+    kind: "homework",
+    priority: "medium",
+  };
+
   const newTaskElement =
     "#root > div > div.kanban-board > div:nth-child(1) > div > div > div";
 
-  const taskTitleElement =
-    "#root > div > div.modal-overlay > div > div > form > div:nth-child(1) > input";
-  const taskDeadlineElement =
-    "#root > div > div.modal-overlay > div > div > form > div:nth-child(2) > input";
-  const taskKindElement =
-    "#root > div > div.modal-overlay > div > div > form > div:nth-child(3) > select";
-  const taskPrioElement =
-    "#root > div > div.modal-overlay > div > div > form > div:nth-child(4) > select";
+  it("Create fail task", () => {
+    cy.get(newTaskElement).should("not.exist");
+    cy.createTask(taskFail, true);
+    cy.get(
+      "#root > div > div.modal-overlay > div > div > form > div.form-buttons.mt-4.flex.gap-2 > button.btn-cancel.flex-1",
+    ).click();
+    cy.get(newTaskElement).should("not.exist");
+  });
+
   it("Create task", () => {
     cy.get(newTaskElement).should("not.exist");
-
-    // Create new task
-    cy.get("#root > div > div.button-container > button:nth-child(1)").click();
-
-    cy.get(taskTitleElement).type(task.title);
-
-    cy.get(taskDeadlineElement).type(task.deadline);
-
-    cy.get(taskKindElement).select(task.kind);
-
-    cy.get(taskPrioElement).select(task.priority);
-
-    cy.get(
-      "#root > div > div.modal-overlay > div > div > form > div.form-buttons.mt-4.flex.gap-2 > button.btn-primary.flex-1",
-    ).click();
-
+    cy.createTask(task);
     cy.get(newTaskElement).should("be.visible");
   });
 
