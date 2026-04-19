@@ -39,18 +39,18 @@ Rationale Begründung: Statische Code-Analyse versteht keine Geschäftslogik. Ei
 
 
 ### Gate 4: Mandatory Security Peer Review Gate 
-Implementierung: GitHub Branch Protection Rules erfordern mindestens ein Code-Review von einem designierten "Security Champion" im Team, sobald Änderungen an auth.py, api.py oder services.py vorgenommen werden. Dazu wird eine verbindliche Checkliste genutzt.
+Implementierung: GitHub Branch Protection Rules erfordern mindestens ein Code-Review von einem designierten "Head of Security" im Team, sobald Änderungen an auth.py, api.py oder services.py vorgenommen werden. Dazu wird eine verbindliche Checkliste genutzt.
 Rationale Begründung: Schwachstellen wie IDOR (Insecure Direct Object Reference) lassen sich oft nur durch menschliches Verständnis der Berechtigungslogik finden. Dieses Gate stellt sicher, dass Autorisierungsprüfungen niemals übersehen werden.
 
 ## Security Aktivitäten in den SDLC Phasen
 | SDLC Phase | Security Aktivität | Methode/ Tool |
 |------------|--------------------|---------------|
-| 1. Requirements | Threat Modeling | Erstellung eines STRIDE-Modells für neue Features |
-| 2. Design | Secure Architecture Review | Überprüfung der API-Endpunkte auf "Secure by Design" |
+| 1. Requirements | Threat Modeling | Erstellung eines STRIDE-Modells für neue Features, Anforderungen des CRA für das Projekt definieren |
+| 2. Design | Secure Architecture Review | Überprüfung der API-Endpunkte auf "Secure by Design", Anpassung d. Systemarchitektur |
 | 3. Implementation | Linting & Secret Scanning | Nutzung von Pre-commit-Hooks; Einsatz von TruffleHog/Gitleaks zur Verhinderung von hartkodierten Credentials. |
 | 4. Testing | SAST, SCA & DAST | SonarQube (SAST), Trivy (Container/SCA) und OWASP ZAP (DAST) in der CI-Pipeline. |
 | 5. Deployment | IaC Scanning | Überprüfung der Konfiguration (Dockerfiles, Kubernetes Manifests) auf Sicherheitslücken vor dem Build. |
-| 6. Maintenance | Vulnerability Monitoring | Kontinuierliche Überwachung der Abhängigkeiten; Logging/Auditing zur Erkennung aktiver Angriffe. |
+| 6. Maintenance | Vulnerability Monitoring | Kontinuierliche Überwachung der Abhängigkeiten; Logging/Auditing zur Erkennung aktiver Angriffe; Nutzung von CI/CD-Piplines |
 
 ## Governance Rules
 Um zu verhindern, dass Security Gates den Entwicklungsprozess blockieren, während gleichzeitig die Sicherheit gewahrt bleibt, definieren wir folgendes "Break-Glass"-Protokoll.
@@ -61,7 +61,7 @@ Diese Regelung definiert die Bedingungen, unter denen Security Gates (SAST, SCA,
 
 ### 2. Autorisierte Rollen
 Ein Override darf nur von folgenden Personen genehmigt werden:
-- Security Champion: Autorisierung bei False-Positives oder nicht-kritischen Fehlern.
+- Head of Security: Autorisierung bei False-Positives oder nicht-kritischen Fehlern.
 - Lead Architect/Projektleiter: Zwingend erforderlich bei "Critical/High"-Sicherheitswarnungen oder in Produktionsnotfällen.
 
 ### 3. Bedingungen für einen Override
