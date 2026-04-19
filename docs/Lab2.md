@@ -43,10 +43,39 @@ Implementierung: GitHub Branch Protection Rules erfordern mindestens ein Code-Re
 Rationale Begründung: Schwachstellen wie IDOR (Insecure Direct Object Reference) lassen sich oft nur durch menschliches Verständnis der Berechtigungslogik finden. Dieses Gate stellt sicher, dass Autorisierungsprüfungen niemals übersehen werden.
 
 ## Security Aktivitäten in den SDLC Phasen
-...
+| SDLC Phase | Security Aktivität | Methode/ Tool |
+|------------|--------------------|---------------|
+| 1. Requirements | Threat Modeling | Erstellung eines STRIDE-Modells für neue Features |
+| 2. Design | Secure Architecture Review | Überprüfung der API-Endpunkte auf "Secure by Design" |
+| 3. Implementation | Linting & Secret Scanning | Nutzung von Pre-commit-Hooks; Einsatz von TruffleHog/Gitleaks zur Verhinderung von hartkodierten Credentials. |
+| 4. Testing | SAST, SCA & DAST | SonarQube (SAST), Trivy (Container/SCA) und OWASP ZAP (DAST) in der CI-Pipeline. |
+| 5. Deployment | IaC Scanning | Überprüfung der Konfiguration (Dockerfiles, Kubernetes Manifests) auf Sicherheitslücken vor dem Build. |
+| 6. Maintenance | Vulnerability Monitoring | Kontinuierliche Überwachung der Abhängigkeiten; Logging/Auditing zur Erkennung aktiver Angriffe. |
 
 ## Governance Rules
-...
+Um zu verhindern, dass Security Gates den Entwicklungsprozess blockieren, während gleichzeitig die Sicherheit gewahrt bleibt, definieren wir folgendes "Break-Glass"-Protokoll.
+Policy: Security Gate Override & Emergency Exception
+
+### 1. Zweck
+Diese Regelung definiert die Bedingungen, unter denen Security Gates (SAST, SCA, DAST) umgangen werden dürfen, um den Betrieb sicherzustellen, ohne die Integrität von StudyConnect zu gefährden.
+
+### 2. Autorisierte Rollen
+Ein Override darf nur von folgenden Personen genehmigt werden:
+- Security Champion: Autorisierung bei False-Positives oder nicht-kritischen Fehlern.
+- Lead Architect/Projektleiter: Zwingend erforderlich bei "Critical/High"-Sicherheitswarnungen oder in Produktionsnotfällen.
+
+### 3. Bedingungen für einen Override
+Ein Override ist nur zulässig bei:
+- False Positive: Ein Tool meldet eine Schwachstelle, die nach manueller Prüfung als nicht ausnutzbar identifiziert wurde.
+- Operativer Notfall: Ein kritischer Produktionsfehler (z.B. Systemausfall) erfordert einen sofortigen Fix, und das Security Gate verhindert den Deployment-Prozess.
+-  Akzeptiertes Risiko: Eine bewusste Entscheidung des Managements, ein Risiko für einen definierten Zeitraum in Kauf zu nehmen, bis eine endgültige Lösung implementiert ist.
+
+### 4. Post-Override Anforderungen
+Wird ein Gate umgangen, sind folgende Schritte für die CRA-Compliance verpflichtend:
+- Dokumentation: Ein "Security Exception Ticket" muss im Issue-Tracker (GitHub Issues) erstellt werden.
+- Begründung: Das Ticket muss eine Risikoanalyse, den Grund für den Override und die Identität des Genehmigenden enthalten.
+- Remediation-Plan: Es muss eine Folgeaufgabe mit einer maximalen Frist von 14 Tagen erstellt werden, um das zugrundeliegende Sicherheitsproblem zu beheben.
+- Audit-Trail: Alle Overrides müssen in der Historie der CI/CD-Pipeline zur transparenten Nachverfolgung protokolliert sein.
 
 ## CRA Compliance Assessment, Bewertung der Cyber Resilience Act Konformität
 Der europäische Cyber Resilience Act (CRA) fordert für Produkte mit digitalen Elementen grundlegende Cybersecurity-Standards, insbesondere "Secure by default", den Umgang mit Schwachstellen und Transparenz.
