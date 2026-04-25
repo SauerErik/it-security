@@ -1,8 +1,7 @@
 # Security & Privacy Requirements Report: StudyConnect
 
-## Sicherheits kritischte Feature
-Unserer Ansicht nach ist das Anzeigen der Taskübersicht [(User Story 3)](./use-cases/uc-003.md) das wichtigste Feature, das auf jeden Fall nach dem Requirement (SEC-REQ-01) implementiert werden muss.
-Den Grund dafür sehen wir im Datenschutz, da unser Produkt private Informationen speichert, muss die Applikation diese Informationen vor Fremdzugriff schützen.
+## Sicherheitskritisches Feature
+Wir bewerten die Anzeige der Aufgabenübersicht ([User Story 3](./use-cases/uc-003.md)) als das wichtigstes sicherheitskritisches Feature. Da die Anwendung private Informationen speichert, muss sie diese Daten vor unbefugtem Zugriff schützen. Deshalb hat die Umsetzung dieses Features Priorität und muss die Anforderungen aus SEC-REQ-01 erfüllen.
 
 ## 1. Testable Security Requirements (derived from CIA)
 Basierend auf den Prinzipien der Vertraulichkeit (Confidentiality), Integrität (Integrity) und Verfügbarkeit (Availability) wurden folgende 9 testbare Sicherheitsanforderungen für die StudyConnect-API definiert:
