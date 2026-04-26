@@ -1,3 +1,9 @@
+<p align="center">
+    <h>Tim Farnung, Dieter Grünke, Erik Sauer, Leonhard Schneider</h>
+</p>
+<p>Projekt: StudyConnect</p>
+
+# Lab3
 # Security & Privacy Requirements Report: StudyConnect
 
 ## Sicherheitskritisches Feature
