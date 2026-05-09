@@ -29,14 +29,19 @@ flowchart TD
     end
 
     %% Data Flows
-    User -- "1. Interacts with UI (Credentials, Task Data)" --> UI
-    UI -- "2. Auth Request (Username/Password)" --> KC
-    KC -- "3. Issues Access/Refresh Tokens (JWT)" --> UI
-    UI -- "4. API Calls (JSON + Bearer Token)" --> API
-    API -- "5. Token Validation & User Info" --> KC
-    API -- "6. Read/Write Data (SQL Queries)" --> DB
+    User -- "1. Interacts (Credentials, Task Data)" --> UI
+    
+    %% UI to API (All traffic goes through API in this codebase)
+    UI -- "2. HTTP Requests (Login, Register, API Calls + JWT)" --> API
+    API -- "3. HTTP Responses (JSON, Access/Refresh Tokens)" --> UI
+    
+    %% API to Keycloak (Auth Proxy & Admin Sync)
+    API -- "4. Auth/Refresh Requests & Admin Sync (Create User)" --> KC
+    KC -- "5. Tokens, User Info & Admin Responses" --> API
+    
+    %% API to Database (Persistence)
+    API -- "6. ORM Read/Write (SQL Queries)" --> DB
     DB -- "7. Return Result Sets" --> API
-    API -- "8. Return API Responses (JSON)" --> UI
 
     %% Styling for Trust Boundaries
     classDef boundary fill:none,stroke:#FF0000,stroke-width:2px,stroke-dasharray: 5 5;
@@ -44,9 +49,9 @@ flowchart TD
 ```
 
 **Identified Trust Boundaries:**
-*   **Trust Boundary 1 (Client to Network):** Separates the user's local browser environment (React UI) from the open internet. Data residing here (like tokens in `localStorage`) is highly susceptible to client-side attacks like XSS.
-*   **Trust Boundary 2 (Network to IAM):** Separates the public internet / application UI from the critical Identity and Access Management (Keycloak).
-*   **Trust Boundary 3 (Network to Backend API & DB):** Separates the public network from the internal business logic (Flask) and data persistence layer (PostgreSQL). The backend must not trust incoming API requests and must validate all inputs and JWTs.
+*   **Trust Boundary 1 (Client Environment):** Separates the user's local browser environment (React UI) from the backend network. Data residing here (like tokens in `localStorage`) is highly susceptible to client-side attacks like XSS.
+*   **Trust Boundary 2 (IAM System):** Protects the critical Identity and Access Management (Keycloak). Crucially, Keycloak is shielded from the public internet/UI; it only communicates server-to-server with the Flask API, which acts as an Auth Proxy and Admin Client.
+*   **Trust Boundary 3 (Backend API & DB):** Separates the public network from the internal business logic and data persistence. Because the API acts as a proxy for Keycloak, this boundary is the **sole** entry point for all traffic, handling both business data and plaintext login credentials. The backend must strictly validate all incoming payloads and JWTs.
 
 ## 2. Critical Assets
 For the Threat Modeling exercise, the following three primary assets have been identified which must be protected regarding Confidentiality, Integrity, and Availability:
