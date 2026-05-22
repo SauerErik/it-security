@@ -26,79 +26,131 @@ This report focuses on Risk R-02 identified in Lab 5: an Insecure Direct Object 
 
 ---
 
-## Refactored Code: secure `update_task_service`
+## Refactored Code diff: secure `update_task_service`
 
-The code below is a refactored, self-contained implementation for `update_task_service` that demonstrates the recommended mitigations:
+The diff below is a refactored, self-contained implementation for `update_task_service` that demonstrates the recommended mitigations:
 
 ```python
 def update_task_service(task_id, data, editor_user_id=None):
-    task = db.session.get(Task, task_id)
-    if not task:
-        raise Exception(f"Task with id {task_id} does not exist")
+task = db.session.get(Task, task_id)
+if not task:
+    raise Exception(f"Task with id {task_id} does not exist")
 
-    # 0) Require authenticated editor for any state-changing operation
-    if not editor_user_id:
-        raise PermissionError("Authentication required to modify tasks")
+-    # Pre-cleanup: The 'expired' status is a pure display state of the frontend
+-    # and must never be written to or validated by the database.
++    # Require authenticated editor for any state-changing operation
++    if not editor_user_id:
++        raise PermissionError("Authentication required to modify tasks")
++
++    editor = db.session.get(User, editor_user_id)
++    if not editor:
++        raise PermissionError("Editor user not found")
++
++    # Object-level authorization: editor must be the owner or a group admin
++    is_owner = (str(task.user_id) == str(editor_user_id))
++    is_group_admin = any(getattr(m, 'role', None) == 'admin' and getattr(m, 'group_id', None) == task.group_id for m in getattr(editor, 'group_memberships', []))
++    if not (is_owner or is_group_admin):
++        raise PermissionError("You are not allowed to modify this task")
++
++    # Field whitelist: only allow specific editable fields from client payload
++    allowed_fields = {'title', 'kind', 'priority', 'status', 'assignee', 'notes', 'progress', 'deadline'}
++    sanitized = {k: v for k, v in data.items() if k in allowed_fields and v is not None}
 
-    editor = db.session.get(User, editor_user_id)
-    if not editor:
-        raise PermissionError("Editor user not found")
++    # Prevent frontend-only display states from being written
++    if sanitized.get('status') == 'expired':
++        sanitized.pop('status', None)
+-    if data.get('status') == 'expired':
+-        del data['status']
 
-    # 1) Object-level authorization: editor must be owner or group-admin
-    is_owner = (str(task.user_id) == str(editor_user_id))
-    is_group_admin = any(getattr(m, 'role', None) == 'admin' and getattr(m, 'group_id', None) == task.group_id for m in editor.group_memberships)
-    if not (is_owner or is_group_admin):
-        raise PermissionError("You are not allowed to modify this task")
+    # Validate status transition
++    if 'status' in sanitized:
+-    if 'status' in data:
+-        # Normalize both the current and the new status to resolve inconsistencies
+    current_status = task.status.lower().replace("inprogress", "in_progress").replace ("expired", "todo")    
++    new_status = sanitized['status'].lower().replace("inprogress", "in_progress")
+-        # Convert the received status to lowercase to avoid case issues (e.g., inProgress vs. in_progress)
+-        new_status = data['status'].lower().replace("inprogress", "in_progress")
+-        # Save the corrected version back to the data so it is stored correctly
++        sanitized['status'] = new_status
+-        data['status'] = new_status
+-
+-        # Only validate the transition if the status actually changes.
+    if new_status != current_status and new_status not in VALID_STATUSES.get(current_status, []):
+        raise ValueError(f"Invalid status transition from {current_status} to {new_status}")
+        
+-        # Prevent a past-due task from being started
+    if new_status == 'in_progress' and task.deadline < date.today():
+        raise ValueError("Cannot start a task that is past its deadline.")
 
-    # 2) Field whitelist: only allow these editable fields from client payload
-    allowed_fields = {'title', 'kind', 'priority', 'status', 'assignee', 'notes', 'progress', 'deadline'}
-    sanitized = {k: v for k, v in data.items() if k in allowed_fields}
+-        # If a task is set to 'done', automatically set its progress to 100.
+    if new_status == 'done':
+        task.progress = 100
 
-    # Prevent frontend-only display states from being written
-    if sanitized.get('status') == 'expired':
-        sanitized.pop('status', None)
-
-    # 3) Validate normalized status and transitions
-    if 'status' in sanitized:
-        current_status = task.status.lower().replace("inprogress", "in_progress").replace("expired", "todo")
-        new_status = sanitized['status'].lower().replace("inprogress", "in_progress")
-        sanitized['status'] = new_status
-        if new_status != current_status and new_status not in VALID_STATUSES.get(current_status, []):
-            raise ValueError(f"Invalid status transition from {current_status} to {new_status}")
-        if new_status == 'in_progress' and task.deadline < date.today():
-            raise ValueError("Cannot start a task that is past its deadline.")
-        if new_status == 'done':
-            task.progress = 100
-
-    # 4) Validate simple scalar fields
-    if 'progress' in sanitized:
-        progress = sanitized['progress']
+    # Validate progress
+-    if 'progress' in data:
+-        progress = data['progress']
++    if 'progress' in sanitized:
++        progress = sanitized['progress']
         if not (0 <= progress <= 100):
             raise ValueError("Progress must be between 0 and 100")
 
-    if 'priority' in sanitized and sanitized['priority'] not in VALID_PRIORITIES:
-        raise ValueError(f"Invalid priority value. Must be one of: {VALID_PRIORITIES}")
+    # Validate priority
++     if 'priority' in sanitized and sanitized['priority'] not in VALID_PRIORITIES:
+-        if 'priority' in data:
+-        if data['priority'] not in VALID_PRIORITIES:
+-            raise ValueError(f"Invalid priority value. Must be one of: {VALID_PRIORITIES}")
++        raise ValueError(f"Invalid priority value. Must be one of: {VALID_PRIORITIES}")
 
-    # 5) Validate assignee membership server-side (if provided)
-    if 'assignee' in sanitized and sanitized['assignee'] is not None:
-        assignee = db.session.get(User, sanitized['assignee'])
++    # Validate assignee membership server-side (if provided)
+-    # Validate group assignment permission
+-    if data.get('group_id') is not None:
+-        if not editor_user_id:
+-            raise PermissionError("User ID is required to assign a task to a group.")
+-        
+-        editor = db.session.get(User, editor_user_id)
+-        if not any(m.group_id == data['group_id'] for m in editor.group_memberships):
+-            raise PermissionError("You can only assign tasks to groups you are a member of.")
+-
+-    # Validate assignee
+-    if data.get('assignee') is not None:
+-        assignee = db.session.get(User, data['assignee'])
++    if 'assignee' in sanitized and sanitized['assignee'] is not None:
++        assignee = db.session.get(User, sanitized['assignee'])
         if not assignee:
             raise ValueError("Assignee user not found")
-        target_group_id = task.group_id
-        if target_group_id and not any(m.group_id == target_group_id for m in assignee.group_memberships):
-            raise ValueError("Assignee must be member of the task's group")
+                
+-        # The group_id to check against is either the new one from `data` or the existing one on the task
+-        target_group_id = data.get('group_id', task.group_id)
+-        if target_group_id and not any(m.group_id == target_group_id for m in assignee.group_memberships):
+-            raise ValueError("Assignee must be member of the group")
++        target_group_id = task.group_id
++        if target_group_id and not any(m.group_id == target_group_id for m in getattr(assignee, 'group_memberships', [])):
++            raise ValueError("Assignee must be member of the task's group")
 
-    # 6) Apply sanitized updates only
-    for field, value in sanitized.items():
-        if field == 'deadline':
-            deadline_date = datetime.strptime(value, '%Y-%m-%d').date()
-            if deadline_date < date.today():
-                raise ValueError("Deadline cannot be in the past")
-            task.deadline = deadline_date
-        else:
-            setattr(task, field, value)
 
-    # 7) Persist and return
-    db.session.commit()
-    return task
++    # Apply sanitized updates only
++    for field, value in sanitized.items():
++        if field == 'deadline':
+-    # Update fields
+-    for field in ['title', 'kind', 'priority', 'status', 'user_id', 'group_id', 'assignee', 'notes', 'progress']:
+-        if field in data and data[field] is not None:
+-            setattr(task, field, data[field])
+-    
+-    if 'group_id' in data: # Explicitly handle group_id to allow 'None'
+-        task.group_id = data['group_id']
+-
+-    if 'deadline' in data:
+-        deadline_date = datetime.strptime(data['deadline'], '%Y-%m-%d').date()
+-        if deadline_date < date.today():
+-            raise ValueError("Deadline cannot be in the past")
+-        task.deadline = deadline_date
++        deadline_date = datetime.strptime(value, '%Y-%m-%d').date()
++        if deadline_date < date.today():
++            raise ValueError("Deadline cannot be in the past")
++        task.deadline = deadline_date
++    else:
++        setattr(task, field, value)
+
+db.session.commit()
+return task
 ```
