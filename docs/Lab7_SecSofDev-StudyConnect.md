@@ -10,6 +10,8 @@ Run once to install Semgrep
 ```sh
 pip install semgrep
 ```
+#### Scan repository
 ```sh
 semgrep --config=p/security-audit \--config=p/owasp-top-ten \--config=p/cwe-top-25 \--json --output=sast-results.json \.
 ```
+### Categorization of findings
