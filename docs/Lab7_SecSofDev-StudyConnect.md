@@ -63,5 +63,38 @@ Static analysis tools inherently struggle with complex business logic. The follo
 - **CWE-250 (Execution with Unnecessary Privileges in Docker):**
   - The SAST scan identified a critical security risk (containers running as `root`) that was not part of the Lab 5 Threat Model. The Threat Model focused heavily on application data flows (APIs, JWTs, DB) but overlooked infrastructure and container privileges.
 
-**Conclusion:** 
-This comparison highlights the necessity of a Defense in Depth strategy. SAST successfully finds configuration issues and infrastructure flaws (like Docker user privileges), but it completely misses business logic vulnerabilities (like IDOR). To achieve comprehensive security and CRA compliance, SAST must be combined with DAST, Secret Scanning, and Manual Code Reviews.
+### Manual Security Code Review (Business Logic Flaws)
+
+As demonstrated above, SAST tools fail to catch business logic and authorization flaws. A manual security code review identified the following high-risk areas that require remediation:
+
+| Finding | Category | Severity | SAST caught? | Fix |
+| :--- | :--- | :--- | :--- | :--- |
+| **IDOR at `GET /api/tasks/user/<user_id>`**<br>Any authenticated user can read the tasks of any other user. | Authentication & Authorization | **Critical** | No | Implement resource-level check: verify `request.user['sub'] == user_id`. |
+| **IDOR at `GET /api/groups/user/<user_id>`**<br>Foreign group memberships can be read without restriction. | Authentication & Authorization | **High** | No | Enforce match of token ID with requested URL parameter ID. |
+| **Logic flaw at `GET /api/groups/user/admin/<user_id>`**<br>Token is validated only if the user does *not* exist in the database yet. | Business Logic | **High** | No | Perform strict authorization BEFORE any database access. |
+| **Exposure of PII at `GET /api/users/<user_id>`**<br>Foreign user profiles (incl. email, birthday, faculty) are publicly accessible. | Data Protection | **Medium** | No | Restrict access to own profile or hide sensitive data for other users. |
+
+### Comparison: SAST vs. Manual Review
+
+**What SAST Found**
+SAST tools (like Semgrep) excel at identifying syntax errors, configuration issues, and infrastructure-level flaws. The scan successfully caught:
+*   **Privilege Management (CWE-250):** Docker containers configured to run as `root` instead of a non-privileged user.
+*   **Exposure of Resources (CWE-668):** Binding the Flask application to all network interfaces (`0.0.0.0`).
+*   **Active Debug Code (CWE-489):** Hardcoded test configurations (`TESTING = True`) in the codebase.
+
+**What SAST Missed & Manual Review Found**
+SAST tools inherently lack contextual awareness and cannot understand business logic or intended permission models. Manual code review successfully uncovered critical flaws that SAST missed:
+*   **Insecure Direct Object References (IDORs):** Endpoints only verified if a user was logged in, but failed to check if they actually owned the requested resource.
+*   **Business Logic Flaws:** Flawed token validation logic and missing cryptographic invite-link verifications.
+*   **Data Protection & PII Exposure:** Public exposure of sensitive user profile data.
+*   **Mass Assignment & Authorization Bypasses:** Allowing clients to override protected fields during updates.
+*   **Architectural Flaws:** Missing API rate limiting, hardcoded secrets in configurations, and insecure JWT storage in `localStorage`.
+
+### The Role of Cognitive Biases in Manual Reviews
+While manual reviews are crucial for catching business logic flaws, human reviewers are still susceptible to overlooking vulnerabilities due to cognitive biases. Common pitfalls include:
+*   **Author Bias / Confirmation Bias:** Reviewers examining their own code tend to see what they intended the code to do, mentally skipping over logic flaws because they assume the underlying concept is sound ("I wrote this, so I know how it works").
+*   **Automation Bias:** Over-relying on automated tools (like SAST) or AI assistants can lead to a false sense of security. If the tool reports no errors, reviewers might subconsciously lower their guard ("The scanner didn't complain, so it must be secure").
+*   **Halo Effect / Authority Bias:** Blindly trusting peers or senior developers reduces the rigor of the review. Reviewers might assume the author already considered security implications ("My teammate is a great developer, I'm sure this is correct").
+
+**Conclusion:**
+This comparison highlights the necessity of a Defense in Depth strategy. SAST is highly effective for identifying technical misconfigurations and infrastructure weaknesses, but **manual review is absolutely essential** for discovering business logic vulnerabilities, IDORs, and architectural design flaws. To achieve comprehensive security and CRA compliance, SAST must be combined with DAST, Secret Scanning, and Manual Code Reviews.
