@@ -63,7 +63,7 @@ Static analysis tools inherently struggle with complex business logic. The follo
 - **CWE-250 (Execution with Unnecessary Privileges in Docker):**
   - The SAST scan identified a critical security risk (containers running as `root`) that was not part of the Lab 5 Threat Model. The Threat Model focused heavily on application data flows (APIs, JWTs, DB) but overlooked infrastructure and container privileges.
 
-### Manual Security Code Review (Business Logic Flaws)
+### Manual Security Code Review
 
 As demonstrated above, SAST tools fail to catch business logic and authorization flaws. A manual security code review identified the following high-risk areas that require remediation:
 
@@ -74,27 +74,46 @@ As demonstrated above, SAST tools fail to catch business logic and authorization
 | **Logic flaw at `GET /api/groups/user/admin/<user_id>`**<br>Token is validated only if the user does *not* exist in the database yet. | Business Logic | **High** | No | Perform strict authorization BEFORE any database access. |
 | **Exposure of PII at `GET /api/users/<user_id>`**<br>Foreign user profiles (incl. email, birthday, faculty) are publicly accessible. | Data Protection | **Medium** | No | Restrict access to own profile or hide sensitive data for other users. |
 
-### Comparison: SAST vs. Manual Review
-
-**What SAST Found**
-SAST tools (like Semgrep) excel at identifying syntax errors, configuration issues, and infrastructure-level flaws. The scan successfully caught:
-*   **Privilege Management (CWE-250):** Docker containers configured to run as `root` instead of a non-privileged user.
-*   **Exposure of Resources (CWE-668):** Binding the Flask application to all network interfaces (`0.0.0.0`).
-*   **Active Debug Code (CWE-489):** Hardcoded test configurations (`TESTING = True`) in the codebase.
-
-**What SAST Missed & Manual Review Found**
-SAST tools inherently lack contextual awareness and cannot understand business logic or intended permission models. Manual code review successfully uncovered critical flaws that SAST missed:
-*   **Insecure Direct Object References (IDORs):** Endpoints only verified if a user was logged in, but failed to check if they actually owned the requested resource.
-*   **Business Logic Flaws:** Flawed token validation logic and missing cryptographic invite-link verifications.
-*   **Data Protection & PII Exposure:** Public exposure of sensitive user profile data.
-*   **Mass Assignment & Authorization Bypasses:** Allowing clients to override protected fields during updates.
-*   **Architectural Flaws:** Missing API rate limiting, hardcoded secrets in configurations, and insecure JWT storage in `localStorage`.
-
 ### The Role of Cognitive Biases in Manual Reviews
 While manual reviews are crucial for catching business logic flaws, human reviewers are still susceptible to overlooking vulnerabilities due to cognitive biases. Common pitfalls include:
 *   **Author Bias / Confirmation Bias:** Reviewers examining their own code tend to see what they intended the code to do, mentally skipping over logic flaws because they assume the underlying concept is sound ("I wrote this, so I know how it works").
 *   **Automation Bias:** Over-relying on automated tools (like SAST) or AI assistants can lead to a false sense of security. If the tool reports no errors, reviewers might subconsciously lower their guard ("The scanner didn't complain, so it must be secure").
 *   **Halo Effect / Authority Bias:** Blindly trusting peers or senior developers reduces the rigor of the review. Reviewers might assume the author already considered security implications ("My teammate is a great developer, I'm sure this is correct").
 
-**Conclusion:**
-This comparison highlights the necessity of a Defense in Depth strategy. SAST is highly effective for identifying technical misconfigurations and infrastructure weaknesses, but **manual review is absolutely essential** for discovering business logic vulnerabilities, IDORs, and architectural design flaws. To achieve comprehensive security and CRA compliance, SAST must be combined with DAST, Secret Scanning, and Manual Code Reviews.
+
+### Comparison: SAST vs. Manual Review
+ 
+| Vulnerability Category | SAST Scan (Semgrep) | Manual Security Code Review |
+| :--- | :--- | :--- |
+| **Infrastructure & Configuration** | **Caught:** Docker missing non-root user (CWE-250)<br> **Caught:** Flask bound to `0.0.0.0` (CWE-668) | **Missed** (Review focused on application logic rather than Dockerfiles) |
+| **Debug & Hardcoded Secrets** | **Caught:** Hardcoded `TESTING=True` in test files (CWE-489) | **Missed** (Often overlooked by humans due to context switching) |
+| **Authorization & IDOR** | **Missed** (Scanners cannot understand custom resource ownership or business rules) | **Caught:** Critical IDORs on `/api/tasks/user/<user_id>` and `/api/groups/user/<user_id>` |
+| **Business Logic Flaws** | **Missed** (Syntax was correct, so the scanner saw no issue) | **Caught:** Flawed token validation logic on `/api/groups/user/admin/<user_id>` |
+| **Data Protection / PII** | **Missed** (Scanners do not inherently know what data is considered sensitive PII) | **Caught:** Public exposure of sensitive profile data on `/api/users/<user_id>` |
+| **Primary Strengths** | Highly scalable, catches misconfigurations, syntax errors, and infrastructure flaws instantly. | Deep contextual awareness; understands intended permission models, roles, and business rules. |
+| **Primary Weaknesses** | Prone to false positives (e.g., flagging test files); completely blind to business logic. | Slow, not scalable, and susceptible to human cognitive biases (e.g., automation bias, review fatigue). |
+
+### Gaps (Tool Blind Spots vs. Human Context)
+When securing software, a fundamental gap exists between automated analysis and manual review.
+
+**What would only tools catch?**
+*   **Scale and Fatigue-based Errors:** Tools can scan millions of lines of code, complex dependency trees, and thousands of configuration files in seconds without losing focus.
+*   **Known Patterns & Syntax:** Scanners excel at finding hardcoded secrets via regex, identifying known CVEs in third-party libraries, and spotting syntax-level misconfigurations (e.g., missing security headers, weak cryptographic algorithms).
+
+**What would only humans catch?**
+*   **Business Logic & Authorization Flaws:** Only a human understands the intended permission model. A tool cannot know that user A shouldn't be able to view user B's tasks (IDOR), or that an admin token validation is implemented backward.
+*   **Contextual Data Sensitivity:** A scanner sees a JSON string being returned. A human reviewer understands the domain context and knows that returning a `birthday` field on a public profile violates privacy requirements (PII exposure).
+
+### Top 3 Findings & Proposed Fixes
+
+1. Insecure Direct Object Reference (IDOR) on Task Endpoints
+- see table "Manual Security Code Review"
+
+2. Logic flaw at token validation on `/api/groups/user/admin/<user_id>`
+- see table "Manual Security Code Review"
+
+3. Missing Non-Privileged User Definition in Dockerfiles
+- Fix: Modify the Dockerfiles to create a dedicated, unprivileged system user and group during the build process. Use the `USER` instruction in the Dockerfile to switch execution from `root` to this unprivileged user before the container's entrypoint command is executed.
+
+### Executive summary ###
+Although the StudyConnect codebase appears fundamentally solid, the current security posture requires immediate attention due to critical vulnerabilities in infrastructure configuration and application business logic. While automated SAST scanning successfully identified privilege management risks like Docker containers running as root, manual code reviews uncovered severe authorization flaws such as IDORs and public exposure of sensitive information. To achieve a secure and CRA-compliant state, we must remediate these high-risk findings.
