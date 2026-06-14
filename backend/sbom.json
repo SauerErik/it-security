@@ -1,0 +1,6015 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:e351d086-896a-4a7a-8920-242921edda23",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-06-14T18:51:44Z",
+    "tools": {
+      "components": [
+        {
+          "group": "@cyclonedx",
+          "name": "cdxgen",
+          "version": "12.6.0",
+          "purl": "pkg:npm/%40cyclonedx/cdxgen@12.6.0",
+          "type": "application",
+          "bom-ref": "pkg:npm/@cyclonedx/cdxgen@12.6.0",
+          "publisher": "OWASP Foundation",
+          "authors": [
+            {
+              "name": "OWASP Foundation"
+            }
+          ]
+        }
+      ]
+    },
+    "authors": [
+      {
+        "name": "OWASP Foundation"
+      }
+    ],
+    "lifecycles": [
+      {
+        "phase": "build"
+      }
+    ],
+    "component": {
+      "group": "",
+      "name": "backend",
+      "version": "latest",
+      "type": "application",
+      "bom-ref": "pkg:pypi/backend@latest",
+      "purl": "pkg:pypi/backend@latest"
+    },
+    "properties": [
+      {
+        "name": "cdx:bom:componentTypes",
+        "value": "pypi"
+      },
+      {
+        "name": "cdx:bom:componentSrcFiles",
+        "value": "../.venv\\nrequirements.txt"
+      }
+    ]
+  },
+  "components": [
+    {
+      "group": "",
+      "name": "asttokens",
+      "version": "3.0.0",
+      "purl": "pkg:pypi/asttokens@3.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/asttokens@3.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "attrs",
+      "version": "25.3.0",
+      "purl": "pkg:pypi/attrs@25.3.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/attrs@25.3.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "backcall",
+      "version": "0.2.0",
+      "purl": "pkg:pypi/backcall@0.2.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/backcall@0.2.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "beautifulsoup4",
+      "version": "4.14.2",
+      "purl": "pkg:pypi/beautifulsoup4@4.14.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/beautifulsoup4@4.14.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "bleach",
+      "version": "6.2.0",
+      "purl": "pkg:pypi/bleach@6.2.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/bleach@6.2.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "blinker",
+      "version": "1.9.0",
+      "purl": "pkg:pypi/blinker@1.9.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/blinker@1.9.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "certifi",
+      "version": "2025.8.3",
+      "purl": "pkg:pypi/certifi@2025.8.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/certifi@2025.8.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "charset-normalizer",
+      "version": "3.4.3",
+      "purl": "pkg:pypi/charset-normalizer@3.4.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/charset-normalizer@3.4.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "click",
+      "version": "8.3.0",
+      "purl": "pkg:pypi/click@8.3.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/click@8.3.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "decorator",
+      "version": "5.2.1",
+      "purl": "pkg:pypi/decorator@5.2.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/decorator@5.2.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "purl": "pkg:pypi/defusedxml@0.7.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/defusedxml@0.7.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "docopt",
+      "version": "0.6.2",
+      "purl": "pkg:pypi/docopt@0.6.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/docopt@0.6.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "executing",
+      "version": "2.2.1",
+      "purl": "pkg:pypi/executing@2.2.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/executing@2.2.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "fastjsonschema",
+      "version": "2.21.2",
+      "purl": "pkg:pypi/fastjsonschema@2.21.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/fastjsonschema@2.21.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "Flask",
+      "version": "3.1.2",
+      "purl": "pkg:pypi/flask@3.1.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/flask@3.1.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "flask-cors",
+      "version": "6.0.1",
+      "purl": "pkg:pypi/flask-cors@6.0.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/flask-cors@6.0.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "Flask-SQLAlchemy",
+      "version": "3.1.1",
+      "purl": "pkg:pypi/flask-sqlalchemy@3.1.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/flask-sqlalchemy@3.1.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "gunicorn",
+      "version": "23.0.0",
+      "purl": "pkg:pypi/gunicorn@23.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/gunicorn@23.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "greenlet",
+      "version": "3.2.4",
+      "purl": "pkg:pypi/greenlet@3.2.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/greenlet@3.2.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "idna",
+      "version": "3.10",
+      "purl": "pkg:pypi/idna@3.10",
+      "type": "library",
+      "bom-ref": "pkg:pypi/idna@3.10",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "ipython",
+      "version": "8.12.3",
+      "purl": "pkg:pypi/ipython@8.12.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/ipython@8.12.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "itsdangerous",
+      "version": "2.2.0",
+      "purl": "pkg:pypi/itsdangerous@2.2.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/itsdangerous@2.2.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jedi",
+      "version": "0.19.2",
+      "purl": "pkg:pypi/jedi@0.19.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jedi@0.19.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "purl": "pkg:pypi/jinja2@3.1.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jinja2@3.1.6",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jsonschema",
+      "version": "4.25.1",
+      "purl": "pkg:pypi/jsonschema@4.25.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jsonschema@4.25.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "purl": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jupyter_client",
+      "version": "8.6.3",
+      "purl": "pkg:pypi/jupyter-client@8.6.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jupyter-client@8.6.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jupyter_core",
+      "version": "5.8.1",
+      "purl": "pkg:pypi/jupyter-core@5.8.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jupyter-core@5.8.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jupyterlab_pygments",
+      "version": "0.3.0",
+      "purl": "pkg:pypi/jupyterlab-pygments@0.3.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jupyterlab-pygments@0.3.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "MarkupSafe",
+      "version": "3.0.3",
+      "purl": "pkg:pypi/markupsafe@3.0.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/markupsafe@3.0.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "matplotlib-inline",
+      "version": "0.1.7",
+      "purl": "pkg:pypi/matplotlib-inline@0.1.7",
+      "type": "library",
+      "bom-ref": "pkg:pypi/matplotlib-inline@0.1.7",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "mistune",
+      "version": "3.1.4",
+      "purl": "pkg:pypi/mistune@3.1.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/mistune@3.1.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "nbclient",
+      "version": "0.10.2",
+      "purl": "pkg:pypi/nbclient@0.10.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/nbclient@0.10.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "nbconvert",
+      "version": "7.16.6",
+      "purl": "pkg:pypi/nbconvert@7.16.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/nbconvert@7.16.6",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "nbformat",
+      "version": "5.10.4",
+      "purl": "pkg:pypi/nbformat@5.10.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/nbformat@5.10.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "packaging",
+      "version": "25.0",
+      "purl": "pkg:pypi/packaging@25.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/packaging@25.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pandocfilters",
+      "version": "1.5.1",
+      "purl": "pkg:pypi/pandocfilters@1.5.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pandocfilters@1.5.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "parso",
+      "version": "0.8.5",
+      "purl": "pkg:pypi/parso@0.8.5",
+      "type": "library",
+      "bom-ref": "pkg:pypi/parso@0.8.5",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pexpect",
+      "version": "4.9.0",
+      "purl": "pkg:pypi/pexpect@4.9.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pexpect@4.9.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "test"
+      ]
+    },
+    {
+      "group": "",
+      "name": "pickleshare",
+      "version": "0.7.5",
+      "purl": "pkg:pypi/pickleshare@0.7.5",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pickleshare@0.7.5",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pipreqs",
+      "version": "0.5.0",
+      "purl": "pkg:pypi/pipreqs@0.5.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pipreqs@0.5.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "platformdirs",
+      "version": "4.4.0",
+      "purl": "pkg:pypi/platformdirs@4.4.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/platformdirs@4.4.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "prompt_toolkit",
+      "version": "3.0.52",
+      "purl": "pkg:pypi/prompt-toolkit@3.0.52",
+      "type": "library",
+      "bom-ref": "pkg:pypi/prompt-toolkit@3.0.52",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "psycopg2-binary",
+      "version": "2.9.10",
+      "purl": "pkg:pypi/psycopg2-binary@2.9.10",
+      "type": "library",
+      "bom-ref": "pkg:pypi/psycopg2-binary@2.9.10",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "ptyprocess",
+      "version": "0.7.0",
+      "purl": "pkg:pypi/ptyprocess@0.7.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/ptyprocess@0.7.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pure_eval",
+      "version": "0.2.3",
+      "purl": "pkg:pypi/pure-eval@0.2.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pure-eval@0.2.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "Pygments",
+      "version": "2.19.2",
+      "purl": "pkg:pypi/pygments@2.19.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pygments@2.19.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "purl": "pkg:pypi/python-dateutil@2.9.0.post0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-dateutil@2.9.0.post0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "python-dotenv",
+      "version": "1.1.1",
+      "purl": "pkg:pypi/python-dotenv@1.1.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-dotenv@1.1.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pyzmq",
+      "version": "27.1.0",
+      "purl": "pkg:pypi/pyzmq@27.1.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pyzmq@27.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "referencing",
+      "version": "0.36.2",
+      "purl": "pkg:pypi/referencing@0.36.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/referencing@0.36.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "requests",
+      "version": "2.32.5",
+      "purl": "pkg:pypi/requests@2.32.5",
+      "type": "library",
+      "bom-ref": "pkg:pypi/requests@2.32.5",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "rpds-py",
+      "version": "0.27.1",
+      "purl": "pkg:pypi/rpds-py@0.27.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/rpds-py@0.27.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "six",
+      "version": "1.17.0",
+      "purl": "pkg:pypi/six@1.17.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/six@1.17.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "soupsieve",
+      "version": "2.8",
+      "purl": "pkg:pypi/soupsieve@2.8",
+      "type": "library",
+      "bom-ref": "pkg:pypi/soupsieve@2.8",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "SQLAlchemy",
+      "version": "2.0.43",
+      "purl": "pkg:pypi/sqlalchemy@2.0.43",
+      "type": "library",
+      "bom-ref": "pkg:pypi/sqlalchemy@2.0.43",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "stack-data",
+      "version": "0.6.3",
+      "purl": "pkg:pypi/stack-data@0.6.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/stack-data@0.6.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "tinycss2",
+      "version": "1.4.0",
+      "purl": "pkg:pypi/tinycss2@1.4.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/tinycss2@1.4.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "tornado",
+      "version": "6.5.2",
+      "purl": "pkg:pypi/tornado@6.5.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/tornado@6.5.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "traitlets",
+      "version": "5.14.3",
+      "purl": "pkg:pypi/traitlets@5.14.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/traitlets@5.14.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "typing_extensions",
+      "version": "4.15.0",
+      "purl": "pkg:pypi/typing-extensions@4.15.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/typing-extensions@4.15.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "urllib3",
+      "version": "2.6.0",
+      "purl": "pkg:pypi/urllib3@2.6.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/urllib3@2.6.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "wcwidth",
+      "version": "0.2.14",
+      "purl": "pkg:pypi/wcwidth@0.2.14",
+      "type": "library",
+      "bom-ref": "pkg:pypi/wcwidth@0.2.14",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "webencodings",
+      "version": "0.5.1",
+      "purl": "pkg:pypi/webencodings@0.5.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/webencodings@0.5.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "Werkzeug",
+      "version": "3.1.4",
+      "purl": "pkg:pypi/werkzeug@3.1.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/werkzeug@3.1.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "yarg",
+      "version": "0.1.9",
+      "purl": "pkg:pypi/yarg@0.1.9",
+      "type": "library",
+      "bom-ref": "pkg:pypi/yarg@0.1.9",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "python-keycloak",
+      "version": "5.8.1",
+      "purl": "pkg:pypi/python-keycloak@5.8.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-keycloak@5.8.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pytest",
+      "version": "9.0.1",
+      "purl": "pkg:pypi/pytest@9.0.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pytest@9.0.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "behave",
+      "version": "1.3.3",
+      "purl": "pkg:pypi/behave@1.3.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/behave@1.3.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "flake8",
+      "version": "7.3.0",
+      "purl": "pkg:pypi/flake8@7.3.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/flake8@7.3.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pytest-cov",
+      "version": "7.0.0",
+      "purl": "pkg:pypi/pytest-cov@7.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pytest-cov@7.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "black",
+      "version": "25.11.0",
+      "purl": "pkg:pypi/black@25.11.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/black@25.11.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "uvicorn",
+      "version": "0.24.0",
+      "purl": "pkg:pypi/uvicorn@0.24.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/uvicorn@0.24.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        },
+        {
+          "name": "cdx:pypi:extras",
+          "value": "standard"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "aiofiles",
+      "version": "25.1.0",
+      "purl": "pkg:pypi/aiofiles@25.1.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/aiofiles@25.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "annotated-types",
+      "version": "0.7.0",
+      "purl": "pkg:pypi/annotated-types@0.7.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/annotated-types@0.7.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "anyio",
+      "version": "4.13.0",
+      "purl": "pkg:pypi/anyio@4.13.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/anyio@4.13.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "async-property",
+      "version": "0.2.2",
+      "purl": "pkg:pypi/async-property@0.2.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/async-property@0.2.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "cucumber-tag-expressions",
+      "version": "9.1.0",
+      "purl": "pkg:pypi/cucumber-tag-expressions@9.1.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/cucumber-tag-expressions@9.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "cucumber-expressions",
+      "version": "19.0.0",
+      "purl": "pkg:pypi/cucumber-expressions@19.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/cucumber-expressions@19.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "parse",
+      "version": "1.21.1",
+      "purl": "pkg:pypi/parse@1.21.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/parse@1.21.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "parse-type",
+      "version": "0.6.6",
+      "purl": "pkg:pypi/parse-type@0.6.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/parse-type@0.6.6",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "colorama",
+      "version": "0.4.6",
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/colorama@0.4.6",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "mypy-extensions",
+      "version": "1.1.0",
+      "purl": "pkg:pypi/mypy-extensions@1.1.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/mypy-extensions@1.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pathspec",
+      "version": "1.0.4",
+      "purl": "pkg:pypi/pathspec@1.0.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pathspec@1.0.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pytokens",
+      "version": "0.4.1",
+      "purl": "pkg:pypi/pytokens@0.4.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pytokens@0.4.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "boltons",
+      "version": "21.0.0",
+      "purl": "pkg:pypi/boltons@21.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/boltons@21.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "bracex",
+      "version": "2.6",
+      "purl": "pkg:pypi/bracex@2.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/bracex@2.6",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "cffi",
+      "version": "2.0.0",
+      "purl": "pkg:pypi/cffi@2.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/cffi@2.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "native"
+      ]
+    },
+    {
+      "group": "",
+      "name": "pycparser",
+      "version": "3.0",
+      "purl": "pkg:pypi/pycparser@3.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pycparser@3.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "parse"
+      ]
+    },
+    {
+      "group": "",
+      "name": "click-option-group",
+      "version": "0.5.9",
+      "purl": "pkg:pypi/click-option-group@0.5.9",
+      "type": "library",
+      "bom-ref": "pkg:pypi/click-option-group@0.5.9",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "coverage",
+      "version": "7.13.5",
+      "purl": "pkg:pypi/coverage@7.13.5",
+      "type": "library",
+      "bom-ref": "pkg:pypi/coverage@7.13.5",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "cryptography",
+      "version": "46.0.7",
+      "purl": "pkg:pypi/cryptography@46.0.7",
+      "type": "library",
+      "bom-ref": "pkg:pypi/cryptography@46.0.7",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "deprecation",
+      "version": "2.1.0",
+      "purl": "pkg:pypi/deprecation@2.1.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/deprecation@2.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "exceptiongroup",
+      "version": "1.2.2",
+      "purl": "pkg:pypi/exceptiongroup@1.2.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/exceptiongroup@1.2.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "face",
+      "version": "26.0.0",
+      "purl": "pkg:pypi/face@26.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/face@26.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "mccabe",
+      "version": "0.7.0",
+      "purl": "pkg:pypi/mccabe@0.7.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/mccabe@0.7.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pycodestyle",
+      "version": "2.14.0",
+      "purl": "pkg:pypi/pycodestyle@2.14.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pycodestyle@2.14.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pyflakes",
+      "version": "3.4.0",
+      "purl": "pkg:pypi/pyflakes@3.4.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pyflakes@3.4.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "glom",
+      "version": "25.12.0",
+      "purl": "pkg:pypi/glom@25.12.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/glom@25.12.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "googleapis-common-protos",
+      "version": "1.75.0",
+      "purl": "pkg:pypi/googleapis-common-protos@1.75.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/googleapis-common-protos@1.75.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "protobuf",
+      "version": "6.33.6",
+      "purl": "pkg:pypi/protobuf@6.33.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/protobuf@6.33.6",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "h11",
+      "version": "0.16.0",
+      "purl": "pkg:pypi/h11@0.16.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/h11@0.16.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "httpcore",
+      "version": "1.0.9",
+      "purl": "pkg:pypi/httpcore@1.0.9",
+      "type": "library",
+      "bom-ref": "pkg:pypi/httpcore@1.0.9",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "httptools",
+      "version": "0.7.1",
+      "purl": "pkg:pypi/httptools@0.7.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/httptools@0.7.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "httpx",
+      "version": "0.28.1",
+      "purl": "pkg:pypi/httpx@0.28.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/httpx@0.28.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "httpx-sse",
+      "version": "0.4.3",
+      "purl": "pkg:pypi/httpx-sse@0.4.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/httpx-sse@0.4.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "importlib-metadata",
+      "version": "8.7.1",
+      "purl": "pkg:pypi/importlib-metadata@8.7.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/importlib-metadata@8.7.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "zipp",
+      "version": "4.1.0",
+      "purl": "pkg:pypi/zipp@4.1.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/zipp@4.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "purl": "pkg:pypi/iniconfig@2.3.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/iniconfig@2.3.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "jwcrypto",
+      "version": "1.5.7",
+      "purl": "pkg:pypi/jwcrypto@1.5.7",
+      "type": "library",
+      "bom-ref": "pkg:pypi/jwcrypto@1.5.7",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "purl": "pkg:pypi/markdown-it-py@4.2.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/markdown-it-py@4.2.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "mdurl",
+      "version": "0.1.2",
+      "purl": "pkg:pypi/mdurl@0.1.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/mdurl@0.1.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "mcp",
+      "version": "1.23.3",
+      "purl": "pkg:pypi/mcp@1.23.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/mcp@1.23.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        },
+        {
+          "name": "cdx:mcp:package",
+          "value": "true"
+        },
+        {
+          "name": "cdx:mcp:official",
+          "value": "true"
+        },
+        {
+          "name": "cdx:mcp:role",
+          "value": "sdk"
+        },
+        {
+          "name": "cdx:mcp:catalogSource",
+          "value": "official-sdk"
+        },
+        {
+          "name": "cdx:mcp:packageName",
+          "value": "mcp"
+        }
+      ],
+      "tags": [
+        "mcp",
+        "mcp-sdk",
+        "official-mcp-sdk",
+        "trusted-source"
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pydantic-settings",
+      "version": "2.14.1",
+      "purl": "pkg:pypi/pydantic-settings@2.14.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pydantic-settings@2.14.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pydantic",
+      "version": "2.13.4",
+      "purl": "pkg:pypi/pydantic@2.13.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pydantic@2.13.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pydantic-core",
+      "version": "2.46.4",
+      "purl": "pkg:pypi/pydantic-core@2.46.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pydantic-core@2.46.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "typing-inspection",
+      "version": "0.4.2",
+      "purl": "pkg:pypi/typing-inspection@0.4.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/typing-inspection@0.4.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "devel"
+      ]
+    },
+    {
+      "group": "",
+      "name": "pyjwt",
+      "version": "2.12.1",
+      "purl": "pkg:pypi/pyjwt@2.12.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pyjwt@2.12.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "python-multipart",
+      "version": "0.0.30",
+      "purl": "pkg:pypi/python-multipart@0.0.30",
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-multipart@0.0.30",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "sse-starlette",
+      "version": "3.4.4",
+      "purl": "pkg:pypi/sse-starlette@3.4.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/sse-starlette@3.4.4",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "starlette",
+      "version": "1.2.1",
+      "purl": "pkg:pypi/starlette@1.2.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/starlette@1.2.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-api",
+      "version": "1.37.0",
+      "purl": "pkg:pypi/opentelemetry-api@1.37.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-api@1.37.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-exporter-otlp-proto-common",
+      "version": "1.37.0",
+      "purl": "pkg:pypi/opentelemetry-exporter-otlp-proto-common@1.37.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-exporter-otlp-proto-common@1.37.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-proto",
+      "version": "1.37.0",
+      "purl": "pkg:pypi/opentelemetry-proto@1.37.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-proto@1.37.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-exporter-otlp-proto-http",
+      "version": "1.37.0",
+      "purl": "pkg:pypi/opentelemetry-exporter-otlp-proto-http@1.37.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-exporter-otlp-proto-http@1.37.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-sdk",
+      "version": "1.37.0",
+      "purl": "pkg:pypi/opentelemetry-sdk@1.37.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-sdk@1.37.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-semantic-conventions",
+      "version": "0.58b0",
+      "purl": "pkg:pypi/opentelemetry-semantic-conventions@0.58b0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-semantic-conventions@0.58b0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-instrumentation",
+      "version": "0.58b0",
+      "purl": "pkg:pypi/opentelemetry-instrumentation@0.58b0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-instrumentation@0.58b0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "wrapt",
+      "version": "1.17.3",
+      "purl": "pkg:pypi/wrapt@1.17.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/wrapt@1.17.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-instrumentation-requests",
+      "version": "0.58b0",
+      "purl": "pkg:pypi/opentelemetry-instrumentation-requests@0.58b0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-instrumentation-requests@0.58b0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-util-http",
+      "version": "0.58b0",
+      "purl": "pkg:pypi/opentelemetry-util-http@0.58b0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-util-http@0.58b0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "opentelemetry-instrumentation-threading",
+      "version": "0.58b0",
+      "purl": "pkg:pypi/opentelemetry-instrumentation-threading@0.58b0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/opentelemetry-instrumentation-threading@0.58b0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "group": "",
+      "name": "peewee",
+      "version": "3.19.0",
+      "purl": "pkg:pypi/peewee@3.19.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/peewee@3.19.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pluggy",
+      "version": "1.6.0",
+      "purl": "pkg:pypi/pluggy@1.6.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pluggy@1.6.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "requests-toolbelt",
+      "version": "1.0.0",
+      "purl": "pkg:pypi/requests-toolbelt@1.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/requests-toolbelt@1.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "purl": "pkg:pypi/pyyaml@6.0.3",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pyyaml@6.0.3",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "rich",
+      "version": "15.0.0",
+      "purl": "pkg:pypi/rich@15.0.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/rich@15.0.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "ruamel.yaml",
+      "version": "0.19.1",
+      "purl": "pkg:pypi/ruamel.yaml@0.19.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/ruamel.yaml@0.19.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "ruamel.yaml.clib",
+      "version": "0.2.15",
+      "purl": "pkg:pypi/ruamel.yaml.clib@0.2.15",
+      "type": "library",
+      "bom-ref": "pkg:pypi/ruamel.yaml.clib@0.2.15",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "semantic-version",
+      "version": "2.10.0",
+      "purl": "pkg:pypi/semantic-version@2.10.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/semantic-version@2.10.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              },
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "semgrep",
+      "version": "1.164.0",
+      "purl": "pkg:pypi/semgrep@1.164.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/semgrep@1.164.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "tomli",
+      "version": "2.4.1",
+      "purl": "pkg:pypi/tomli@2.4.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/tomli@2.4.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "wcmatch",
+      "version": "8.5.2",
+      "purl": "pkg:pypi/wcmatch@8.5.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/wcmatch@8.5.2",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "manifest-analysis",
+                "confidence": 0.8,
+                "value": "requirements.txt"
+              },
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "uvloop",
+      "version": "0.22.1",
+      "purl": "pkg:pypi/uvloop@0.22.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/uvloop@0.22.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "watchfiles",
+      "version": "1.1.1",
+      "purl": "pkg:pypi/watchfiles@1.1.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/watchfiles@1.1.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    },
+    {
+      "group": "",
+      "name": "websockets",
+      "version": "16.0",
+      "purl": "pkg:pypi/websockets@16.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/websockets@16.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "requirements.txt"
+        }
+      ],
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "confidence": 1,
+            "methods": [
+              {
+                "technique": "instrumentation",
+                "confidence": 1,
+                "value": "../.venv"
+              }
+            ],
+            "concludedValue": "../.venv"
+          }
+        ]
+      }
+    }
+  ],
+  "services": [],
+  "dependencies": [
+    {
+      "ref": "pkg:pypi/backend@latest",
+      "dependsOn": [
+        "pkg:pypi/asttokens@3.0.0",
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/backcall@0.2.0",
+        "pkg:pypi/beautifulsoup4@4.14.2",
+        "pkg:pypi/behave@1.3.3",
+        "pkg:pypi/black@25.11.0",
+        "pkg:pypi/bleach@6.2.0",
+        "pkg:pypi/blinker@1.9.0",
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/charset-normalizer@3.4.3",
+        "pkg:pypi/click@8.3.0",
+        "pkg:pypi/decorator@5.2.1",
+        "pkg:pypi/defusedxml@0.7.1",
+        "pkg:pypi/docopt@0.6.2",
+        "pkg:pypi/executing@2.2.1",
+        "pkg:pypi/fastjsonschema@2.21.2",
+        "pkg:pypi/flake8@7.3.0",
+        "pkg:pypi/flask-cors@6.0.1",
+        "pkg:pypi/flask-sqlalchemy@3.1.1",
+        "pkg:pypi/flask@3.1.2",
+        "pkg:pypi/greenlet@3.2.4",
+        "pkg:pypi/gunicorn@23.0.0",
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/ipython@8.12.3",
+        "pkg:pypi/itsdangerous@2.2.0",
+        "pkg:pypi/jedi@0.19.2",
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/jupyter-client@8.6.3",
+        "pkg:pypi/jupyter-core@5.8.1",
+        "pkg:pypi/jupyterlab-pygments@0.3.0",
+        "pkg:pypi/markupsafe@3.0.3",
+        "pkg:pypi/matplotlib-inline@0.1.7",
+        "pkg:pypi/mistune@3.1.4",
+        "pkg:pypi/nbclient@0.10.2",
+        "pkg:pypi/nbconvert@7.16.6",
+        "pkg:pypi/nbformat@5.10.4",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pandocfilters@1.5.1",
+        "pkg:pypi/parso@0.8.5",
+        "pkg:pypi/pexpect@4.9.0",
+        "pkg:pypi/pickleshare@0.7.5",
+        "pkg:pypi/pipreqs@0.5.0",
+        "pkg:pypi/platformdirs@4.4.0",
+        "pkg:pypi/prompt-toolkit@3.0.52",
+        "pkg:pypi/psycopg2-binary@2.9.10",
+        "pkg:pypi/ptyprocess@0.7.0",
+        "pkg:pypi/pure-eval@0.2.3",
+        "pkg:pypi/pygments@2.19.2",
+        "pkg:pypi/pytest-cov@7.0.0",
+        "pkg:pypi/pytest@9.0.1",
+        "pkg:pypi/python-dateutil@2.9.0.post0",
+        "pkg:pypi/python-dotenv@1.1.1",
+        "pkg:pypi/python-keycloak@5.8.1",
+        "pkg:pypi/pyzmq@27.1.0",
+        "pkg:pypi/referencing@0.36.2",
+        "pkg:pypi/requests@2.32.5",
+        "pkg:pypi/rpds-py@0.27.1",
+        "pkg:pypi/six@1.17.0",
+        "pkg:pypi/soupsieve@2.8",
+        "pkg:pypi/sqlalchemy@2.0.43",
+        "pkg:pypi/stack-data@0.6.3",
+        "pkg:pypi/tinycss2@1.4.0",
+        "pkg:pypi/tornado@6.5.2",
+        "pkg:pypi/traitlets@5.14.3",
+        "pkg:pypi/typing-extensions@4.15.0",
+        "pkg:pypi/urllib3@2.6.0",
+        "pkg:pypi/uvicorn@0.24.0",
+        "pkg:pypi/wcwidth@0.2.14",
+        "pkg:pypi/webencodings@0.5.1",
+        "pkg:pypi/werkzeug@3.1.4",
+        "pkg:pypi/yarg@0.1.9"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/aiofiles@25.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/annotated-types@0.7.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/idna@3.10",
+      "dependsOn": [
+        "pkg:pypi/flake8@7.3.0",
+        "pkg:pypi/pytest@9.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pytest@9.0.1",
+      "dependsOn": [
+        "pkg:pypi/iniconfig@2.3.0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pluggy@1.6.0",
+        "pkg:pypi/pygments@2.19.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/flake8@7.3.0",
+      "dependsOn": [
+        "pkg:pypi/mccabe@0.7.0",
+        "pkg:pypi/pycodestyle@2.14.0",
+        "pkg:pypi/pyflakes@3.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/typing-extensions@4.15.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/anyio@4.13.0",
+      "dependsOn": [
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/asttokens@3.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/async-property@0.2.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/attrs@25.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/backcall@0.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/soupsieve@2.8",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/beautifulsoup4@4.14.2",
+      "dependsOn": [
+        "pkg:pypi/soupsieve@2.8",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/cucumber-tag-expressions@9.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/cucumber-expressions@19.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/parse@1.21.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/parse-type@0.6.6",
+      "dependsOn": [
+        "pkg:pypi/parse@1.21.1",
+        "pkg:pypi/six@1.17.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/six@1.17.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/colorama@0.4.6",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/behave@1.3.3",
+      "dependsOn": [
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/cucumber-expressions@19.0.0",
+        "pkg:pypi/cucumber-tag-expressions@9.1.0",
+        "pkg:pypi/parse-type@0.6.6",
+        "pkg:pypi/parse@1.21.1",
+        "pkg:pypi/six@1.17.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/click@8.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/mypy-extensions@1.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/packaging@25.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pathspec@1.0.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/platformdirs@4.4.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pytokens@0.4.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/black@25.11.0",
+      "dependsOn": [
+        "pkg:pypi/click@8.3.0",
+        "pkg:pypi/mypy-extensions@1.1.0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pathspec@1.0.4",
+        "pkg:pypi/platformdirs@4.4.0",
+        "pkg:pypi/pytokens@0.4.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/webencodings@0.5.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/bleach@6.2.0",
+      "dependsOn": [
+        "pkg:pypi/webencodings@0.5.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/blinker@1.9.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/boltons@21.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/bracex@2.6",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/certifi@2025.8.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pycparser@3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/cffi@2.0.0",
+      "dependsOn": [
+        "pkg:pypi/pycparser@3.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/charset-normalizer@3.4.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/click-option-group@0.5.9",
+      "dependsOn": [
+        "pkg:pypi/click@8.3.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/coverage@7.13.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/cryptography@46.0.7",
+      "dependsOn": [
+        "pkg:pypi/cffi@2.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/decorator@5.2.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/defusedxml@0.7.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/deprecation@2.1.0",
+      "dependsOn": [
+        "pkg:pypi/packaging@25.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/docopt@0.6.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/exceptiongroup@1.2.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/executing@2.2.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/face@26.0.0",
+      "dependsOn": [
+        "pkg:pypi/boltons@21.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/fastjsonschema@2.21.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/mccabe@0.7.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pycodestyle@2.14.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pyflakes@3.4.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/itsdangerous@2.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/jinja2@3.1.6",
+      "dependsOn": [
+        "pkg:pypi/markupsafe@3.0.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/markupsafe@3.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/werkzeug@3.1.4",
+      "dependsOn": [
+        "pkg:pypi/markupsafe@3.0.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/flask@3.1.2",
+      "dependsOn": [
+        "pkg:pypi/blinker@1.9.0",
+        "pkg:pypi/click@8.3.0",
+        "pkg:pypi/itsdangerous@2.2.0",
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/markupsafe@3.0.3",
+        "pkg:pypi/werkzeug@3.1.4"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/flask-cors@6.0.1",
+      "dependsOn": [
+        "pkg:pypi/flask@3.1.2",
+        "pkg:pypi/werkzeug@3.1.4"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/sqlalchemy@2.0.43",
+      "dependsOn": [
+        "pkg:pypi/greenlet@3.2.4",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/greenlet@3.2.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/flask-sqlalchemy@3.1.1",
+      "dependsOn": [
+        "pkg:pypi/flask@3.1.2",
+        "pkg:pypi/sqlalchemy@2.0.43"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/glom@25.12.0",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/boltons@21.0.0",
+        "pkg:pypi/face@26.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/protobuf@6.33.6",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/googleapis-common-protos@1.75.0",
+      "dependsOn": [
+        "pkg:pypi/protobuf@6.33.6"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/gunicorn@23.0.0",
+      "dependsOn": [
+        "pkg:pypi/packaging@25.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/h11@0.16.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/httpcore@1.0.9",
+      "dependsOn": [
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/h11@0.16.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/httptools@0.7.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/httpx@0.28.1",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.13.0",
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/httpcore@1.0.9",
+        "pkg:pypi/idna@3.10"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/httpx-sse@0.4.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/zipp@4.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/importlib-metadata@8.7.1",
+      "dependsOn": [
+        "pkg:pypi/zipp@4.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/iniconfig@2.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/jedi@0.19.2",
+      "dependsOn": [
+        "pkg:pypi/parso@0.8.5"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/parso@0.8.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/matplotlib-inline@0.1.7",
+      "dependsOn": [
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/traitlets@5.14.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pickleshare@0.7.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/prompt-toolkit@3.0.52",
+      "dependsOn": [
+        "pkg:pypi/wcwidth@0.2.14"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/wcwidth@0.2.14",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pygments@2.19.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/stack-data@0.6.3",
+      "dependsOn": [
+        "pkg:pypi/asttokens@3.0.0",
+        "pkg:pypi/executing@2.2.1",
+        "pkg:pypi/pure-eval@0.2.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pure-eval@0.2.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pexpect@4.9.0",
+      "dependsOn": [
+        "pkg:pypi/ptyprocess@0.7.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/ptyprocess@0.7.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/nbconvert@7.16.6",
+      "dependsOn": [
+        "pkg:pypi/beautifulsoup4@4.14.2",
+        "pkg:pypi/bleach@6.2.0",
+        "pkg:pypi/defusedxml@0.7.1",
+        "pkg:pypi/ipython@8.12.3",
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/jupyter-core@5.8.1",
+        "pkg:pypi/jupyterlab-pygments@0.3.0",
+        "pkg:pypi/markupsafe@3.0.3",
+        "pkg:pypi/mistune@3.1.4",
+        "pkg:pypi/nbclient@0.10.2",
+        "pkg:pypi/nbformat@5.10.4",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pandocfilters@1.5.1",
+        "pkg:pypi/pygments@2.19.2",
+        "pkg:pypi/pytest@9.0.1",
+        "pkg:pypi/tornado@6.5.2",
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/ipython@8.12.3",
+      "dependsOn": [
+        "pkg:pypi/backcall@0.2.0",
+        "pkg:pypi/black@25.11.0",
+        "pkg:pypi/decorator@5.2.1",
+        "pkg:pypi/jedi@0.19.2",
+        "pkg:pypi/matplotlib-inline@0.1.7",
+        "pkg:pypi/nbconvert@7.16.6",
+        "pkg:pypi/nbformat@5.10.4",
+        "pkg:pypi/pexpect@4.9.0",
+        "pkg:pypi/pickleshare@0.7.5",
+        "pkg:pypi/prompt-toolkit@3.0.52",
+        "pkg:pypi/pygments@2.19.2",
+        "pkg:pypi/pytest@9.0.1",
+        "pkg:pypi/stack-data@0.6.3",
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/nbformat@5.10.4",
+      "dependsOn": [
+        "pkg:pypi/fastjsonschema@2.21.2",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/jupyter-core@5.8.1",
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/tornado@6.5.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "dependsOn": [
+        "pkg:pypi/referencing@0.36.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/referencing@0.36.2",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/rpds-py@0.27.1",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/rpds-py@0.27.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/jsonschema@4.25.1",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/referencing@0.36.2",
+        "pkg:pypi/rpds-py@0.27.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/jupyter-core@5.8.1",
+      "dependsOn": [
+        "pkg:pypi/platformdirs@4.4.0",
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/python-dateutil@2.9.0.post0",
+      "dependsOn": [
+        "pkg:pypi/six@1.17.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pyzmq@27.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/jupyter-client@8.6.3",
+      "dependsOn": [
+        "pkg:pypi/jupyter-core@5.8.1",
+        "pkg:pypi/python-dateutil@2.9.0.post0",
+        "pkg:pypi/pyzmq@27.1.0",
+        "pkg:pypi/tornado@6.5.2",
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/jupyterlab-pygments@0.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/jwcrypto@1.5.7",
+      "dependsOn": [
+        "pkg:pypi/cryptography@46.0.7",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mdurl@0.1.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/markdown-it-py@4.2.0",
+      "dependsOn": [
+        "pkg:pypi/mdurl@0.1.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pydantic-settings@2.14.1",
+      "dependsOn": [
+        "pkg:pypi/pydantic@2.13.4",
+        "pkg:pypi/python-dotenv@1.1.1",
+        "pkg:pypi/typing-inspection@0.4.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pydantic@2.13.4",
+      "dependsOn": [
+        "pkg:pypi/annotated-types@0.7.0",
+        "pkg:pypi/pydantic-core@2.46.4",
+        "pkg:pypi/typing-extensions@4.15.0",
+        "pkg:pypi/typing-inspection@0.4.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pydantic-core@2.46.4",
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/typing-inspection@0.4.2",
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/python-dotenv@1.1.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pyjwt@2.12.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/python-multipart@0.0.30",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/sse-starlette@3.4.4",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.13.0",
+        "pkg:pypi/starlette@1.2.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/starlette@1.2.1",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.13.0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/uvicorn@0.24.0",
+      "dependsOn": [
+        "pkg:pypi/click@8.3.0",
+        "pkg:pypi/h11@0.16.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mcp@1.23.3",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.13.0",
+        "pkg:pypi/httpx-sse@0.4.3",
+        "pkg:pypi/httpx@0.28.1",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/pydantic-settings@2.14.1",
+        "pkg:pypi/pydantic@2.13.4",
+        "pkg:pypi/pyjwt@2.12.1",
+        "pkg:pypi/python-multipart@0.0.30",
+        "pkg:pypi/sse-starlette@3.4.4",
+        "pkg:pypi/starlette@1.2.1",
+        "pkg:pypi/typing-extensions@4.15.0",
+        "pkg:pypi/typing-inspection@0.4.2",
+        "pkg:pypi/uvicorn@0.24.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mistune@3.1.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/nbclient@0.10.2",
+      "dependsOn": [
+        "pkg:pypi/jupyter-client@8.6.3",
+        "pkg:pypi/jupyter-core@5.8.1",
+        "pkg:pypi/nbformat@5.10.4",
+        "pkg:pypi/traitlets@5.14.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pandocfilters@1.5.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-api@1.37.0",
+      "dependsOn": [
+        "pkg:pypi/importlib-metadata@8.7.1",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-proto@1.37.0",
+      "dependsOn": [
+        "pkg:pypi/protobuf@6.33.6"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-exporter-otlp-proto-common@1.37.0",
+      "dependsOn": [
+        "pkg:pypi/opentelemetry-proto@1.37.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-sdk@1.37.0",
+      "dependsOn": [
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/opentelemetry-semantic-conventions@0.58b0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-semantic-conventions@0.58b0",
+      "dependsOn": [
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/requests@2.32.5",
+      "dependsOn": [
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/charset-normalizer@3.4.3",
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/urllib3@2.6.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/urllib3@2.6.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-exporter-otlp-proto-http@1.37.0",
+      "dependsOn": [
+        "pkg:pypi/googleapis-common-protos@1.75.0",
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/opentelemetry-exporter-otlp-proto-common@1.37.0",
+        "pkg:pypi/opentelemetry-proto@1.37.0",
+        "pkg:pypi/opentelemetry-sdk@1.37.0",
+        "pkg:pypi/requests@2.32.5",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/wrapt@1.17.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-instrumentation@0.58b0",
+      "dependsOn": [
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/opentelemetry-semantic-conventions@0.58b0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/wrapt@1.17.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-util-http@0.58b0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-instrumentation-requests@0.58b0",
+      "dependsOn": [
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/opentelemetry-instrumentation@0.58b0",
+        "pkg:pypi/opentelemetry-semantic-conventions@0.58b0",
+        "pkg:pypi/opentelemetry-util-http@0.58b0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/opentelemetry-instrumentation-threading@0.58b0",
+      "dependsOn": [
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/opentelemetry-instrumentation@0.58b0",
+        "pkg:pypi/wrapt@1.17.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/peewee@3.19.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/yarg@0.1.9",
+      "dependsOn": [
+        "pkg:pypi/requests@2.32.5"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pipreqs@0.5.0",
+      "dependsOn": [
+        "pkg:pypi/docopt@0.6.2",
+        "pkg:pypi/ipython@8.12.3",
+        "pkg:pypi/nbconvert@7.16.6",
+        "pkg:pypi/yarg@0.1.9"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pluggy@1.6.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/psycopg2-binary@2.9.10",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pytest-cov@7.0.0",
+      "dependsOn": [
+        "pkg:pypi/coverage@7.13.5",
+        "pkg:pypi/pluggy@1.6.0",
+        "pkg:pypi/pytest@9.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/requests-toolbelt@1.0.0",
+      "dependsOn": [
+        "pkg:pypi/requests@2.32.5"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/python-keycloak@5.8.1",
+      "dependsOn": [
+        "pkg:pypi/aiofiles@25.1.0",
+        "pkg:pypi/async-property@0.2.2",
+        "pkg:pypi/deprecation@2.1.0",
+        "pkg:pypi/httpx@0.28.1",
+        "pkg:pypi/jwcrypto@1.5.7",
+        "pkg:pypi/requests-toolbelt@1.0.0",
+        "pkg:pypi/requests@2.32.5"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pyyaml@6.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/rich@15.0.0",
+      "dependsOn": [
+        "pkg:pypi/markdown-it-py@4.2.0",
+        "pkg:pypi/pygments@2.19.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/ruamel.yaml@0.19.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/ruamel.yaml.clib@0.2.15",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/semantic-version@2.10.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/tomli@2.4.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/wcmatch@8.5.2",
+      "dependsOn": [
+        "pkg:pypi/bracex@2.6"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/semgrep@1.164.0",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/boltons@21.0.0",
+        "pkg:pypi/click-option-group@0.5.9",
+        "pkg:pypi/click@8.3.0",
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/exceptiongroup@1.2.2",
+        "pkg:pypi/glom@25.12.0",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/mcp@1.23.3",
+        "pkg:pypi/opentelemetry-api@1.37.0",
+        "pkg:pypi/opentelemetry-exporter-otlp-proto-http@1.37.0",
+        "pkg:pypi/opentelemetry-instrumentation-requests@0.58b0",
+        "pkg:pypi/opentelemetry-instrumentation-threading@0.58b0",
+        "pkg:pypi/opentelemetry-sdk@1.37.0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/peewee@3.19.0",
+        "pkg:pypi/pyjwt@2.12.1",
+        "pkg:pypi/requests@2.32.5",
+        "pkg:pypi/rich@15.0.0",
+        "pkg:pypi/semantic-version@2.10.0",
+        "pkg:pypi/tomli@2.4.1",
+        "pkg:pypi/typing-extensions@4.15.0",
+        "pkg:pypi/urllib3@2.6.0",
+        "pkg:pypi/wcmatch@8.5.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/tinycss2@1.4.0",
+      "dependsOn": [
+        "pkg:pypi/webencodings@0.5.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/uvloop@0.22.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/watchfiles@1.1.1",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.13.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/websockets@16.0",
+      "dependsOn": []
+    }
+  ],
+  "annotations": [
+    {
+      "bom-ref": "metadata-annotations",
+      "subjects": [
+        "pkg:pypi/backend@latest"
+      ],
+      "annotator": {
+        "component": {
+          "group": "@cyclonedx",
+          "name": "cdxgen",
+          "version": "12.6.0",
+          "purl": "pkg:npm/%40cyclonedx/cdxgen@12.6.0",
+          "type": "application",
+          "bom-ref": "pkg:npm/@cyclonedx/cdxgen@12.6.0",
+          "publisher": "OWASP Foundation",
+          "authors": [
+            {
+              "name": "OWASP Foundation"
+            }
+          ]
+        }
+      },
+      "timestamp": "2026-06-14T18:51:44Z",
+      "text": "This Software Bill-of-Materials (SBOM) document was created on Sunday, June 14, 2026 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'backend'. This SBOM contains 146 dynamically instrumented library components discovered during process execution tracing. These libraries were loaded at runtime and mapped back to system packages."
+    }
+  ]
+}

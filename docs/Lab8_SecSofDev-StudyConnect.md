@@ -54,3 +54,12 @@ Below is an excerpt of the project’s dependencies, annotated to show which pac
 
 
 ## Part B: SBOM and Automated Scan
+#### Generate SBOM
+Install cdxgen with npm `npm install -g @cyclonedx/cdxgen' and run 'cdxgen --output sbom.json --json-pretty`,
+this generates the sbom file [sbom.json](../backend/sbom.json).
+
+#### Count components
+Using `jq '.components | length' sbom.json` or `python3 -c "import json; data=json.load(open('backend/sbom.json')); print(len(data['components']))"
+` counts the amount of components in the sbom.json when in the backend folder.
+
+The amount in this projects sbom is: **146 components**
