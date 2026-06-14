@@ -1,0 +1,109 @@
+
+Report Summary
+
+┌────────┬────────────┬─────────────────┐
+│ Target │    Type    │ Vulnerabilities │
+├────────┼────────────┼─────────────────┤
+│ Python │ python-pkg │       23        │
+└────────┴────────────┴─────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+Python (python-pkg)
+===================
+Total: 23 (UNKNOWN: 0, LOW: 3, MEDIUM: 12, HIGH: 8, CRITICAL: 0)
+
+┌───────────────┬─────────────────────┬──────────┬──────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│    Library    │    Vulnerability    │ Severity │  Status  │ Installed Version │ Fixed Version │                            Title                             │
+├───────────────┼─────────────────────┼──────────┼──────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ Flask         │ CVE-2026-27205      │ LOW      │ fixed    │ 3.1.2             │ 3.1.3         │ flask: Flask: Information disclosure via improper caching of │
+│               │                     │          │          │                   │               │ session data                                                 │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27205                   │
+├───────────────┼─────────────────────┤          │          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ Pygments      │ CVE-2026-4539       │          │          │ 2.19.2            │ 2.20.0        │ pygments: Pygments: Denial of Service via inefficient        │
+│               │                     │          │          │                   │               │ regular expression processing in AdlLexer...                 │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-4539                    │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ Werkzeug      │ CVE-2026-21860      │ MEDIUM   │          │ 3.1.4             │ 3.1.5         │ Werkzeug safe_join() allows Windows special device names     │
+│               │                     │          │          │                   │               │ with compound extensions                                     │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-21860                   │
+│               ├─────────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-27199      │          │          │                   │ 3.1.6         │ Werkzeug safe_join() allows Windows special device names     │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27199                   │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ black         │ CVE-2026-32274      │ HIGH     │          │ 25.11.0           │ 26.3.1        │ black: Black: Arbitrary file writes from unsanitized user    │
+│               │                     │          │          │                   │               │ input in cache file...                                       │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-32274                   │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ idna          │ CVE-2026-45409      │ MEDIUM   │          │ 3.10              │ 3.15          │ Internationalized Domain Names in Applications (IDNA) for    │
+│               │                     │          │          │                   │               │ Python provi ...                                             │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-45409                   │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ mistune       │ CVE-2026-33079      │ HIGH     │          │ 3.1.4             │ 3.2.1         │ mistune: Mistune: Regular Expression Denial of Service       │
+│               │                     │          │          │                   │               │ (ReDoS) via crafted Markdown input...                        │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-33079                   │
+│               ├─────────────────────┼──────────┼──────────┤                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-44708      │ MEDIUM   │ affected │                   │               │ Mistune is a Python Markdown parser with renderers and       │
+│               │                     │          │          │                   │               │ plugins. Prior ...                                           │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-44708                   │
+│               ├─────────────────────┤          ├──────────┤                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-44896      │          │ fixed    │                   │ 3.2.1         │ Mistune is a Python Markdown parser with renderers and       │
+│               │                     │          │          │                   │               │ plugins. In 3.2...                                           │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-44896                   │
+│               ├─────────────────────┤          │          │                   │               ├──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-44897      │          │          │                   │               │ Mistune is a Python Markdown parser with renderers and       │
+│               │                     │          │          │                   │               │ plugins. Prior ...                                           │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-44897                   │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ nbconvert     │ CVE-2025-53000      │ HIGH     │          │ 7.16.6            │ 7.17.0        │ nbconvert: nbconvert: Arbitrary code execution via malicious │
+│               │                     │          │          │                   │               │ SVG to PDF conversion on...                                  │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-53000                   │
+│               ├─────────────────────┼──────────┤          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-39377      │ MEDIUM   │          │                   │ 7.17.1        │ nbconvert: nbconvert: Arbitrary file write via crafted       │
+│               │                     │          │          │                   │               │ Jupyter notebook cell attachment filenames...                │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-39377                   │
+│               ├─────────────────────┤          │          │                   │               ├──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-39378      │          │          │                   │               │ nbconvert: nbconvert: Sensitive file exfiltration via path   │
+│               │                     │          │          │                   │               │ traversal in image references                                │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-39378                   │
+├───────────────┼─────────────────────┤          │          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ pytest        │ CVE-2025-71176      │          │          │ 9.0.1             │ 9.0.3         │ pytest: pytest: Denial of Service or Privilege Escalation    │
+│               │                     │          │          │                   │               │ via insecure temporary directory...                          │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-71176                   │
+├───────────────┼─────────────────────┤          │          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ python-dotenv │ CVE-2026-28684      │          │          │ 1.1.1             │ 1.2.2         │ python-dotenv: python-dotenv: Arbitrary file overwrite via   │
+│               │                     │          │          │                   │               │ symbolic link following                                      │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28684                   │
+├───────────────┼─────────────────────┤          │          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ requests      │ CVE-2026-25645      │          │          │ 2.32.5            │ 2.33.0        │ requests: Requests: Security bypass due to predictable       │
+│               │                     │          │          │                   │               │ temporary file creation                                      │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-25645                   │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ tornado       │ CVE-2026-31958      │ HIGH     │          │ 6.5.2             │ 6.5.5         │ tornado-python: Tornado: Denial of Service via large         │
+│               │                     │          │          │                   │               │ multipart bodies                                             │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-31958                   │
+│               ├─────────────────────┤          │          │                   │               ├──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-35536      │          │          │                   │               │ tornado: Tornado: Cookie attribute injection due to improper │
+│               │                     │          │          │                   │               │ handling of cookie arguments...                              │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-35536                   │
+│               ├─────────────────────┼──────────┤          │                   │               ├──────────────────────────────────────────────────────────────┤
+│               │ GHSA-78cv-mqj4-43f7 │ MEDIUM   │          │                   │               │ Tornado has incomplete validation of cookie attributes       │
+│               │                     │          │          │                   │               │ https://github.com/advisories/GHSA-78cv-mqj4-43f7            │
+│               ├─────────────────────┼──────────┤          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-49854      │ LOW      │          │                   │ 6.5.6         │ Tornado has out-of-bounds memory access via C extension      │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-49854                   │
+├───────────────┼─────────────────────┼──────────┤          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ urllib3       │ CVE-2026-21441      │ HIGH     │          │ 2.6.0             │ 2.6.3         │ urllib3: urllib3 vulnerable to decompression-bomb safeguard  │
+│               │                     │          │          │                   │               │ bypass when following HTTP redirects (streaming...           │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-21441                   │
+│               ├─────────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-44431      │          │          │                   │ 2.7.0         │ urllib3: urllib3: Information disclosure via cross-origin    │
+│               │                     │          │          │                   │               │ redirects forwarding sensitive headers                       │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-44431                   │
+│               ├─────────────────────┤          │          │                   │               ├──────────────────────────────────────────────────────────────┤
+│               │ CVE-2026-44432      │          │          │                   │               │ urllib3: urllib3: Denial of Service due to excessive HTTP    │
+│               │                     │          │          │                   │               │ response decompression                                       │
+│               │                     │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2026-44432                   │
+└───────────────┴─────────────────────┴──────────┴──────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘
