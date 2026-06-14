@@ -143,16 +143,16 @@ The table below lists all CVEs found across both methods. The 4 CVEs from the ma
 ```json
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
-  "@id": "https://studyconnect.example.com/vex/CVE-2026-44432/1",
+  "@id": "https://studyconnect.example.com/vex/CVE-2026-32274/1",
   "author": "Leonhard Schneider <studyconnect-sec@example.com>",
   "timestamp": "2026-06-14T18:00:00Z",
   "version": 1,
   "statements": [
     {
       "vulnerability": {
-        "@id": "https://nvd.nist.gov/vuln/detail/CVE-2026-44432",
-        "name": "CVE-2026-44432",
-        "description": "HIGH-severity vulnerability in urllib3 affecting versions 2.6.0–2.6.x"
+        "@id": "https://nvd.nist.gov/vuln/detail/CVE-2026-32274",
+        "name": "CVE-2026-32274",
+        "description": "HIGH-severity vulnerability in black (Python code formatter) affecting versions prior to 26.3.1"
       },
       "products": [
         {
@@ -162,28 +162,26 @@ The table below lists all CVEs found across both methods. The 4 CVEs from the ma
           },
           "subcomponents": [
             {
-              "@id": "pkg:pypi/urllib3@2.6.0"
+              "@id": "pkg:pypi/black@25.1.0"
             }
           ]
         }
       ],
-      "status": "affected",
-      "action_statement": "Upgrade transitive dependency urllib3 to version 2.7.0 or later.",
-      "action_statement_timestamp": "2026-06-14T18:00:00Z",
-      "impact_statement": "The StudyConnect backend includes urllib3 2.6.0 as a transitive dependency (pulled in via python-keycloak and/or requests). This version falls within the affected range 2.6.0–2.6.x. The vulnerability was independently confirmed by both manual CVE lookup on NVD/OSV and automated Trivy SBOM scan of the project's CycloneDX SBOM (146 components). No compensating controls are currently in place. Exploitability depends on whether attacker-controlled HTTP requests can reach the urllib3 code paths; this requires further runtime analysis.",
-      "justification": null,
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "The StudyConnect backend includes black as a transitive dependency pulled in solely by development and testing tooling (e.g. pytest plugins). black is a Python source-code formatter and is never invoked during application startup, request handling, or any production code path. No mechanism exists by which an external attacker could trigger the vulnerable formatting logic at runtime. The application does not expose any interface that processes or formats Python source code. Therefore, despite the presence of black in the SBOM, the vulnerable code path is unreachable in the deployed product.",
       "evidence": [
         {
-          "type": "manual_review",
-          "description": "NVD and OSV lookup performed manually during Lab 8 Part A. urllib3 2.6.0 confirmed in affected version range (2.6.0–2.6.x). Cross-checked on osv.dev."
+          "type": "code_review",
+          "description": "Review of backend/ source code confirms that black is not imported or called anywhere in the application code. It appears only as a transitive dependency of dev/test tooling and is absent from the application's import graph at runtime."
         },
         {
           "type": "automated_scan",
-          "description": "Trivy SBOM scan (trivy sbom sbom.cdx.json) against CycloneDX SBOM generated with cdxgen. CVE-2026-44432 flagged as HIGH with fix version 2.7.0. Scan output: backend/trivyScan.txt."
+          "description": "Trivy SBOM scan (trivy sbom sbom.cdx.json) against CycloneDX SBOM generated with cdxgen flagged CVE-2026-32274 as HIGH. Scan output: backend/trivyScan.txt. The finding is present in the SBOM because black is listed as a component, but runtime reachability analysis rules out exploitability."
         },
         {
           "type": "sbom",
-          "description": "CycloneDX SBOM (specVersion 1.7, serialNumber urn:uuid:e351d086-896a-4a7a-8920-242921edda23) lists urllib3 2.6.0 as pkg:pypi/urllib3@2.6.0 among 146 components. SBOM generated 2026-06-14T18:51:44Z."
+          "description": "CycloneDX SBOM (specVersion 1.7, serialNumber urn:uuid:e351d086-896a-4a7a-8920-242921edda23) lists black among 146 components. SBOM generated 2026-06-14T18:51:44Z."
         }
       ]
     }
