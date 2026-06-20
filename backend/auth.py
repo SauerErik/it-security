@@ -32,15 +32,18 @@ keycloak_openid_admin = KeycloakOpenID(
     realm_name=realm_name,
     client_secret_key=admin_client_secret,
 )
-admin_token_dict = keycloak_openid_admin.token(grant_type="client_credentials")
-
-# Step 2: Initialize KeycloakAdmin with the full token
-keycloak_admin = KeycloakAdmin(
-    server_url=server_url,
-    realm_name=realm_name,
-    token=admin_token_dict,  # Pass the full token dict!
-    verify=True
-)
+try:
+    admin_token_dict = keycloak_openid_admin.token(grant_type="client_credentials")
+    # Step 2: Initialize KeycloakAdmin with the full token
+    keycloak_admin = KeycloakAdmin(
+        server_url=server_url,
+        realm_name=realm_name,
+        token=admin_token_dict,  # Pass the full token dict!
+        verify=True
+    )
+except Exception:
+    admin_token_dict = None
+    keycloak_admin = None
 
 # -----------------------------
 # Decorator for protected routes
