@@ -1,3 +1,8 @@
+<p align="center">
+    <h>Tim Farnung, Dieter Grünke, Erik Sauer, Leonhard Schneider</h>
+</p>
+<p>Projekt: StudyConnect</p>
+
 # Lab 8
 
 ## Part A: Manual CVE Hunt

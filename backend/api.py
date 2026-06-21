@@ -5,15 +5,15 @@ import os
 from dotenv import load_dotenv
 from keycloak import KeycloakOpenID
 from keycloak.exceptions import KeycloakError
-from models import User, Group, db
-from services import (
+from backend.models import User, Group, db
+from backend.services import (
     create_task_service, create_group_service,
     get_tasks_for_user, get_groups_for_user,
     join_group_service, update_task_service, get_all_groups, leave_group_service, promote_to_admin_service, kick_user_service,
     UserService
 )
 # Change 1: Import keycloak_openid from auth to use the same instance as the decorator/tests
-from auth import create_user, get_user_by_id, keycloak_protect, keycloak_admin, set_user_password, update_user, keycloak_openid
+from backend.auth import create_user, get_user_by_id, keycloak_protect, keycloak_admin, set_user_password, update_user, keycloak_openid
 
 # -----------------------------
 # App Initialization
